@@ -17,10 +17,15 @@ import org.springframework.ui.Model;
 public class OfficeController {
     private Date fecha=Date.valueOf(LocalDate.now());
     
-    @GetMapping("/addOffice")
+     @GetMapping("/addOffice")
     public String addOffice(Model model) {
         model.addAttribute("date", fecha);
         return "offices/addOffice";
+    }
+    @GetMapping("/editOffice")
+    public String editOffice(Model model) {
+        model.addAttribute("date", fecha);
+        return "offices/editOffice";
     }
     
     @GetMapping("/listOffices")
@@ -31,10 +36,20 @@ public class OfficeController {
         return "offices/listOffices";
     }
     
+    @GetMapping("/version")
+    public String versionOffice(Model model) {
+        log.info("ejecutando el controlador Oficios");
+        return "offices/versionOffice";
+    }
+    
+    @GetMapping("/annulOffice")
+    public String annulOffice(Model model) {
+        log.info("ejecutando el controlador Oficios");
+        return "offices/annulOffice";
+    }
+    
     public List<office> getListOffice(){
-         List<office> list=new ArrayList();
-         
-         
+         List<office> list=new ArrayList();         
          office o1= new office(1, "Esperando Respuesta", "Probar que funciona",fecha,"Oficio-MPSP-1-Prueba","Interno");
          office o2= new office(2, "Respondido", "Probar que funciona 2",fecha,"Oficio-MPSP-2-Prueba","Externo");
          office o3= new office(3, "Esperando Respuesta", "Probar que funciona 3",fecha,"Oficio-MPSP-3-Prueba","Externo");
