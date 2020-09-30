@@ -1,1 +1,4 @@
+com\sisdi\controller\OfficeController.class
+com\sisdi\controller\IndexController.class
 com\sisdi\SisdiApplication.class
+com\sisdi\model\office.class
