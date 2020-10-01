@@ -14,10 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/**
- *
- * @author Vale
- */
 @Controller
 @Slf4j
 @RequestMapping(value = "/versions")
@@ -38,7 +34,7 @@ public class VersionController {
     public String addVersion(Model model) { 
         model.addAttribute("date", fecha);
         model.addAttribute("time",hora);
-        return "versions/addVersion";
+        return "offices/addVersion";
     }
 
     public List<version> getListVersion() {
