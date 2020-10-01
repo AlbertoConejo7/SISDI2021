@@ -34,10 +34,9 @@
                 <div id="titulo">
                     <h3 class='font-italic text-center' id='titleh3'>Crear nueva versiòn del oficio</h3>
                 </div>
+                <div th:insert="menu/HeadOffice :: menuOffice"></div>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#responseTime">Agregar nueva versiòn</button>
             </div>
-            <div th:insert="menu/HeadOffice :: menuOffice"></div>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#responseTime">Agregar nueva versiòn</button>
-
             <div class="modal fade" id="responseTime" tabindex="-1" role="dialog" aria-labelledby="responseTimeTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
