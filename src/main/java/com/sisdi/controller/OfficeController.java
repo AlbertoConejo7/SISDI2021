@@ -18,7 +18,13 @@ import org.springframework.ui.Model;
 public class OfficeController {
     private Date fecha=Date.valueOf(LocalDate.now());
     
-     @GetMapping("/addOffice")
+    @GetMapping("/createOffice")
+    public String createOffice(Model model) {
+        model.addAttribute("date", fecha);
+        return "offices/createOffice";
+    }
+    
+    @GetMapping("/addOffice")
     public String addOffice(Model model) {
         model.addAttribute("date", fecha);
         return "offices/addOffice";
