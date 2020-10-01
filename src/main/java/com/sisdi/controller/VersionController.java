@@ -19,15 +19,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/versions")
 public class VersionController {
 
-    private final Date fecha = Date.valueOf(LocalDate.now());
-    private final Time hora = Time.valueOf(LocalTime.now());
+    private Date fecha = Date.valueOf(LocalDate.now());
+    private Time hora = Time.valueOf(LocalTime.now());
         
     @GetMapping("/listVersions")
     public String listVersion(Model model) {
         List<version> versions = this.getListVersion();
         log.info("ejecutando el controlador Versiones");
         model.addAttribute("versions", versions);
-        return "versions/listVersions";
+        return "offices/versionOffice";
     }
     
     @GetMapping("/addVersion")
@@ -44,7 +44,6 @@ public class VersionController {
         version v2 = new version("Oficio-MPSP-1-Prueba", 2, 2, fecha, hora, "Modificacion de version 1");
 
         list.add(v1);
-
         list.add(v2);
 
         return list;
