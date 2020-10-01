@@ -15,6 +15,7 @@
         <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+        <script th:src="@{/js/calendar.js}"></script>
     </head>
     <body>
         <header th:insert="menu/Head :: menu"></header>
@@ -27,8 +28,29 @@
                     <h3 class='font-italic text-center' id='titleh3'>Anular Oficio</h3>
                 </div>
                 <div th:insert="menu/HeadOffice :: menuOffice"></div>
+                <div class="container">
+                    <form>
+                        <div class="form-group">
+                            <label for="officeName">Oficio</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Oficio-MPSP-0-NAME">
+                        </div>
+                        <div class="form-group">
+                            <label for="dateAnnul">Fecha de Anulación</label>
+                            <div class='input-group date'>
+                                <input type='text' class="form-control" th:value="${#dates.format(date, 'dd/MM/yyyy')}" readonly="readonly"/>
+                                <span class="input-group-addon ">
+                                    <img class="icon-img" th:src="@{/images/calendar.svg}">
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="motiveAnnul">Motivo de Anulación</label>
+                            <textarea class="form-control" id="motiveAnnul" rows="3"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-primary">Anular</button>
+                    </form>
+                </div>
             </div>
-            
         </main>
     </body>
 </html>
