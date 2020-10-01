@@ -41,7 +41,7 @@ public class VersionController {
         List<version> list = new ArrayList();
         
         version v1 = new version("Oficio-MPSP-1-Prueba", 1, 2, fecha, hora, "Modificacion de version 1");
-        version v2 = new version("Oficio-MPSP-1-Prueba", 2, 2, fecha, hora, "Modificacion de version 1");
+        version v2 = new version("Oficio-MPSP-2-Prueba", 2, 2, fecha, hora, "Modificacion de version 1");
 
         list.add(v1);
         list.add(v2);
