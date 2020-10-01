@@ -37,12 +37,6 @@ public class OfficeController {
         return "offices/listOffices";
     }
     
-    @GetMapping("/version")
-    public String versionOffice(Model model) {
-        log.info("ejecutando el controlador Oficios");
-        return "offices/versionOffice";
-    }
-    
     @GetMapping("/annulOffice")
     public String annulOffice(Model model) {
         log.info("ejecutando el controlador Oficios");
