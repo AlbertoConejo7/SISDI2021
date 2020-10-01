@@ -49,8 +49,8 @@
                                         <tr th:each="version : ${versions}" th:if="${versions != null and !versions.empty}">
                                             <td th:text="${version.id_office}"></td>
                                             <td  th:text="${version.version_number}"></td>
-                                            <td  th:text="${version.date}"></td>
-                                            <td  th:text="${version.time}"></td>
+                                            <td  th:text="${version.version_date}"></td>
+                                            <td  th:text="${version.version_time}"></td>
                                             <td  th:text="${version.version_description}"></td>
                                         </tr>
                                         <tr>                                            
