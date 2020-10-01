@@ -26,6 +26,7 @@
                 <div id="titulo">
                     <h3 class='font-italic text-center' id='titleh3'>Versiones de Oficio</h3>
                 </div>
+                <div th:insert="menu/HeadOffice :: menuOffice"></div>
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
@@ -42,19 +43,19 @@
                                     </thead>
                                     <tbody>
 
-                                        <tr th:if="${offices == null or offices.empty}">
+                                        <tr th:if="${versions == null or versions.empty}">
                                             <td colspan="6" style="text-align: center;">No existen versiones del oficio</td>
                                         </tr>
-                                        <tr th:each="office : ${offices}" th:if="${offices != null and !offices.empty}">
-                                            <td th:text="${office.id_office}"></td>
-                                            <td  th:text="${office.version_number}"></td>
-                                            <td  th:text="${office.date}"></td>
-                                            <td  th:text="${office.time}"></td>
-                                            <td  th:text="${office.version_description}"></td>
+                                        <tr th:each="version : ${versions}" th:if="${versions != null and !versions.empty}">
+                                            <td th:text="${version.id_office}"></td>
+                                            <td  th:text="${version.version_number}"></td>
+                                            <td  th:text="${version.date}"></td>
+                                            <td  th:text="${version.time}"></td>
+                                            <td  th:text="${version.version_description}"></td>
                                         </tr>
                                         <tr>                                            
-                                        <a th:href="@{/offices/addVersion}">Agregar Versiòn</a> <!--Redireccionar al agregar version-->
-                                        </tr>
+                                    <a th:href="@{/versions/addVersion}">Agregar Versiòn</a> <!--Redireccionar al agregar version-->
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -62,7 +63,6 @@
                     </div>
                 </div>
             </div>
-            <div th:insert="menu/HeadOffice :: menuOffice"></div>
         </main>
     </body>
 </html>

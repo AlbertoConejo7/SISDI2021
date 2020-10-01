@@ -1,5 +1,6 @@
 package com.sisdi.controller;
 
+import com.sisdi.model.office;
 import com.sisdi.model.version;
 import java.sql.Date;
 import java.sql.Time;
@@ -24,14 +25,20 @@ public class VersionController {
 
     private final Date fecha = Date.valueOf(LocalDate.now());
     private final Time hora = Time.valueOf(LocalTime.now());
-    
-    
+        
     @GetMapping("/listVersions")
     public String listVersion(Model model) {
         List<version> versions = this.getListVersion();
-        log.info("ejecutando el controlador Oficios");
+        log.info("ejecutando el controlador Versiones");
         model.addAttribute("versions", versions);
         return "versions/listVersions";
+    }
+    
+    @GetMapping("/addVersion")
+    public String addVersion(Model model) { 
+        model.addAttribute("date", fecha);
+        model.addAttribute("time",hora);
+        return "versions/addVersion";
     }
 
     public List<version> getListVersion() {

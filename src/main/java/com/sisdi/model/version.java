@@ -2,11 +2,13 @@ package com.sisdi.model;
 
 import java.sql.Time;
 import java.util.Date;
+import lombok.Data;
 
 /**
  *
  * @author Vale
  */
+@Data
 public class version {
 
     private String id_office;

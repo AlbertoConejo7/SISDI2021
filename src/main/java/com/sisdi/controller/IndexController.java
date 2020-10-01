@@ -1,6 +1,7 @@
 package com.sisdi.controller;
 
 import com.sisdi.model.office;
+import com.sisdi.model.version;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -28,5 +29,14 @@ public class IndexController {
         model.addAttribute("offices", offices);
         return "offices/listOffices";
     }
+    
+//    @GetMapping("/index")
+//    public String showVersions(Model model) {
+//        VersionController verC=new VersionController();
+//        List<version> versions=verC.getListVersion();
+//        log.info("ejecutando el controlador Versiones");
+//        model.addAttribute("offices", versions);
+//        return "versions/versionOffice";
+//    }
     
 }
