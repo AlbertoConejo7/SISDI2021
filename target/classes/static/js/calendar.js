@@ -7,3 +7,5 @@ $('#datepicker1').datepicker({
     startDate: today,
     todayHighlight: true
 });
+//var hour= new Time();
+//var 
