@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -21,10 +22,14 @@ public class VersionController {
 
     private Date fecha = Date.valueOf(LocalDate.now());
     private Time hora = Time.valueOf(LocalTime.now());
-        
-    @GetMapping("/listVersions")
-    public String listVersion(Model model) {
+       
+    @GetMapping("/listVersions/{officeId}")
+    public String listVersion(@PathVariable String officeId, Model model) {
         List<version> versions = this.getListVersion();
+        OfficeController ofC=new OfficeController();
+        office officeAct=ofC.getOffice(officeId);
+        model.addAttribute("officeActual", officeAct);
+        model.addAttribute("title", "Versiones");
         log.info("ejecutando el controlador Versiones");
         model.addAttribute("versions", versions);
         return "offices/versionOffice";
