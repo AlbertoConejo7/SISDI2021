@@ -15,6 +15,11 @@
         <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+        <style>
+            p{
+                margin-bottom: 0 !important;
+            }
+        </style>
     </head>
     <body>
         <header th:insert="menu/Head :: menu"></header>
@@ -23,12 +28,129 @@
         </div>
         <main>
             <div class="container">
-                <div id="titulo">
-                    <h3 class='font-italic text-center' id='titleh3'>Ver Oficio</h3>
-                </div>
                 <div th:insert="menu/HeadOffice :: menuOffice"></div>
+                <div class="row mt-4 mr-5">
+                    <div class="col-sm">
+                        <table class="table"> 
+                            <tr class="m-0">
+                                <th>
+                                    <p>Oficio</p>
+                                </th>
+                                <td colspan="2">
+                                    <p th:text="${officeActual.name}"></p>
+                                </td>
+                            </tr>
+                            <tr class="m-0">
+                                <th>
+                                    <p>Motivo</p>
+                                </th>
+                                <td colspan="2">
+                                    <p th:text="${officeActual.reason}"></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <p>Fecha Emision</p>
+                                </th>
+                                <td colspan="2">
+                                    <p th:text="${officeActual.date}"></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th rowspan="2" class="align-center">
+                                    <p>Emisor</p>
+                                </th>
+                                <th>
+                                    <p>Usuario</p>
+                                </th>
+                                <td>
+
+                                    <p>Juan Perez </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <p>Departamento</p>
+                                </th>
+                                <td>
+                                    <p>Administracion</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th rowspan="2">
+                                    <p>Receptor</p>
+                                </th>
+                                <th>
+                                    <p>Usuario</p>
+                                </th>
+                                <td>
+                                    <p>Pedro Perez </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <p>Departamento</p>
+                                </th>
+                                <td>
+                                    <p>Contabilidad</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <p>Tipo</p>
+                                </th>
+                                <td colspan="2">
+                                    <p th:text="${officeActual.type}"></p>
+                                </td>
+                            </tr>
+                            <tr >
+                                <td colspan="3">
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#annulModal">Anular Officio</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm">
+                        One of three columns
+                    </div>
+                </div>
             </div>
-             
+            <div class="modal fade" id="annulModal" tabindex="-1" role="dialog" aria-labelledby="annulModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="annulModalTitle">Anular Oficio</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="officeName">Oficio</label>
+                                    <input type="text" class="form-control" id="exampleFormControlInput1" th:value="${officeActual.name}" disabled/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dateAnnul">Fecha de Anulación</label>
+                                    <div class='input-group date'>
+                                        <input type='text' class="form-control" th:value="${#dates.format(date, 'dd/MM/yyyy')}" disabled/>
+                                        <span class="input-group-addon ">
+                                            <img class="icon-img" th:src="@{/images/calendar.svg}">
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="motiveAnnul">Motivo de Anulación</label>
+                                    <textarea class="form-control" id="motiveAnnul" rows="3"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger">Anular Oficio</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </body>
 </html>
