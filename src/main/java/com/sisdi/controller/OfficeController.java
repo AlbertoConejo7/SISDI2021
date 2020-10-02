@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @Slf4j
@@ -29,9 +30,12 @@ public class OfficeController {
         model.addAttribute("date", fecha);
         return "offices/addOffice";
     }
-    @GetMapping("/editOffice")
-    public String editOffice(Model model) {
+    @GetMapping("/editOffice/{officeId}")
+    public String editOffice(@PathVariable String officeId,Model model) {
+        office officeAct=this.getOffice(officeId);
         model.addAttribute("date", fecha);
+        model.addAttribute("officeActual", officeAct);
+        model.addAttribute("title", "Ver Oficio");
         return "offices/editOffice";
     }
     
@@ -64,5 +68,15 @@ public class OfficeController {
          list.add(o5);
          
          return list;
+    }
+     public office getOffice(String officeId){
+         List<office> list= this.getListOffice();
+         office aux =null;
+         for(office o:list){
+             if(o.getName().equals(officeId)){
+                 aux=o;
+             }
+         }
+         return aux;
     }
 }
