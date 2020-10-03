@@ -56,6 +56,19 @@ DELIMITER ;
 
 
 
+USE `SISDI`;
+DROP procedure IF EXISTS updateCodOffice;
+DELIMITER $$
+USE `SISDI`$$
+create procedure updateCodOffice( IN _tempuser VARCHAR(45),IN _indx int) 
+begin
+DECLARE var varchar(100);
+set var=  CONCAT('OFICIO MSPH-','AM-', _indx,'-',YEAR(NOW()));
+UPDATE T_OFFICE SET OFFNUMBER=var where USER_ID=_tempuser AND INDX=_indx;
+end$$
+DELIMITER ; 
+
+
 
 
 
