@@ -1,5 +1,6 @@
 package com.sisdi.model;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 import lombok.Data;
@@ -8,10 +9,19 @@ import lombok.Data;
  *
  * @author Vale
  */
+
 @Data
-public class version {
+//@Entity
+//@Table( name ="T_VERSION")
+public class version implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
+      
+    
 
     private String id_office;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_version;
     private int version_number;
     private Date version_date;

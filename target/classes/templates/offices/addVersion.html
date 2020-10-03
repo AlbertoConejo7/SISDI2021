@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html¨xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Nueva versiòn de oficio</title>
         <meta charset="UTF-8">
@@ -21,23 +21,22 @@
         <script th:src="@{/js/calendar.js}"></script>
     </head>
     <body>
-        <div th:insert="menu/HeadOffice :: menuOffice"></div>
+        <header th:insert="menu/Head :: menu"></header>
         <div class="mt-2 col-md-1">
             <br> <br> <br>
         </div>
         <div class="alert alert-success alert-dismissable alert-min fade" id="alert-save">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Versiòn nueva</strong> guardada.
+            <strong>Versión nueva</strong> guardada.
         </div>
         <main>
             <div class="container">
                 <div id="titulo">
                     <h3 class='font-italic text-center' id='titleh3'>Crear nueva versiòn del oficio</h3>
                 </div>
+                <div th:insert="menu/HeadOffice :: menuOffice"></div>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#responseTime">Agregar nueva versiòn</button>
             </div>
-
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#responseTime">Agregar nueva versiòn</button>
-
             <div class="modal fade" id="responseTime" tabindex="-1" role="dialog" aria-labelledby="responseTimeTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">

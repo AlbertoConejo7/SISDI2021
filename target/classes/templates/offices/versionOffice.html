@@ -23,9 +23,6 @@
         </div>
         <main>
             <div class="container">
-                <div id="titulo">
-                    <h3 class='font-italic text-center' id='titleh3'>Versiones de Oficio</h3>
-                </div>
                 <div th:insert="menu/HeadOffice :: menuOffice"></div>
                 <div class="container">
                     <div class="row">
@@ -49,8 +46,8 @@
                                         <tr th:each="version : ${versions}" th:if="${versions != null and !versions.empty}">
                                             <td th:text="${version.id_office}"></td>
                                             <td  th:text="${version.version_number}"></td>
-                                            <td  th:text="${version.date}"></td>
-                                            <td  th:text="${version.time}"></td>
+                                            <td  th:text="${version.version_date}"></td>
+                                            <td  th:text="${version.version_time}"></td>
                                             <td  th:text="${version.version_description}"></td>
                                         </tr>
                                         <tr>                                            

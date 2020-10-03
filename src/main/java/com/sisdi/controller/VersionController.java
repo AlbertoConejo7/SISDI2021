@@ -1,5 +1,6 @@
 package com.sisdi.controller;
 
+import com.service.versionService;
 import com.sisdi.model.office;
 import com.sisdi.model.version;
 import java.sql.Date;
@@ -9,6 +10,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 @RequestMapping(value = "/versions")
 public class VersionController {
+    
+    @Autowired
+    private versionService versionService ;
 
     private Date fecha = Date.valueOf(LocalDate.now());
     private Time hora = Time.valueOf(LocalTime.now());
@@ -34,6 +39,7 @@ public class VersionController {
         model.addAttribute("versions", versions);
         return "offices/versionOffice";
     }
+    
     
     @GetMapping("/addVersion")
     public String addVersion(Model model) { 

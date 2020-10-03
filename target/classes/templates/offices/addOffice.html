@@ -22,76 +22,231 @@
     <body>
         <header th:insert="menu/Head :: menu"></header>
         <div class="mt-2 col-md-1">
-            <br> <br> <br>
+            <br> <br>
         </div>
         <div class="alert alert-success alert-dismissable alert-min fade" id="alert-save">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Fecha de Plazo de Respuesta</strong> guardada.
-            </div>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Fecha de Plazo de Respuesta</strong> guardada.
+        </div>
         <main>
-            <div class="container">
+            <div class="container mx-auto">
                 <div id="titulo">
                     <h3 class='font-italic text-center' id='titleh3'>Crear Oficio</h3>
                 </div>
+                <div class="mx-auto w-75">
+                    <form class="form ">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td>
+                                    <span>Título</span>
+                                </td>
+                                <td>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control" placeholder="Título del oficio"/>
+                                        <span class="input-group-addon ">
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Motivo</span>
+                                </td>
+                                <td>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control" placeholder="Motivo del oficio"/>
+                                        <span class="input-group-addon ">
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Fecha de Ingreso</span>
+                                </td>
+                                <td>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control" th:value="${#dates.format(date, 'dd/MM/yyyy')}" readonly="readonly"/>
+                                        <span class="input-group-addon ">
+                                            <img class="icon-img" th:src="@{/images/calendar.svg}">
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Emisor</span>
+                                </td>
+                                <td>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control" placeholder="Nombre del Emisor" />
+                                        <span class="input-group-addon ">
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Departamento Emisor</span>
+                                </td>
+                                <td>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control" placeholder="Nombre del Departamento"/>
+                                        <span class="input-group-addon ">
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Receptor</span>
+                                </td>
+                                <td>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control" placeholder="Nombre del Emisor" />
+                                        <span class="input-group-addon ">
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Departamento Receptor</span>
+                                </td>
+                                <td>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control" placeholder="Nombre del Departamento" />
+                                        <span class="input-group-addon ">
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Tipo de Oficio</span>
+                                </td>
+                                <td>
+                                    <div class='input-group'>
+                                        <input type="radio" name="boton" value="Comunicar">&nbsp;&nbsp;Comunicar&nbsp;&nbsp;
+                                        <input type="radio" name="boton" value="Solicitar">&nbsp;&nbsp;Solicitar&nbsp;&nbsp;
+                                        <input type="radio" name="boton" value="Aprobar">&nbsp;&nbsp;Aprobar
+                                        <span class="input-group-addon ">
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Observaciones</span>
+                                </td>
+                                <td>
+                                    <div class='input-group'>
+                                        <textarea name="texto" rows="4" class="w-100" placeholder="Escriba aquí sus observaciones" style="resize: none;"></textarea>
+                                        <span class="input-group-addon ">
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Adjuntar oficio</span>
+                                </td>
+                                <td>
+                                    <div class='input-group'>
+                                        <input type="file" name="adjunto" accept=".pdf"/>
+                                        <span class="input-group-addon ">
+                                        </span>
+                                        <p class="w-100">*Solo se admite un único archivo .pdf*</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Archivos adjuntos</span>
+                                </td>
+                                <td>
+                                    <div class='input-group'>
+                                        <input type="file" name="adjunto" accept=".pdf,.jpg,.png, .pptx, .docx, .mp3, .mp4, .xml, .txt, .html" multiple />
+                                        <span class="input-group-addon ">
+                                        </span>
+                                        <p class="w-100">*Agregue aquí los adjuntos necesarios*</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Fecha Limite de Respuesta</span>
+                                </td>
+                                <td>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control w-100" id="dateLimit" placeholder="Fecha de Limite de Respuesta" disabled/>
+                                        <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#responseTime">Agregar Plazo de Respuesta</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="text-lg-right">
+                                    <button type="button" class="btn btn-primary mt-2">Agregar Oficio</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
             </div>
+        </div>
 
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#responseTime">Agregar Plazo de Respuesta</button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="responseTime" tabindex="-1" role="dialog" aria-labelledby="responseTimeTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="responseTimeTitle">Plazo de Tiempo de Respuesta</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="containerPopUp">
-                                <div class="form-group">
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                <span>Fecha de Emision</span>
-                                            </td>
-                                            <td>
-                                                <div class='input-group date'>
-                                                    <input type='text' class="form-control" th:value="${#dates.format(date, 'dd/MM/yyyy')}" readonly="readonly"/>
-                                                    <span class="input-group-addon ">
-                                                        <img class="icon-img" th:src="@{/images/calendar.svg}">
-                                                    </span>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span>Fecha Limite de Respuesta</span>
-                                                <span class="help-block error-message hide-message" id="errorResponseTime">Error</span>
-                                            </td>
-                                            <td>
-                                                <div class='input-group date' id='datepicker1'>
-                                                    <input type='text' class="form-control" placeholder="dd/mm/yyyy" id="responseTimeValue"/>
-                                                    <span class="input-group-addon ">
-                                                        <img class="icon-img" th:src="@{/images/calendar.svg}">
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            
-                                        </tr>
-                                    </table>
-                                </div>
+        <div class="modal fade" id="responseTime" tabindex="-1" role="dialog" aria-labelledby="responseTimeTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="responseTimeTitle">Plazo de Tiempo de Respuesta</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="containerPopUp">
+                            <div class="form-group">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <span>Fecha de Emision</span>
+                                        </td>
+                                        <td>
+                                            <div class='input-group date'>
+                                                <input type='text' class="form-control" th:value="${#dates.format(date, 'dd/MM/yyyy')}" readonly="readonly"/>
+                                                <span class="input-group-addon ">
+                                                    <img class="icon-img" th:src="@{/images/calendar.svg}">
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Fecha Limite de Respuesta</span>
+                                            <span class="help-block error-message hide-message" id="errorResponseTime">Error</span>
+                                        </td>
+                                        <td>
+                                            <div class='input-group date' id='datepicker1'>
+                                                <input type='text' class="form-control" placeholder="dd/mm/yyyy" id="responseTimeValue"/>
+                                                <span class="input-group-addon ">
+                                                    <img class="icon-img" th:src="@{/images/calendar.svg}">
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" onclick="saveResponseTime()">Guardar</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="saveResponseTime()">Guardar</button>
                     </div>
                 </div>
             </div>
-        </main>
-        <script th:src="@{/js/addOffice.js}"></script>
-        <script th:src="@{/js/calendar.js}"></script>
-    </body>
+        </div>
+    </main>
+    <script th:src="@{/js/addOffice.js}"></script>
+    <script th:src="@{/js/calendar.js}"></script>
+</body>
 </html>

@@ -3,16 +3,15 @@
     <head>
     </head>
     <body>
-        <nav th:fragment="menuOffice">
-            <ul class="nav nav-pills">
+        
+        <nav th:fragment="menuOffice" class="navbar justify-content-center" style="background-color: #e3f2fd;">
+            <h3 class='font-italic text-center w-100' th:text="${title}"></h3>
+            <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/offices/editOffice}">Ver Oficio</a>
+                    <a class="nav-link font-weight-bold" th:href="@{/offices/editOffice/{id} (id=${officeActual.name})}">Ver Oficio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/offices/version}">Versiones</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/offices/annulOffice}">Anular</a>
+                    <a class="nav-link font-weight-bold" th:href="@{/versions/listVersions/{id} (id=${officeActual.name})}">Versiones</a>
                 </li>
             </ul>
         </nav>
