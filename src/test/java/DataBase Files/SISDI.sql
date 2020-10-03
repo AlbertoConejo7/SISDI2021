@@ -21,13 +21,16 @@ VERSION_NUMBER INT,
 VERSION_DATE date,
 VERSION_TIME time,
 VERSION_DESCRIPTION varchar(100),
+REASON varchar(45),
+OBSERVATIONS longtext,
 
 constraint PK_VERSION primary key (ID)
 );
 
 
 create table T_DEPARTMENT (
-ID int auto_increment, 
+ID int auto_increment,
+COD  varchar(45),
 NAME varchar(100) NOT NULL,
 constraint PK_DEPARMENT primary key(ID),
 constraint UK_NAMED unique key(NAME)
