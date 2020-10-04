@@ -11,17 +11,14 @@ import lombok.Data;
  */
 
 @Data
-//@Entity
-//@Table( name ="T_VERSION")
-public class version implements Serializable {
+
+public class version  {
     
-    private static final long serialVersionUID = 1L;
-      
+   
     
 
     private String id_office;
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int id_version;
     private int version_number;
     private Date version_date;
