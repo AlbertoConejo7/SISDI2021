@@ -24,6 +24,14 @@ public class IndexController {
     @GetMapping("/index")
     public String showIndex(Model model) {
         OfficeController offC=new OfficeController();
+//        List<office> offices=offC.getListOffice();
+        log.info("ejecutando el controlador Oficios");
+//        model.addAttribute("offices", offices);
+        return "login";
+    }
+     @GetMapping("/list")
+    public String listOff(Model model) {
+        OfficeController offC=new OfficeController();
         List<office> offices=offC.getListOffice();
         log.info("ejecutando el controlador Oficios");
         model.addAttribute("offices", offices);
