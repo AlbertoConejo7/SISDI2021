@@ -15,6 +15,7 @@
         <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+        <script th:src="@{/js/calendar.js}"></script>
     </head>
     <body>
         <header th:insert="menu/Head :: menu"></header>
@@ -50,11 +51,67 @@
                                             <td  th:text="${version.version_time}"></td>
                                             <td  th:text="${version.version_description}"></td>
                                         </tr>
-                                        <tr>                                            
-                                    <a th:href="@{/versions/addVersion}">Agregar Versiòn</a> <!--Redireccionar al agregar version-->
-                                    </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#newVersionModal">Agregar Version</button>
+                                            </td>
+
+                                        </tr>
                                     </tbody>
                                 </table>
+                                <div class="modal fade" id="newVersionModal" tabindex="-1" role="dialog" aria-labelledby="newVersionTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="newVersionTitle">Nueva versión</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <label for="officeName">Oficio</label>
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" th:value="${officeActual.name}" disabled/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="officeEmisor">Emisor</label>
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="emisor"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="officeReceptor">Receptor</label>
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="receptor"/>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="dateVersion">Fecha de Actualización</label>
+                                                        <div class='input-group date'>
+                                                            <input type='text' class="form-control" th:value="${#dates.format(date, 'dd/MM/yyyy')}" disabled/>
+                                                            <span class="input-group-addon ">
+                                                                <img class="icon-img" th:src="@{/images/calendar.svg}">
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="version">Versión</label>
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Version"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="motive">Motivo</label>
+                                                        <textarea class="form-control" id="motive" rows="3"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="observations">Observaciones</label>
+                                                        <textarea class="form-control" id="observations" rows="3"></textarea>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger">Agregar version</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

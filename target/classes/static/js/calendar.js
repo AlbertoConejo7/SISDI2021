@@ -8,4 +8,4 @@ $('#datepicker1').datepicker({
     todayHighlight: true
 });
 //var hour= new Time();
-//var 
+//var now = new Time(hour.get)

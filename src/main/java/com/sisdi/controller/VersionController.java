@@ -57,4 +57,14 @@ public class VersionController {
         return list;
     }
 
+//         public office getVersion(String officeId){
+//         List<office> list= this.getListOffice();
+//         office aux =null;
+//         for(office o:list){
+//             if(o.getName().equals(officeId)){
+//                 aux=o;
+//             }
+//         }
+//         return aux;
+//    }
 }

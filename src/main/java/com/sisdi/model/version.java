@@ -13,9 +13,7 @@ import lombok.Data;
 @Data
 
 public class version  {
-    
    
-    
 
     private String id_office;
 
