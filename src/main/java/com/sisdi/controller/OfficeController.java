@@ -1,7 +1,7 @@
 package com.sisdi.controller;
 
 import com.sisdi.model.office;
-import com.sisdi.model.version;
+//import com.sisdi.model.version;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,18 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+//import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @Slf4j
 @RequestMapping(value = "/offices")
 public class OfficeController {
     private Date fecha=Date.valueOf(LocalDate.now());
-    
-    @GetMapping("/createOffice")
-    public String createOffice(Model model) {
-        model.addAttribute("date", fecha);
-        return "offices/createOffice";
-    }
     
     @GetMapping("/addOffice")
     public String addOffice(Model model) {
@@ -46,12 +42,13 @@ public class OfficeController {
         model.addAttribute("offices", offices);
         return "offices/listOffices";
     }
-    
-    @GetMapping("/annulOffice")
-    public String annulOffice(Model model) {
-        log.info("ejecutando el controlador Oficios");
-        return "offices/annulOffice";
-    }
+   
+//    @PostMapping("/anularOficio")
+//    public String anularOficio(@RequestParam("officeActual") office offi, Model model){
+//        model.addAttribute("offi", offi);
+//        model.addAttribute("anulado", "Algun oficio fue anulado");
+//        return "offices/anular";
+//    }
     
     public List<office> getListOffice(){
          List<office> list=new ArrayList();         
