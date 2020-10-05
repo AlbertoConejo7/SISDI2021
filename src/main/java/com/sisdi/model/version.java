@@ -3,6 +3,11 @@ package com.sisdi.model;
 import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.Data;
 
 /**
@@ -11,10 +16,14 @@ import lombok.Data;
  */
 
 @Data
-
-public class version  {
+@Entity
+@Table(name="T_VERSION")
+public class version implements Serializable {
    
+    private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id_office;
 
     private int id_version;

@@ -3,20 +3,16 @@
     <head>
     </head>
     <body>
-        
         <nav th:fragment="menu" class="navbar navbar-expand-md navbar-light bg-dark fixed-top">
             <button type="button" class="navbar-toggler bg-light"
 		data-toggle="collapse" data-target="#nav">
-
 		<span class="navbar-toggler-icon"></span>
-
 	</button>
             <div class="collapse navbar-collapse justify-content-between" id="nav"> 
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link text-light font-weight-bold px-3 dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> OFICIOS </a>
                          <div class="dropdown-menu">
-                            <a class="dropdown-item" th:href="@{/offices/createOffice}">Crear Oficio</a>
                             <a class="dropdown-item" th:href="@{/offices/addOffice}">Agregar Oficio</a> 
                             <a class="dropdown-item"th:href="@{/offices/listOffices}">Lista de Oficios</a>
                         </div>
