@@ -1,3 +1,4 @@
+<<<<<<< Upstream, based on origin/master
 C:\Proyecto\SISDI\src\main\java\com\sisdi\model\office.java
 C:\Proyecto\SISDI\src\main\java\com\sisdi\service\VersionService.java
 C:\Proyecto\SISDI\src\main\java\com\sisdi\controller\OfficeController.java
@@ -7,3 +8,12 @@ C:\Proyecto\SISDI\src\main\java\com\sisdi\dao\VersionDao.java
 C:\Proyecto\SISDI\src\main\java\com\sisdi\model\version.java
 C:\Proyecto\SISDI\src\main\java\com\sisdi\SisdiApplication.java
 C:\Proyecto\SISDI\src\main\java\com\sisdi\service\VersionServiceImp.java
+=======
+C:\Proyectos\SISDI\src\main\java\com\sisdi\controller\VersionController.java
+C:\Proyectos\SISDI\src\main\java\com\sisdi\controller\IndexController.java
+C:\Proyectos\SISDI\src\main\java\com\sisdi\dao\VersionDao.java
+C:\Proyectos\SISDI\src\main\java\com\sisdi\model\version.java
+C:\Proyectos\SISDI\src\main\java\com\sisdi\model\office.java
+C:\Proyectos\SISDI\src\main\java\com\sisdi\SisdiApplication.java
+C:\Proyectos\SISDI\src\main\java\com\sisdi\controller\OfficeController.java
+>>>>>>> c053c58 Cambios para Login y Logout

@@ -18,7 +18,7 @@
                 <img th:src="@{/images/muni.png}">
             </div>
             <div class="login-content">
-                <form method="POST" id="loginForm" th:action="@{/login}">
+                <form method="POST" th:action="@{/login}">
                     <img th:src="@{/images/user.png}">
                     <h2 class="title">Bienvenido</h2>
                     <a th:href="@{/list}">Listar Oficios</a>
@@ -27,7 +27,7 @@
                             <i class="fas fa-user"></i>
                         </div>
                         <div class="div">
-                            <h5>Usuario</h5>
+                            <h5 for="username">Usuario</h5>
                             <input type="text" class="input" id="username" name="username"
                                    value="" required>
                         </div>
@@ -37,10 +37,10 @@
                             <i class="fas fa-lock"></i>
                         </div>
                         <div class="div">
-                            <h5>Contraseña</h5>
+                            <h5 for="password">Contraseña</h5>
                             <!--th:name="${_csrf.parameterName}" th:value="${_csrf.token}"-->
                             <input type="password" class="input" id="password" name="password"
-                                   value="" required> <input type="hidden"/>
+                                   value="" required>
                         </div>
                     </div>
 

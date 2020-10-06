@@ -18,10 +18,12 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light font-weight-bold px-3" href="#">PERFIL</a>
+                        <a class="nav-link text-light font-weight-bold px-3" href="#" th:text="PERFIL">PERFIL</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light font-weight-bold px-3" href="#">LOGOUT</a>
+                        <form method="POST" th:action="@{/logout}">
+                            <a class="nav-link text-light font-weight-bold px-3" href="#" onclick="this.parentNode.submit();">LOGOUT</a>
+                        </form>
                     </li>
                 </ul>
             </div>

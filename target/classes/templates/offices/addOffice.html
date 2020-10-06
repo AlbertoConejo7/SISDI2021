@@ -79,7 +79,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input type='text' class="form-control" placeholder="Nombre del Emisor" />
+                                        <input type='text' class="form-control" placeholder="Nombre del Emisor" th:value="${session.usuarioCompleto.tempUser.name}" disabled/>
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -91,7 +91,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input type='text' class="form-control" placeholder="Nombre del Departamento"/>
+                                        <input type='text' class="form-control" placeholder="Nombre del Departamento"  th:value="${session.usuarioCompleto.department.name}" disabled/>
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
