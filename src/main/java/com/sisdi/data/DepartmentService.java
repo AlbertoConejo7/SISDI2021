@@ -8,6 +8,7 @@ package com.sisdi.data;
 import com.sisdi.model.Department;
 import java.util.HashMap;
 
+//Data Department
 public class DepartmentService {
      private  HashMap<String, Department> listDepartment;
      

@@ -13,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /*
-    El controlador de la Pagina principal de SISDI
+    El controlador de la pagina principal de SISDI
  */
 
 @Controller

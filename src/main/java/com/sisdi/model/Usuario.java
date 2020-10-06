@@ -25,6 +25,4 @@ public class Usuario {
         this.status = status;
         this.isBoss = isBoss;
     }
-    
-    
 }

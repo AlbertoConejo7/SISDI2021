@@ -4,7 +4,7 @@ import com.sisdi.model.Usuario;
 import java.util.HashMap;
 import java.util.List;
 
-
+//Data User
 public final class UserService {
     
    private  HashMap<String, Usuario> listUser; 
