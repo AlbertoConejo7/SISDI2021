@@ -21,16 +21,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                     .roles("USER");
         }
     }
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception{
-//        http.authorizeRequests()
-//                .antMatchers("/addOffice" )
-//                    .hasRole("USER")
-//                .antMatchers("/")
-//                    .hasRole("USER")
-//                .and()
-//                    .formLogin()
-//                    .loginPage("/login")
-//                ;
-//    }
+    @Override
+    protected void configure(HttpSecurity http) throws Exception{
+        http.authorizeRequests()
+                .antMatchers("/editOffice/**", "/addOffice", "/listOffices/**", "/versionOffice")
+                    .permitAll()
+                    .antMatchers("/")
+                    .hasRole("USER")
+                .and()
+                    .formLogin()
+                    .loginPage("/login")
+                    .permitAll()
+                .and()
+                    .logout()
+                    .permitAll();
+    }
 }
