@@ -19,13 +19,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @Slf4j
 public class IndexController {
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
     @GetMapping("/")
     public String showIndex(Model model, @AuthenticationPrincipal User user, HttpSession session) {
         UserService uServ=new UserService();
         OfficeController offC=new OfficeController();
         List<office> offices=offC.getListOffice();
         log.info("ejecutando el controlador Oficios");
-        log.info("usuario:"+user);
         session.setAttribute("user", user);
         session.setAttribute("usuarioCompleto", uServ.getUser(user.getUsername()));
         model.addAttribute("user", user);
