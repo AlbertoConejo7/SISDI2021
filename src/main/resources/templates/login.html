@@ -2,14 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-    <head>
         <title>Login</title>
         <link rel="stylesheet" type="text/css" href="css/login.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="/js/graphics2.js"></script>
         <link rel= "shortcut icon" th:href="@{/images/log4.ico}" type="image/x-icon"  >
         <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
-
     </head>
     <body>
         <img class="wave" th:src="@{/images/wave.png}">
@@ -21,15 +19,13 @@
                 <form method="POST" th:action="@{/login}">
                     <img th:src="@{/images/user.png}">
                     <h2 class="title">Bienvenido</h2>
-                    <a th:href="@{/list}">Listar Oficios</a>
                     <div class="input-div one">
                         <div class="i">
                             <i class="fas fa-user"></i>
                         </div>
                         <div class="div">
-                            <h5 for="username">Usuario</h5>
                             <input type="text" class="input" id="username" name="username"
-                                   value="" required>
+                                   value="" placeholder="Usuario" required>
                         </div>
                     </div>
                     <div class="input-div pass">
@@ -37,10 +33,10 @@
                             <i class="fas fa-lock"></i>
                         </div>
                         <div class="div">
-                            <h5 for="password">Contraseña</h5>
+                            
                             <!--th:name="${_csrf.parameterName}" th:value="${_csrf.token}"-->
                             <input type="password" class="input" id="password" name="password"
-                                   value="" required>
+                                   value="" placeholder="Contraseña" required>
                         </div>
                     </div>
 
