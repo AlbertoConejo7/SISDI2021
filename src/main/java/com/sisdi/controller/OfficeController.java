@@ -42,6 +42,14 @@ public class OfficeController {
         model.addAttribute("offices", offices);
         return "offices/listOffices";
     }
+    
+    @GetMapping("/pendingOffice")
+    public String pendingOffice(Model model) {
+        List<office> offices = this.getListOffice();
+        log.info("ejecutando el controlador Oficios");
+        model.addAttribute("offices", offices);
+        return "offices/pendingOffice";
+    }
    
 //    @PostMapping("/anularOficio")
 //    public String anularOficio(@RequestParam("officeActual") office offi, Model model){
