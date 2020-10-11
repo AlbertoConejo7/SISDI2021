@@ -1,9 +1,17 @@
+com\sisdi\data\UserService.class
+com\sisdi\model\Usuario.class
 com\sisdi\controller\OfficeController.class
+com\sisdi\web\SecurityConfig.class
 com\sisdi\service\VersionServiceImp.class
 com\sisdi\controller\IndexController.class
 com\sisdi\SisdiApplication.class
+com\sisdi\model\TempUser.class
 com\sisdi\dao\VersionDao.class
+com\sisdi\web\WebConfig.class
 com\sisdi\controller\VersionController.class
+com\sisdi\model\Department.class
+com\sisdi\data\TempUserService.class
 com\sisdi\service\VersionService.class
 com\sisdi\model\office.class
+com\sisdi\data\DepartmentService.class
 com\sisdi\model\version.class

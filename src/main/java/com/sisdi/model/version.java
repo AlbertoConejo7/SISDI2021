@@ -22,10 +22,12 @@ public class version implements Serializable {
    
     private static final long serialVersionUID = 1L;
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id_office;
 
+   
     private int id_version;
     private int version_number;
     private Date version_date;

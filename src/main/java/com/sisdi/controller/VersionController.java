@@ -4,6 +4,7 @@ package com.sisdi.controller;
 import com.sisdi.dao.VersionDao;
 import com.sisdi.model.office;
 import com.sisdi.model.version;
+import com.sisdi.service.VersionService;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -25,14 +27,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class VersionController {
     
     @Autowired
-    VersionDao versionDao;
+    private VersionService versionService;
 
     private Date fecha = Date.valueOf(LocalDate.now());
     private Time hora = Time.valueOf(LocalTime.now());
        
     @GetMapping("/listVersions/{officeId}")
     public String listVersion(@PathVariable String officeId, Model model) {
-        //var versions = versionDao.findAll();
+        //var versions = versionService.list_versions();
         List<version> versions = this.getListVersion();
         OfficeController ofC=new OfficeController();
         office officeAct=ofC.getOffice(officeId);
@@ -44,13 +46,25 @@ public class VersionController {
     }
     
     
-    @GetMapping("/addVersion")
-    public String addVersion(Model model) { 
-        model.addAttribute("date", fecha);
-        model.addAttribute("time",hora);
-        return "offices/addVersion";
+//    @GetMapping("/addVersion")
+//    public String addVersion(Model model) { 
+//        model.addAttribute("date", fecha);
+//        model.addAttribute("time",hora);
+//        return "offices/addVersion";
+//    }
+    
+    @GetMapping("/add")
+    public String add(version v){
+        
+        return "versionOffice";
     }
-
+    
+    @PostMapping("/saveVersion")
+    public String saveVersion(version v){
+        versionService.save_version(v);
+        return "redirect:/offices/versionOffice";
+    }
+    
     public List<version> getListVersion() {
         List<version> list = new ArrayList();
         
