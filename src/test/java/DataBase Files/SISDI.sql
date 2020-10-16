@@ -36,6 +36,18 @@ constraint PK_DEPARMENT primary key(ID),
 constraint UK_NAMED unique key(NAME)
 );
 
+create table T_TIMEOUTS (
+ID int auto_increment,
+COD  varchar(45),
+LIMITDATE date,
+LIMITTIME time,
+DEPARTMENT int,
+TYPE varchar(45),
+constraint PK_WAIT primary key(ID),
+constraint FK_DEPARTMENT_TIMEOUTS foreign key (DEPARTMENT) references T_DEPARTMENT(ID)
+
+);
+
 create table T_TEMPUSER(
 INDX int auto_increment,
 NAME varchar(45) NOT NULL,
@@ -74,6 +86,7 @@ TYPE_ID int,
 VERSION_ID int,
 USER_ID varchar(45),
 RECEIVER_ID varchar(45),
+TIMEOUTS_ID INT,
 
 constraint PK_OFFICE primary key (INDX),
 constraint UK_SESSIONDATE unique key (SESSIONDATE),
@@ -82,7 +95,8 @@ constraint FK_VERSION foreign key (VERSION_ID) references T_VERSION(ID),
 constraint FK_STATE foreign key (STATE) references T_STATE(ID),
 constraint UK_OFFNUMBER unique key (OFFNUMBER),
 constraint FK_USER foreign key (USER_ID) references T_USER(TEMPUSER),
-constraint FK_RECEIVER foreign key (RECEIVER_ID) references T_USER(TEMPUSER)
+constraint FK_RECEIVER foreign key (RECEIVER_ID) references T_USER(TEMPUSER),
+constraint FK_TIMEOUTS foreign key (TIMEOUTS_ID) references T_TIMEOUTS(ID)
 );
 
 
@@ -151,7 +165,4 @@ OFFICENUMBER varchar(45) NOT NULL,
 USER varchar(45) NOT NULL,
 Date DATETIME NOT NULL	
 );
-
-
-
 

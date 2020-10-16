@@ -7,14 +7,14 @@ CREATE PROCEDURE insertOffice (IN offNumber VARCHAR(45),IN reason VARCHAR(45),IN
 IN deadLine DATE, IN sessionDate DATE,  IN observations longtext, IN publics TINYINT(4),
 IN notified TINYINT(4), IN states INT,
 IN type_id int,IN version_id int,
- IN user_id VARCHAR(45),IN receiver_id VARCHAR(45)
+ IN user_id VARCHAR(45),IN receiver_id VARCHAR(45),timeouts_id INT
 )
 
 BEGIN
 INSERT INTO T_OFFICE (OFFNUMBER,REASON,NAME, INCORDATE,INCORTIME, 
-DEADLINE, SESSIONDATE, OBSERVATIONS, PUBLIC, NOTIFIED,  STATE, TYPE_ID,VERSION_ID, USER_ID,RECEIVER_ID) 
+DEADLINE, SESSIONDATE, OBSERVATIONS, PUBLIC, NOTIFIED,  STATE, TYPE_ID,VERSION_ID, USER_ID,RECEIVER_ID,TIMEOUTS_ID) 
 VALUES (offNumber, reason, name, incorDate, incorTime, deadLine,
- sessionDate, observations, publics, notified, states, type_id, version_id, user_id ,receiver_id);
+ sessionDate, observations, publics, notified, states, type_id, version_id, user_id ,receiver_id,timeouts_id);
 commit; 
 end$$ 
 DELIMITER ;
@@ -357,9 +357,10 @@ insert into T_USER_ROLE (USER_ID,ROLE_NAME) values('informatica@sanpablo.go.cr',
 insert into T_USER (TEMPUSER,PASSWORD,DEPARTMENT,STATUS) values
  ('controlinterno@sanpablo.go.cr','$2y$12$PP.ROST1M6niteGtzRK/f.qpbOOAkLk8eZXonQgJC1uKE9QdIlpsu',3,1); #pass:controlinterno
 insert into T_USER_ROLE (USER_ID,ROLE_NAME) values('controlinterno@sanpablo.go.cr','Control Interno');
+INSERT INTO `sisdi`.`t_timeouts` (`ID`, `COD`, `LIMITDATE`, `LIMITTIME`, `DEPARTMENT`, `TYPE`) VALUES ('1', 'SOLICITUD VACACIONES', '2020/10/10', '11:00', '1', 'Oficio');
 
 INSERT INTO `sisdi`.`t_version` (`ID`, `VERSION_ID`, `VERSION_NUMBER`, `VERSION_DATE`, `VERSION_TIME`, `VERSION_DESCRIPTION`) VALUES ('1', '\"Version id\"', '1', '2020-10-01', '11:00', '\"Primera version descripcion\"');
-call sisdi.insertOffice("OFICIO MSPH-AM-CCPJ-NE-001-2020", "Plan covid", "PLAN COVID", "2020/10/1", "11:00", "2020/10/3", "2020/10/1", "texto largo", 1, 1, 1, 1, 1, "superuser@superuser.com", "concejomunicipal@sanpablo.go.cr");
+call sisdi.insertOffice("OFICIO MSPH-AM-CCPJ-NE-001-2020", "Plan covid", "PLAN COVID", "2020/10/1", "11:00", "2020/10/3", "2020/10/1", "texto largo", 1, 1, 1, 1, 1, "superuser@superuser.com", "concejomunicipal@sanpablo.go.cr",1);
 
 call sisdi.insertVersion('ver2', 1, '2020/10/1', '11:00', 'version nueva ');
 call sisdi.updateOffice('OFICIO MSPH-AM-CCPJ-NE-001-2020', 'Asamblea', 'Oficio Asamblea', '2020/10/20', '12:00', '2020/10/30', '2020/10/20', 'texto largo', 1, 1, 0, 2, 1, 'asistente.licencias@sanpablo.go.cr', 'gestiondecobros@sanpablo.go.cr');
