@@ -1,9 +1,10 @@
 package com.sisdi.model;
 
+import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class Usuario {
+public class Usuario{
     private TempUser tempUser;
     private String password;
     private Department department;
