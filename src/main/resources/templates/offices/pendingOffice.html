@@ -42,11 +42,11 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
-                                        <tr th:if="${offices == null or offices.empty}">
+                                        
+                                        <tr th:if="${officesPending == null or officesPending.empty}">
                                             <td colspan="6" style="text-align: center;">No hay oficios</td>
                                         </tr>
-                                        <tr th:each="office : ${offices}" th:if="${offices != null and !offices.empty}">
+                                        <tr th:each="office : ${officesPending}" th:if="${officesPending != null and !officesPending.empty}">
                                             <td th:text="${office.name}"></td>
                                             <td  th:text="${office.reason}"></td>
                                             <td  th:text="${office.date}"></td>
@@ -56,6 +56,7 @@
                                                 <a th:href="@{/offices/addOffice}">Responder</a>
                                             </td>
                                         </tr>
+                                        
                                     </tbody>
                                 </table>
                             </div>
