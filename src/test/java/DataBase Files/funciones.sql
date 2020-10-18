@@ -68,7 +68,20 @@ UPDATE T_OFFICE SET OFFNUMBER=var where USER_ID=_tempuser AND INDX=_indx;
 end$$
 DELIMITER ; 
 
-
+#Change States Office
+USE `SISDI`;
+DROP procedure IF EXISTS changeState;
+DELIMITER $$
+USE `SISDI`$$
+CREATE PROCEDURE changeState (
+IN office_id VARCHAR(45),
+IN office_state int
+)
+BEGIN
+UPDATE T_OFFICE SET STATE=office_state WHERE OFFNUMBER=office_id;
+commit; 
+end$$ 
+DELIMITER ;
 
 
 
@@ -80,9 +93,10 @@ insert into T_TYPE (DESCRIPTION) values ('externo');
 
 
 
-insert into T_STATE (ID, DESCRIPTION)values (0, 'Esperando Respuesta');
-insert into T_STATE (ID, DESCRIPTION)values (1, 'Respondido');
-
+insert into T_STATE (ID, DESCRIPTION)values (0, 'Enviado');
+insert into T_STATE (ID, DESCRIPTION)values (1, 'Recibido');
+insert into T_STATE (ID, DESCRIPTION)values (2, 'Respondido');
+insert into T_STATE (ID, DESCRIPTION)values (3, 'Anulado');
 
 insert into T_TEMPUSER(NAME,EMAIL) values ('SUPERUSER','superuser@superuser.com');
 insert into T_TEMPUSER(NAME,EMAIL) values ('Concejo Municipal','concejomunicipal@sanpablo.go.cr');
@@ -364,3 +378,5 @@ call sisdi.insertOffice("OFICIO MSPH-AM-CCPJ-NE-001-2020", "Plan covid", "PLAN C
 
 call sisdi.insertVersion('ver2', 1, '2020/10/1', '11:00', 'version nueva ');
 call sisdi.updateOffice('OFICIO MSPH-AM-CCPJ-NE-001-2020', 'Asamblea', 'Oficio Asamblea', '2020/10/20', '12:00', '2020/10/30', '2020/10/20', 'texto largo', 1, 1, 0, 2, 1, 'asistente.licencias@sanpablo.go.cr', 'gestiondecobros@sanpablo.go.cr');
+
+call sisdi.changeState('OFICIO MSPH-AM-CCPJ-NE-001-2020', 1);
