@@ -56,22 +56,4 @@ public class IndexController {
         return "index";
     }
     
-     @GetMapping("/list")
-    public String listOff(Model model) {
-        OfficeController offC=new OfficeController();
-        List<office> offices=offC.getListOffice();
-        log.info("ejecutando el controlador Oficios");
-        model.addAttribute("offices", offices);
-        return "offices/listOffices";
-    }
-    
-//    @GetMapping("/index")
-//    public String showVersions(Model model) {
-//        VersionController verC=new VersionController();
-//        List<version> versions=verC.getListVersion();
-//        log.info("ejecutando el controlador Versiones");
-//        model.addAttribute("offices", versions);
-//        return "versions/versionOffice";
-//    }
-    
 }
