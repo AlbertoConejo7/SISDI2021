@@ -38,7 +38,7 @@
                                     <p>Oficio</p>
                                 </th>
                                 <td colspan="2">
-                                    <p th:text="${officeActual.name}"></p>
+                                    <p th:text="${officeActual.OFFNUMBER}"></p>
                                 </td>
                             </tr>
                             <tr class="m-0">
@@ -46,7 +46,7 @@
                                     <p>Motivo</p>
                                 </th>
                                 <td colspan="2">
-                                    <p th:text="${officeActual.reason}"></p>
+                                    <p th:text="${officeActual.REASON}"></p>
                                 </td>
                             </tr>
                             <tr>
@@ -54,7 +54,7 @@
                                     <p>Fecha Emision</p>
                                 </th>
                                 <td colspan="2">
-                                    <p th:text="${officeActual.date}"></p>
+                                    <p th:text="${#dates.format(officeActual.INCORDATE, 'dd/MM/yyyy')}"></p>
                                 </td>
                             </tr>
                             <tr>
@@ -63,7 +63,7 @@
                                 </th>
                                 <td colspan="2">
 
-                                    <p>Juan Perez </p>
+                                    <p th:text="${officeActual.USER_ID}"></p>
                                 </td>
                             </tr>
                             <tr>
@@ -71,7 +71,7 @@
                                     <p>Departamento Emisor</p>
                                 </th>
                                 <td colspan="2">
-                                    <p>Administracion</p>
+                                    <p>No definido</p>
                                 </td>
                             </tr>
                             <tr>
@@ -79,7 +79,7 @@
                                     <p>Usuario Receptor</p>
                                 </th>
                                 <td colspan="2">
-                                    <p>Pedro Perez </p>
+                                    <p th:text="${officeActual.RECEIVER_ID}"></p>
                                 </td>
                             </tr>
                             <tr>
@@ -87,7 +87,7 @@
                                     <p>Departamento Receptor</p>
                                 </th>
                                 <td colspan="2">
-                                    <p>Contabilidad</p>
+                                    <p>No definido</p>
                                 </td>
                             </tr>
                             <tr>
@@ -95,7 +95,7 @@
                                     <p>Tipo</p>
                                 </th>
                                 <td colspan="2">
-                                    <p th:text="${officeActual.type}"></p>
+                                    <p th:text="${officeActual.TYPE_ID}"></p>
                                 </td>
                             </tr>
                             <tr >
@@ -123,7 +123,7 @@
                             <form method="POST" id="formAnnul" th:action="@{/offices/anular}" th:object="${officeAnulado}">
                                 <div class="form-group">
                                     <label for="officeName">Oficio</label>
-                                    <input type="text" class="form-control" th:value="${officeActual.name}" disabled/>
+                                    <input type="text" class="form-control" th:value="${officeActual.OFFNUMBER}" disabled/>
                                 </div>
                                 <div class="form-group">
                                     <label for="dateAnnul">Fecha de Anulación</label>
@@ -136,7 +136,6 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="motiveAnnul">Motivo de Anulación</label>
-                                    <span class="help-block error-message " id="errorAnnul">Error</span>
                                     <textarea class="form-control" id="motiveAnnul" rows="3" style="resize:none;"></textarea>
                                 </div>
                                 <div class="modal-footer form-group">

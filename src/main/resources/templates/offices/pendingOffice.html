@@ -47,13 +47,13 @@
                                             <td colspan="6" style="text-align: center;">No hay oficios</td>
                                         </tr>
                                         <tr th:each="office : ${officesPending}" th:if="${officesPending != null and !officesPending.empty}">
-                                            <td th:text="${office.name}"></td>
-                                            <td  th:text="${office.reason}"></td>
-                                            <td  th:text="${office.date}"></td>
-                                            <td  th:text="${office.type}"></td>
-                                            <td  th:text="${office.state}"></td>
+                                            <td th:text="${office.OFFNUMBER}"></td>
+                                            <td  th:text="${office.REASON}"></td>
+                                            <td  th:text="${#dates.format(office.INCORDATE, 'dd/MM/yyyy')}"></td>
+                                            <td  th:text="${office.TYPE_ID}"></td>
+                                            <td  th:text="${office.STATE}"></td>
                                             <td>
-                                                <a th:href="@{/offices/responseOffice/{id} (id=${office.name})}">Responder</a>
+                                                <a th:href="@{/offices/responseOffice/{id} (id=${office.OFFNUMBER})}">Responder</a>
                                             </td>
                                         </tr>
                                         
