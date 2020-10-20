@@ -1,17 +1,15 @@
 package com.sisdi.controller;
 
-import com.sisdi.dao.TempUserDao;
-import com.sisdi.model.TempUser;
-import com.sisdi.model.office;
-import com.sisdi.service.TempUserServiceImp;
+import com.sisdi.model.Office;
+import com.sisdi.service.OfficeServiceImp;
 //import com.sisdi.model.version;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +25,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class OfficeController {
 
     private Date fecha = Date.valueOf(LocalDate.now());
+    
+    @Autowired
+    private OfficeServiceImp officeServiceImp;
 
     @GetMapping("/addOffice")
     public String addOffice(Model model) {
@@ -36,7 +37,7 @@ public class OfficeController {
 
     @GetMapping("/responseOffice/{officeId}")
     public String responseOffice(@PathVariable String officeId, Model model) {
-        office officeAct = this.getOffice(officeId);
+        Office officeAct = officeServiceImp.searchOffice(officeId);
         model.addAttribute("date", fecha);
         model.addAttribute("officeActual", officeAct);
         model.addAttribute("title", "Ver Oficio");
@@ -45,7 +46,7 @@ public class OfficeController {
 
     @GetMapping("/editOffice/{officeId}")
     public String editOffice(@PathVariable String officeId, Model model) {
-        office officeAct = this.getOffice(officeId);
+        Office officeAct = officeServiceImp.searchOffice(officeId);
         model.addAttribute("date", fecha);
         model.addAttribute("officeActual", officeAct);
         model.addAttribute("title", "Ver Oficio");
@@ -53,52 +54,27 @@ public class OfficeController {
     }
 
     @GetMapping("/listOffices")
-    public String listOffice(Model model) {
-        List<office> offices = this.getListOffice();
+    public String listOffice(Model model, @AuthenticationPrincipal User user) {
+        List<Office> offices = officeServiceImp.listOfficeByEmisor(user.getUsername());
         log.info("ejecutando el controlador Oficios");
         model.addAttribute("offices", offices);
         return "offices/listOffices";
     }
 
     @GetMapping("/pendingOffice")
-    public String pendingOffice(Model model) {
-        List<office> offices = this.getListOffice();
+    public String pendingOffice(Model model, @AuthenticationPrincipal User user) {
+        List<Office> offices = officeServiceImp.listOfficeByReceptor(user.getUsername());
         log.info("ejecutando el controlador Oficios");
         model.addAttribute("officesPending", offices);
         return "offices/pendingOffice";
     }
 
     @PostMapping("/anular")
-    public String anularOficio(Model model) {
+    public String anularOficio(Model model, @AuthenticationPrincipal User user) {
+        List<Office> offices = officeServiceImp.listOfficeByEmisor(user.getUsername());
+        log.info("ejecutando el controlador Oficios");
+        model.addAttribute("offices", offices);
         log.info("Oficio Anulado");
         return "offices/listOffices";
-    }
-
-    public List<office> getListOffice() {
-        List<office> list = new ArrayList();
-        office o1 = new office(1, "Esperando Respuesta", "Probar que funciona", fecha, "Oficio-MPSP-1-Prueba", "Interno");
-        office o2 = new office(2, "Anulado", "Probar que funciona 2", fecha, "Oficio-MPSP-2-Prueba", "Externo");
-        office o3 = new office(3, "Esperando Respuesta", "Probar que funciona 3", fecha, "Oficio-MPSP-3-Prueba", "Externo");
-        office o4 = new office(4, "Esperando Respuesta", "Probar que funciona 4", fecha, "Oficio-MPSP-4-Prueba", "Interno");
-        office o5 = new office(5, "Respondido", "Probar que funciona 5", fecha, "Oficio-MPSP-5-Prueba", "Externo");
-
-        list.add(o1);
-        list.add(o2);
-        list.add(o3);
-        list.add(o4);
-        list.add(o5);
-
-        return list;
-    }
-
-    public office getOffice(String officeId) {
-        List<office> list = this.getListOffice();
-        office aux = null;
-        for (office o : list) {
-            if (o.getName().equals(officeId)) {
-                aux = o;
-            }
-        }
-        return aux;
     }
 }

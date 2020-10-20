@@ -1,9 +1,8 @@
 package com.sisdi.controller;
 
-
-import com.sisdi.dao.VersionDao;
-import com.sisdi.model.office;
+import com.sisdi.model.Office;
 import com.sisdi.model.version;
+import com.sisdi.service.OfficeServiceImp;
 import com.sisdi.service.VersionService;
 import java.sql.Date;
 import java.sql.Time;
@@ -12,7 +11,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +26,9 @@ public class VersionController {
     
     @Autowired
     private VersionService versionService;
+    
+    @Autowired 
+    private OfficeServiceImp officeService;
 
     private Date fecha = Date.valueOf(LocalDate.now());
     private Time hora = Time.valueOf(LocalTime.now());
@@ -36,8 +37,7 @@ public class VersionController {
     public String listVersion(@PathVariable String officeId, Model model) {
         //var versions = versionService.list_versions();
         List<version> versions = this.getListVersion();
-        OfficeController ofC=new OfficeController();
-        office officeAct=ofC.getOffice(officeId);
+        Office officeAct=officeService.searchOffice(officeId);
         model.addAttribute("officeActual", officeAct);
         model.addAttribute("title", "Versiones");
         log.info("ejecutando el controlador Versiones");
@@ -67,10 +67,8 @@ public class VersionController {
     
     public List<version> getListVersion() {
         List<version> list = new ArrayList();
-        
         version v1 = new version("Oficio-MPSP-1-Prueba", 1, 2, fecha, hora, "Modificacion de version 1");
         version v2 = new version("Oficio-MPSP-2-Prueba", 2, 2, fecha, hora, "Modificacion de version 1");
-
         list.add(v1);
         list.add(v2);
 
