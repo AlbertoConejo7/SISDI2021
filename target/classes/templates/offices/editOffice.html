@@ -120,7 +120,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form method="POST" id="formAnnul">
+                            <form method="POST" id="formAnnul" th:action="@{/offices/anular}" th:object="${officeAnulado}">
                                 <div class="form-group">
                                     <label for="officeName">Oficio</label>
                                     <input type="text" class="form-control" th:value="${officeActual.name}" disabled/>
