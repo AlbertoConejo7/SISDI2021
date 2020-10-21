@@ -3,6 +3,8 @@ package com.sisdi.controller;
 import com.sisdi.model.Office;
 import com.sisdi.service.OfficeServiceImp;
 //import com.sisdi.model.version;
+import com.sisdi.model.TimeOuts;
+import com.sisdi.service.TimeOutsServiceImp;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -28,6 +30,7 @@ public class OfficeController {
     
     @Autowired
     private OfficeServiceImp officeServiceImp;
+    private TimeOutsServiceImp timeOutsServiceImp;
 
     @GetMapping("/addOffice")
     public String addOffice(Model model) {
@@ -64,8 +67,12 @@ public class OfficeController {
     @GetMapping("/pendingOffice")
     public String pendingOffice(Model model, @AuthenticationPrincipal User user) {
         List<Office> offices = officeServiceImp.listOfficeByReceptor(user.getUsername());
+       // List<TimeOuts> time = timeOutsServiceImp.listTimeOuts();
+        
+         model.addAttribute("date", fecha);
         log.info("ejecutando el controlador Oficios");
         model.addAttribute("officesPending", offices);
+        // model.addAttribute("timeOuts", time);
         return "offices/pendingOffice";
     }
 

@@ -39,6 +39,8 @@
                                             <th style="text-align: center">Tipo</th>
                                             <th style="text-align: center">Estado</th>
                                             <th style="text-align: center">Responder</th>
+                                            <th style="text-align: center">Marcar como Recibido</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -46,15 +48,27 @@
                                         <tr th:if="${officesPending == null or officesPending.empty}">
                                             <td colspan="6" style="text-align: center;">No hay oficios</td>
                                         </tr>
+                                        
                                         <tr th:each="office : ${officesPending}" th:if="${officesPending != null and !officesPending.empty}">
                                             <td th:text="${office.OFFNUMBER}"></td>
                                             <td  th:text="${office.REASON}"></td>
                                             <td  th:text="${#dates.format(office.INCORDATE, 'dd/MM/yyyy')}"></td>
                                             <td  th:text="${office.TYPE_ID}"></td>
                                             <td  th:text="${office.STATE}"></td>
-                                            <td>
-                                                <a th:href="@{/offices/responseOffice/{id} (id=${office.OFFNUMBER})}">Responder</a>
+                                            
+                                                <td>
+                                                    <a th:href="@{/offices/responseOffice/{id} (id=${office.OFFNUMBER})}">Responder</a>
+                                                </td>
+                              
+                                             <td>
+                                            
+                                            <div class='input-group'>
+
+                                                <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#responseTime">Aceptar Oficio</button>
+                                            </div>
+                                                 
                                             </td>
+                                           <!--   <td  th:each=${#dates.format(timeOuts.LIMITDATE, 'dd/MM/yyyy')}"></td> -->
                                         </tr>
                                         
                                     </tbody>
@@ -64,6 +78,72 @@
                     </div>
                 </div>
             </div>
+            
+        <div class="modal fade" id="responseTime" tabindex="-1" role="dialog" aria-labelledby="responseTimeTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="responseTimeTitle">Aceptar Oficio</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="containerPopUp">
+                            <div class="form-group">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <span>Fecha de Recepcion</span>
+                                             
+                                             
+                                        </td>
+                                        <td>
+                                            <div class='input-group date'>
+                                                <input id="recepcionTimeValue" type='text' class="form-control" th:value="${#dates.format(date, 'dd/MM/yyyy')}" readonly="readonly"/>
+                                                <span class="input-group-addon ">
+                                                    <img class="icon-img" th:src="@{/images/calendar.svg}">
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Fecha Limite de Respuesta</span>
+                                            
+                                              
+                                        </td>
+                                        <td>
+                                            <div class='input-group date'>
+                                                <input  id="limitTimeValue" type='text' class="form-control" th:value="${#dates.format(date, 'dd/MM/yyyy')}" readonly="readonly"/>
+                                                <span class="input-group-addon ">
+                                                    <img class="icon-img" th:src="@{/images/calendar.svg}">
+                                                </span>
+                                               
+                                            </div>
+                                            
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="saveResponseTime()">Registrar Recibido</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+            
+            
+            
+            
+     <script th:src="@{/js/acceptOffice.js}"></script>
+        
+    <script th:src="@{/js/calendar.js}"></script>
+            
+            
         </main>
     </body>
 </html>
