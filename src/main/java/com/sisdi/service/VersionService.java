@@ -1,6 +1,6 @@
 package com.sisdi.service;
 
-import com.sisdi.model.version;
+import com.sisdi.model.Version;
 import java.util.List;
 
 /**
@@ -9,12 +9,12 @@ import java.util.List;
  */
 public interface VersionService {
     
-    public List<version> list_versions();
+    public List<Version> list_versions();
     
-    public void save_version(version v);
+    public void save_version(Version v);
     
-//    public void delete_version(version v);
+//    public void delete_version(Version v);
     
-    public version find_version(version v);
+    public Version find_version(Version v);
     
 }

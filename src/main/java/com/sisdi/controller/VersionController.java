@@ -1,7 +1,7 @@
 package com.sisdi.controller;
 
 import com.sisdi.model.Office;
-import com.sisdi.model.version;
+import com.sisdi.model.Version;
 import com.sisdi.service.OfficeServiceImp;
 import com.sisdi.service.VersionService;
 import java.sql.Date;
@@ -36,7 +36,7 @@ public class VersionController {
     @GetMapping("/listVersions/{officeId}")
     public String listVersion(@PathVariable String officeId, Model model) {
         //var versions = versionService.list_versions();
-        List<version> versions = this.getListVersion();
+        List<Version> versions = this.getListVersion();
         Office officeAct=officeService.searchOffice(officeId);
         model.addAttribute("officeActual", officeAct);
         model.addAttribute("title", "Versiones");
@@ -54,21 +54,21 @@ public class VersionController {
 //    }
     
     @GetMapping("/add")
-    public String add(version v){
+    public String add(Version v){
         
         return "versionOffice";
     }
     
     @PostMapping("/saveVersion")
-    public String saveVersion(version v){
+    public String saveVersion(Version v){
         versionService.save_version(v);
         return "redirect:/offices/versionOffice";
     }
     
-    public List<version> getListVersion() {
-        List<version> list = new ArrayList();
-        version v1 = new version("Oficio-MPSP-1-Prueba", 1, 2, fecha, hora, "Modificacion de version 1");
-        version v2 = new version("Oficio-MPSP-2-Prueba", 2, 2, fecha, hora, "Modificacion de version 1");
+    public List<Version> getListVersion() {
+        List<Version> list = new ArrayList();
+        Version v1 = new Version(1, "Oficio-MPSP-1-Prueba",1, fecha, hora, "Modificacion de version 1","Razon", "Observaciones");
+        Version v2 = new Version(2,"Oficio-MPSP-2-Prueba", 2, fecha, hora, "Modificacion de version 1","Razon", "Observaciones ");
         list.add(v1);
         list.add(v2);
 
