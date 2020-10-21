@@ -20,7 +20,7 @@ import lombok.Data;
 @Table(name="T_VERSION")
 public class Version implements Serializable {
    
-    //private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
 
     @Id
@@ -36,9 +36,9 @@ public class Version implements Serializable {
     private String reason;
     private String observations;
 
-public Version(int id, String version_id, int version_number, Date version_date, Time version_time, String version_description, String reason, String observations) {
+public Version(int id, String id_version, int version_number, Date version_date, Time version_time, String version_description, String reason, String observations) {
     this.id = id;
-    this.version_id = version_id;
+    this.version_id = id_version;
     this.version_number = version_number;
     this.version_date = version_date;
     this.version_time=version_time;
