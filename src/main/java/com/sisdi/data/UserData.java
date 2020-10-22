@@ -43,12 +43,21 @@ public final class UserData {
             throw new Exception("Usuario no existe");
         }
     }
-     public Usuario getUser(String email){
+    public Usuario getUser(String email){
          return listUser.get(email);
+    }
+    public Usuario getUserByName(String name){
+        Usuario aux=null;
+        for(Usuario u:listUser.values()){
+            if(u.getTempUser().getName().equals(name)){
+                aux=u;
+            }
+        }
+         return aux;
      }
-     public  HashMap<String, Usuario> getUsuarios(){
+    public  HashMap<String, Usuario> getUsuarios(){
          return listUser;
-     }
+    }
     public boolean is(int i){
         return i==1;
     }
