@@ -94,8 +94,10 @@ DELIMITER ;
 alter table T_ROLE auto_increment = 1;
 alter table T_DEPARTMENT auto_increment = 1;
 
-insert into T_TYPE (DESCRIPTION) values ('interno');
-insert into T_TYPE (DESCRIPTION) values ('externo');
+insert into T_TYPE (DESCRIPTION) values ('Comunicar');
+insert into T_TYPE (DESCRIPTION) values ('Solicitar');
+insert into T_TYPE (DESCRIPTION) values ('Aprobar');
+
 
 
 
@@ -385,6 +387,6 @@ INSERT INTO `sisdi`.`t_version` (`ID`, `OFFICE_ID`, `VERSION_ID`, `VERSION_NUMBE
 call sisdi.insertVersion("OFICIO MSPH-AM-CCPJ-NE-001-2020",'ver2', 1, '2020/10/1', 'version nueva ');
 call sisdi.updateOffice('OFICIO MSPH-AM-CCPJ-NE-001-2020', 'Asamblea', 'Oficio Asamblea', '2020/10/30', '2020/10/20','texto largo', 1, 1, 0, 2, 'asistente.licencias@sanpablo.go.cr', 'gestiondecobros@sanpablo.go.cr');
 
-call sisdi.changeState('OFICIO MSPH-AM-CCPJ-NE-001-2020', 3);
+call sisdi.changeState('OFICIO MSPH-AM-CCPJ-NE-003-2020', 1);
 
 INSERT INTO `sisdi`.`t_office` (`OFFNUMBER`, `REASON`, `NAME`, `INCORDATE`, `INCORTIME`, `DEADLINE`, `SESSIONDATE`, `OBSERVATIONS`, `PUBLIC`, `NOTIFIED`, `STATE`, `TYPE_ID`, `USER_ID`, `RECEIVER_ID`, `TIMEOUTS_ID`) VALUES ('OFICIO MSPH-AM-CCPJ-NE-002-2020', 'Asamblea', 'Oficio Asamblea', '2020-10-01', '11:00:00', '2020-10-30', '2020-10-22', 'texto largo', 1, 1, 2, 1, 'gestiondecobros@sanpablo.go.cr', 'asistente.licencias@sanpablo.go.cr', 1);
