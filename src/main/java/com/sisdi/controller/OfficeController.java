@@ -5,13 +5,10 @@ import com.sisdi.data.UserData;
 import com.sisdi.model.Office;
 import com.sisdi.model.OfficeSimple;
 import com.sisdi.service.OfficeServiceImp;
-//import com.sisdi.model.version;
-import com.sisdi.model.TimeOuts;
 import com.sisdi.model.Usuario;
 import com.sisdi.service.TimeOutsServiceImp;
 import java.sql.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +22,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @Slf4j
