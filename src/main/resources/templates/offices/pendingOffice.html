@@ -53,8 +53,15 @@
                                             <td th:text="${office.OFFNUMBER}"></td>
                                             <td  th:text="${office.REASON}"></td>
                                             <td  th:text="${#dates.format(office.INCORDATE, 'dd/MM/yyyy')}"></td>
-                                            <td  th:text="${office.TYPE_ID}"></td>
-                                            <td  th:text="${office.STATE}"></td>
+                                            
+                                            <td th:if="${office.TYPE_ID == 1}" th:text="Comunicar"></td>
+                                            <td th:if="${office.TYPE_ID == 2}" th:text="Solicitar"></td>
+                                            <td th:if="${office.TYPE_ID == 3}" th:text="Aprobar"></td>
+                                            
+                                             <td th:if="${office.STATE == 0}" th:text="Enviado"></td>
+                                            <td th:if="${office.STATE == 1}" th:text="Recibido"></td>
+                                            <td th:if="${office.STATE == 2}" th:text="Respondido"></td>
+                                            <td th:if="${office.STATE == 3}" th:text="Anulado"></td>
                                             
                                                 <td>
                                                     <a th:href="@{/offices/responseOffice/{id} (id=${office.OFFNUMBER})}">Responder</a>
@@ -62,7 +69,7 @@
                               
                                              <td>
                                             
-                                            <div class='input-group'>
+                                            <div class='input-group' th:if="${office.STATE != 1}">
 
                                                 <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#responseTime">Aceptar Oficio</button>
                                             </div>

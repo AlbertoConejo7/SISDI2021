@@ -45,14 +45,14 @@
                                             <td colspan="6" style="text-align: center;">No existen versiones del oficio</td>
                                         </tr>
                                         <tr th:each="version : ${versions}" th:if="${versions != null and !versions.empty}">
-                                            <td th:text="${version.id_office}"></td>
+                                            <!--<td th:text="${version.id_office}"></td>-->
                                             <td  th:text="${version.version_number}"></td>
                                             <td  th:text="${version.version_date}"></td>
                                             <td  th:text="${version.version_time}"></td>
                                             <td  th:text="${version.version_description}"></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="3">
+                                            <td colspan="5">
                                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#newVersionModal">Agregar Version</button>
                                             </td>
 
@@ -72,15 +72,15 @@
                                                 <form>
                                                     <div class="form-group">
                                                         <label for="officeName">Oficio</label>
-                                                        <input type="text" class="form-control" id="exampleFormControlInput1" th:value="${officeActual.OFFNUMBER}" disabled/>
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" th:value="${officeActual.offnumber}" disabled/>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="officeEmisor">Emisor</label>
-                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="emisor"/>
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" th:value="${officeActual.emisor}" placeholder="emisor"/>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="officeReceptor">Receptor</label>
-                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="receptor"/>
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" th:value="${officeActual.receptor}" placeholder="receptor"/>
                                                     </div>
 
                                                     <div class="form-group">
@@ -98,11 +98,11 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="motive">Motivo</label>
-                                                        <textarea class="form-control" id="motive" rows="3"></textarea>
+                                                        <textarea class="form-control" id="motive" rows="3" th:text="${officeActual.reason}"></textarea>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="observations">Observaciones</label>
-                                                        <textarea class="form-control" id="observations" rows="3"></textarea>
+                                                        <textarea class="form-control" id="observations" rows="3" th:text="${officeActual.observations}"></textarea>
                                                     </div>
                                                 </form>
                                             </div>
