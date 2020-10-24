@@ -1,6 +1,8 @@
 package com.sisdi.controller;
 
+import com.sisdi.data.OfficeData;
 import com.sisdi.model.Office;
+import com.sisdi.model.OfficeSimple;
 import com.sisdi.model.Version;
 import com.sisdi.service.OfficeServiceImp;
 import com.sisdi.service.VersionService;
@@ -30,6 +32,9 @@ public class VersionController {
     @Autowired 
     private OfficeServiceImp officeService;
 
+    @Autowired 
+    private OfficeData officeData;
+     
     private Date fecha = Date.valueOf(LocalDate.now());
     private Time hora = Time.valueOf(LocalTime.now());
        
@@ -38,7 +43,9 @@ public class VersionController {
         //var versions = versionService.list_versions();
         List<Version> versions = this.getListVersion();
         Office officeAct=officeService.searchOffice(officeId);
-        model.addAttribute("officeActual", officeAct);
+        OfficeSimple os=officeData.getOfficeSimple(officeAct);
+        model.addAttribute("date", fecha);
+        model.addAttribute("officeActual", os);
         model.addAttribute("title", "Versiones");
         log.info("ejecutando el controlador Versiones");
         model.addAttribute("versions", versions);
@@ -67,10 +74,10 @@ public class VersionController {
     
     public List<Version> getListVersion() {
         List<Version> list = new ArrayList();
-        Version v1 = new Version(1, "Oficio-MPSP-1-Prueba",1, fecha, hora, "Modificacion de version 1","Razon", "Observaciones");
-        Version v2 = new Version(2,"Oficio-MPSP-2-Prueba", 2, fecha, hora, "Modificacion de version 1","Razon", "Observaciones ");
-        list.add(v1);
-        list.add(v2);
+//        Version v1 = new Version("Oficio-MPSP-1-Prueba",1, fecha, hora, "Modificacion de version 1","Razon", "Observaciones");
+//        Version v2 = new Version("Oficio-MPSP-2-Prueba", 2, fecha, hora, "Modificacion de version 1","Razon", "Observaciones ");
+//        list.add(v1);
+//        list.add(v2);
 
         return list;
     }
