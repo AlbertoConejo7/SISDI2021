@@ -8,10 +8,10 @@
             <h3 class='font-italic text-center w-100' th:text="${title}"></h3>
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link font-weight-bold" th:href="@{/offices/editOffice/{id} (id=${officeActual.OFFNUMBER})}">Ver Oficio</a>
+                    <a class="nav-link font-weight-bold" th:href="@{/offices/editOffice/{id} (id=${officeActual.offnumber})}">Ver Oficio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link font-weight-bold" th:href="@{/versions/listVersions/{id} (id=${officeActual.OFFNUMBER})}">Versiones</a>
+                    <a class="nav-link font-weight-bold" th:href="@{/versions/listVersions/{id} (id=${officeActual.offnumber})}">Versiones</a>
                 </li>
             </ul>
         </nav>
