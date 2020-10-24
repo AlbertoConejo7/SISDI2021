@@ -1,5 +1,6 @@
 package com.sisdi.controller;
 
+import com.sisdi.data.OfficeData;
 import com.sisdi.data.UserData;
 import com.sisdi.model.Office;
 import com.sisdi.model.OfficeSimple;
@@ -42,6 +43,9 @@ public class OfficeController {
     
     @Autowired 
     private UserData userData;
+    
+    @Autowired 
+    private OfficeData officeData;
 
     @GetMapping("/addOffice")
     public String addOffice(Model model, OfficeSimple officeAdd, @AuthenticationPrincipal User user) {
@@ -55,21 +59,7 @@ public class OfficeController {
     }
      @PostMapping("/saveOffice")
      public String saveOffice(Model model, @ModelAttribute("officeAdd")OfficeSimple office) throws ParseException{
-         Office o=new Office();
-         Usuario emisor=userData.getUserByName(office.getEmisor());
-         Usuario receptor=userData.getUserByName(office.getReceptor());
-         java.util.Date dateLimit=new SimpleDateFormat("dd/MM/yyyy").parse(office.getDateLimit());
-         o.setOFFNUMBER(office.getOffnumber());
-         o.setREASON(office.getReason());
-         o.setINCORDATE(fecha);
-         o.setUSER_ID(emisor.getTempUser().getEmail());
-         o.setRECEIVER_ID(receptor.getTempUser().getEmail());
-         o.setTYPE_ID(office.getType_id());
-         o.setSTATE(0);
-         o.setOBSERVATIONS(office.getObservations());
-         o.setDEADLINE(dateLimit);
-         o.setVERSION_ID(1);
-         o.setTIMEOUTS_ID(1);
+         Office o=officeData.getOffice(office);
          log.info(o.toString());
          officeServiceImp.addOffice(o);
          return "redirect:/offices/addOffice";
@@ -87,8 +77,9 @@ public class OfficeController {
     @GetMapping("/editOffice/{officeId}")
     public String editOffice(@PathVariable String officeId, Model model) {
         Office officeAct = officeServiceImp.searchOffice(officeId);
+        OfficeSimple os=officeData.getOfficeSimple(officeAct);
         model.addAttribute("date", fecha);
-        model.addAttribute("officeActual", officeAct);
+        model.addAttribute("officeActual", os);
         model.addAttribute("title", "Ver Oficio");
         return "offices/editOffice";
     }
