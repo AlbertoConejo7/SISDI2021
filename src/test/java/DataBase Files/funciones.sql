@@ -1,4 +1,11 @@
 USE `SISDI`;
+DELIMITER ;
+CREATE TABLE IF NOT EXISTS `SISDI`.`T_DELETEDOFFICES`(
+OFFICENUMBER varchar(45) NOT NULL,
+USER varchar(45) NOT NULL,
+Date DATETIME NOT NULL	
+);
+USE `SISDI`;
 DROP procedure IF EXISTS insertOffice;
 DELIMITER $$
 USE `SISDI`$$
@@ -6,15 +13,14 @@ CREATE PROCEDURE insertOffice (IN offNumber VARCHAR(45),IN reason VARCHAR(45),IN
  IN incorDate DATE, IN incorTime TIME, 
 IN deadLine DATE, IN sessionDate DATE,  IN observations longtext, IN publics TINYINT(4),
 IN notified TINYINT(4), IN states INT,
-IN type_id int,IN version_id int,
- IN user_id VARCHAR(45),IN receiver_id VARCHAR(45),timeouts_id INT
+IN type_id int, IN user_id VARCHAR(45),IN receiver_id VARCHAR(45),timeouts_id INT
 )
 
 BEGIN
 INSERT INTO T_OFFICE (OFFNUMBER,REASON,NAME, INCORDATE,INCORTIME, 
-DEADLINE, SESSIONDATE, OBSERVATIONS, PUBLIC, NOTIFIED,  STATE, TYPE_ID,VERSION_ID, USER_ID,RECEIVER_ID,TIMEOUTS_ID) 
+DEADLINE, SESSIONDATE, OBSERVATIONS, PUBLIC, NOTIFIED,  STATE, TYPE_ID, USER_ID,RECEIVER_ID,TIMEOUTS_ID) 
 VALUES (offNumber, reason, name, incorDate, incorTime, deadLine,
- sessionDate, observations, publics, notified, states, type_id, version_id, user_id ,receiver_id,timeouts_id);
+ sessionDate, observations, publics, notified, states, type_id, user_id ,receiver_id,timeouts_id);
 commit; 
 end$$ 
 DELIMITER ;
@@ -24,16 +30,17 @@ DROP procedure IF EXISTS insertVersion;
 DELIMITER $$
 USE `SISDI`$$
 CREATE PROCEDURE insertVersion (
+IN office_id VARCHAR(45),
 IN version_id VARCHAR(45),
 IN version_number int,
 IN version_date DATE,
-IN version_time TIME, 
+
 IN version_description VARCHAR(100)
 )
 
 BEGIN
-INSERT INTO T_VERSION (VERSION_ID,VERSION_NUMBER,VERSION_DATE,VERSION_TIME,VERSION_DESCRIPTION) 
-VALUES (version_id, version_number, version_date, version_time, version_description);
+INSERT INTO T_VERSION (OFFICE_ID,VERSION_ID,VERSION_NUMBER,VERSION_DATE,VERSION_DESCRIPTION) 
+VALUES (office_id,version_id, version_number, version_date, version_description);
 commit; 
 end$$ 
 DELIMITER ;
@@ -42,11 +49,10 @@ USE `SISDI`;
 DROP procedure IF EXISTS updateOffice;
 DELIMITER $$
 USE `SISDI`$$
-create procedure updateOffice( IN _offNumber VARCHAR(45),IN _reason VARCHAR(45),IN _name VARCHAR(45),
- IN _incorDate DATE, IN _incorTime TIME, 
+create procedure updateOffice( IN _offNumber VARCHAR(45),IN _reason VARCHAR(45),IN _name VARCHAR(45), 
 IN _deadLine DATE, IN _sessionDate DATE,  IN _observations longtext, IN _publics TINYINT(4),
 IN _notified TINYINT(4), IN _state INT,
-IN _type int,IN _version int,
+IN _type int,
  IN _user VARCHAR(45),IN _receiver VARCHAR(45)) 
 begin
 UPDATE T_OFFICE SET REASON= _reason, NAME= _name, DEADLINE=_deadline, SESSIONDATE=_sessionDate, OBSERVATIONS=_observations,PUBLIC=_publics , NOTIFIED=_notified, STATE=_state, 
@@ -371,12 +377,14 @@ insert into T_USER_ROLE (USER_ID,ROLE_NAME) values('informatica@sanpablo.go.cr',
 insert into T_USER (TEMPUSER,PASSWORD,DEPARTMENT,STATUS) values
  ('controlinterno@sanpablo.go.cr','controlinterno',3,1); #pass:$2y$12$PP.ROST1M6niteGtzRK/f.qpbOOAkLk8eZXonQgJC1uKE9QdIlpsu
 insert into T_USER_ROLE (USER_ID,ROLE_NAME) values('controlinterno@sanpablo.go.cr','Control Interno');
-INSERT INTO `sisdi`.`t_timeouts` (`ID`, `COD`, `LIMITDATE`, `LIMITTIME`, `DEPARTMENT`, `TYPE`) VALUES ('1', 'SOLICITUD VACACIONES', '2020/10/10', '11:00', '1', 'Oficio');
+INSERT INTO `sisdi`.`t_timeouts` (`ID`, `COD`, `LIMITDATE`,  `DEPARTMENT`, `TYPE`) VALUES ('1', 'SOLICITUD VACACIONES', '2020/10/10', '1', 'Oficio');
 
-INSERT INTO `sisdi`.`t_version` (`ID`, `VERSION_ID`, `VERSION_NUMBER`, `VERSION_DATE`, `VERSION_TIME`, `VERSION_DESCRIPTION`) VALUES ('1', '\"Version id\"', '1', '2020-10-01', '11:00', '\"Primera version descripcion\"');
-call sisdi.insertOffice("OFICIO MSPH-AM-CCPJ-NE-001-2020", "Plan covid", "PLAN COVID", "2020/10/1", "11:00", "2020/10/3", "2020/10/1", "texto largo", 1, 1, 1, 1, 1, "superuser@superuser.com", "concejomunicipal@sanpablo.go.cr",1);
+call sisdi.insertOffice("OFICIO MSPH-AM-CCPJ-NE-001-2020", "Plan covid", "PLAN COVID", "2020/10/1", "11:00", "2020/10/3", "2020/10/1", "texto largo", 1, 1, 1, 1, "superuser@superuser.com", "concejomunicipal@sanpablo.go.cr",1);
+INSERT INTO `sisdi`.`t_version` (`ID`, `OFFICE_ID`, `VERSION_ID`, `VERSION_NUMBER`, `VERSION_DATE`,  `VERSION_DESCRIPTION`) VALUES ('1',"OFICIO MSPH-AM-CCPJ-NE-001-2020", '\"Version id\"', '1', '2020-10-01', '\"Primera version descripcion\"');
 
-call sisdi.insertVersion('ver2', 1, '2020/10/1', '11:00', 'version nueva ');
-call sisdi.updateOffice('OFICIO MSPH-AM-CCPJ-NE-001-2020', 'Asamblea', 'Oficio Asamblea', '2020/10/20', '12:00', '2020/10/30', '2020/10/20', 'texto largo', 1, 1, 0, 2, 1, 'asistente.licencias@sanpablo.go.cr', 'gestiondecobros@sanpablo.go.cr');
+call sisdi.insertVersion("OFICIO MSPH-AM-CCPJ-NE-001-2020",'ver2', 1, '2020/10/1', 'version nueva ');
+call sisdi.updateOffice('OFICIO MSPH-AM-CCPJ-NE-001-2020', 'Asamblea', 'Oficio Asamblea', '2020/10/30', '2020/10/20','texto largo', 1, 1, 0, 2, 'asistente.licencias@sanpablo.go.cr', 'gestiondecobros@sanpablo.go.cr');
 
-call sisdi.changeState('OFICIO MSPH-AM-CCPJ-NE-001-2020', 1);
+call sisdi.changeState('OFICIO MSPH-AM-CCPJ-NE-001-2020', 3);
+
+INSERT INTO `sisdi`.`t_office` (`OFFNUMBER`, `REASON`, `NAME`, `INCORDATE`, `INCORTIME`, `DEADLINE`, `SESSIONDATE`, `OBSERVATIONS`, `PUBLIC`, `NOTIFIED`, `STATE`, `TYPE_ID`, `USER_ID`, `RECEIVER_ID`, `TIMEOUTS_ID`) VALUES ('OFICIO MSPH-AM-CCPJ-NE-002-2020', 'Asamblea', 'Oficio Asamblea', '2020-10-01', '11:00:00', '2020-10-30', '2020-10-22', 'texto largo', 1, 1, 2, 1, 'gestiondecobros@sanpablo.go.cr', 'asistente.licencias@sanpablo.go.cr', 1);
