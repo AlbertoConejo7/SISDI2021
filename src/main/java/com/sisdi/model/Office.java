@@ -24,7 +24,6 @@ public class Office implements Serializable{
     private boolean NOTIFIED;
     private int STATE;
     private int TYPE_ID;
-    private int VERSION_ID;
     private String USER_ID;
     private String RECEIVER_ID;
     private int TIMEOUTS_ID;
