@@ -14,18 +14,6 @@ ID int auto_increment,
 DESCRIPTION varchar(25) NOT NULL,
 constraint PK_TYPE primary key (ID)
 );
-create table T_VERSION (
-ID int auto_increment, 
-VERSION_ID varchar(25) NOT NULL,
-VERSION_NUMBER INT,
-VERSION_DATE date,
-VERSION_TIME time,
-VERSION_DESCRIPTION varchar(100),
-REASON varchar(45),
-OBSERVATIONS longtext,
-
-constraint PK_VERSION primary key (ID)
-);
 
 
 create table T_DEPARTMENT (
@@ -40,7 +28,6 @@ create table T_TIMEOUTS (
 ID int auto_increment,
 COD  varchar(45),
 LIMITDATE date,
-LIMITTIME time,
 DEPARTMENT int,
 TYPE varchar(45),
 constraint PK_WAIT primary key(ID),
@@ -83,7 +70,6 @@ PUBLIC tinyint,
 NOTIFIED tinyint,
 STATE int,
 TYPE_ID int,
-VERSION_ID int,
 USER_ID varchar(45),
 RECEIVER_ID varchar(45),
 TIMEOUTS_ID INT,
@@ -91,12 +77,24 @@ TIMEOUTS_ID INT,
 constraint PK_OFFICE primary key (INDX),
 constraint UK_SESSIONDATE unique key (SESSIONDATE),
 constraint FK_TYPE foreign key (TYPE_ID) references T_TYPE(ID),
-constraint FK_VERSION foreign key (VERSION_ID) references T_VERSION(ID),
 constraint FK_STATE foreign key (STATE) references T_STATE(ID),
 constraint UK_OFFNUMBER unique key (OFFNUMBER),
 constraint FK_USER foreign key (USER_ID) references T_USER(TEMPUSER),
 constraint FK_RECEIVER foreign key (RECEIVER_ID) references T_USER(TEMPUSER),
 constraint FK_TIMEOUTS foreign key (TIMEOUTS_ID) references T_TIMEOUTS(ID)
+);
+
+create table T_VERSION (
+ID int auto_increment, 
+OFFICE_ID varchar(45),
+VERSION_ID varchar(45) NOT NULL,
+VERSION_NUMBER INT,
+VERSION_DATE date,
+VERSION_DESCRIPTION varchar(100),
+REASON varchar(45),
+OBSERVATIONS longtext,
+constraint FK_VERSION_OFFICE foreign key (OFFICE_ID) references T_OFFICE(OFFNUMBER),
+constraint PK_VERSION primary key (ID)
 );
 
 
@@ -155,13 +153,4 @@ USER_ID varchar(45),
 TOKEN varchar(6),
 DATE_TIME datetime,
 constraint FK_T_FORGOT foreign key (USER_ID) references T_USER(TEMPUSER)
-);
-
-
-USE `SISDI`;
-DELIMITER ;
-CREATE TABLE IF NOT EXISTS `SISDI`.`T_DELETEDOFFICES`(
-OFFICENUMBER varchar(45) NOT NULL,
-USER varchar(45) NOT NULL,
-Date DATETIME NOT NULL	
 );
