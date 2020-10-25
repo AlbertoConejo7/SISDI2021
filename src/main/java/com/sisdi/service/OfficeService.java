@@ -10,5 +10,5 @@ public interface OfficeService {
     Office searchOffice(String offnumber);
     List<Office> listOfficeByEmisor(String emisor);
     List<Office> listOfficeByReceptor(String receptor);
-    
+//    void updateState(String offnumber, int state); 
 }
