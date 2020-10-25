@@ -60,5 +60,10 @@ public class OfficeServiceImp implements OfficeService{
         
         return aux; 
     }
-    
+
+//    @Override
+//    public void updateState(String offnumber, int state) {
+//        officeDao.updateState(offnumber, state);
+//    }
+//    
 }
