@@ -74,6 +74,9 @@
                                             <td th:if="${office.STATE != 3}">
                                                 <a th:href="@{/offices/editOffice/{id} (id=${office.OFFNUMBER})}">Editar</a>
                                             </td>
+                                            <td th:if="${office.STATE == 3}">
+                                                
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
