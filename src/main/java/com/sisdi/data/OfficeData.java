@@ -39,6 +39,7 @@ public class OfficeData {
         Usuario receptor=userData.getUser(office.getRECEIVER_ID());
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         String incordate = format.format(office.getINCORDATE());
+        o.setId(office.getINDX());
         o.setOffnumber(office.getOFFNUMBER());
         o.setDateCreate(incordate);
         o.setEmisor(emisor.getTempUser().getName());
