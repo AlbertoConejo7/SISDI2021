@@ -1,12 +1,10 @@
 package com.sisdi.controller;
 
 import com.sisdi.data.UserData;
-import com.sisdi.model.Office;
 import com.sisdi.service.DepartmentServiceImp;
 import com.sisdi.service.OfficeServiceImp;
 import com.sisdi.service.TempUserServiceImp;
 import com.sisdi.service.UserServiceImp;
-import java.util.List;
 import javax.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

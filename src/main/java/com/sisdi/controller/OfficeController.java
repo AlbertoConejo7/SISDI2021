@@ -7,9 +7,9 @@ import com.sisdi.model.OfficeSimple;
 import com.sisdi.service.OfficeServiceImp;
 import com.sisdi.model.Usuario;
 import com.sisdi.service.TimeOutsServiceImp;
-import java.sql.Date;
+import java.util.Date;
 import java.text.ParseException;
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping(value = "/offices")
 public class OfficeController {
 
-    private Date fecha = Date.valueOf(LocalDate.now());
+    private Date fecha = new Date();
     
     @Autowired
     private OfficeServiceImp officeServiceImp;
@@ -44,17 +44,18 @@ public class OfficeController {
 
     @GetMapping("/addOffice")
     public String addOffice(Model model, OfficeSimple officeAdd, @AuthenticationPrincipal User user) {
+        String fechaS = new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
         model.addAttribute("date", fecha);
         Usuario u=userData.getUser(user.getUsername());
         officeAdd.setEmisor(u.getTempUser().getName());
         officeAdd.setEmisorDep(u.getDepartment().getName());
-        officeAdd.setDateCreate(fecha.toString());
+        officeAdd.setDateCreate(fechaS);
         model.addAttribute("officeAdd", officeAdd);
         return "offices/addOffice";
     }
      @PostMapping("/saveOffice")
      public String saveOffice(Model model, @ModelAttribute("officeAdd")OfficeSimple office) throws ParseException{
-         Office o=officeData.getOffice(office);
+         Office o=officeData.getOffice(office, 0);
          log.info(o.toString());
          officeServiceImp.addOffice(o);
          return "redirect:/offices/addOffice";
@@ -100,11 +101,12 @@ public class OfficeController {
     }
 
     @PostMapping("/anular")
-    public String anularOficio(Model model, @AuthenticationPrincipal User user) {
+    public String anularOficio(Model model, @AuthenticationPrincipal User user, @ModelAttribute("officeActual")OfficeSimple office) throws ParseException {
         List<Office> offices = officeServiceImp.listOfficeByEmisor(user.getUsername());
         log.info("ejecutando el controlador Oficios");
+        Office o=officeData.getOffice(office, 3);
         model.addAttribute("offices", offices);
-        log.info("Oficio Anulado");
+        log.info(o.toString());
         return "offices/listOffices";
     }
 }

@@ -6,9 +6,8 @@ import com.sisdi.model.OfficeSimple;
 import com.sisdi.model.Version;
 import com.sisdi.service.OfficeServiceImp;
 import com.sisdi.service.VersionService;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Time;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,7 @@ public class VersionController {
     @Autowired 
     private OfficeData officeData;
      
-    private Date fecha = Date.valueOf(LocalDate.now());
+    private Date fecha = new Date();
     private Time hora = Time.valueOf(LocalTime.now());
        
     @GetMapping("/listVersions/{officeId}")
