@@ -122,15 +122,23 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form method="POST" id="formAnnul" th:action="@{/offices/anular}" >
+                            <form method="POST" id="formAnnul" th:action="@{/offices/anular}" th:object="${officeActual}" >
+                                <input type="text" th:field="*{reason}" class="d-none"/>
+                                <input type="text" th:field="*{dateCreate}" class="d-none"/>
+                                <input type="text" th:field="*{emisor}" class="d-none"/>
+                                <input type="text" th:field="*{emisorDep}" class="d-none"/>
+                                <input type="text" th:field="*{receptor}" class="d-none"/>
+                                <input type="text" th:field="*{receptorDep}" class="d-none"/>
+                                <input type="text" th:field="*{type_id}" class="d-none"/>
+                                <input type="text" th:field="*{dateLimit}" class="d-none"/>
                                 <div class="form-group">
                                     <label for="officeName">Oficio</label>
-                                    <input type="text" class="form-control" th:value="${officeActual.offnumber}" disabled/>
+                                    <input type="text" class="form-control" th:field="*{offnumber}" readonly="readonly"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="dateAnnul">Fecha de Anulación</label>
                                     <div class='input-group date'>
-                                        <input type='text' class="form-control" th:value="${#dates.format(date, 'dd/MM/yyyy')}" disabled/>
+                                        <input type='text' class="form-control" th:value="${#dates.format(date, 'dd/MM/yyyy')}" readonly="readonly"/>
                                         <span class="input-group-addon ">
                                             <img class="icon-img" th:src="@{/images/calendar.svg}">
                                         </span>
@@ -138,7 +146,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="motiveAnnul">Motivo de Anulación</label>
-                                    <textarea class="form-control" id="motiveAnnul" rows="3" style="resize:none;"></textarea>
+                                    <textarea class="form-control" id="motiveAnnul" rows="3" style="resize:none;" th:field="*{observations}"></textarea>
                                 </div>
                                 <div class="modal-footer form-group">
                                     <button type="submit" class="btn btn-danger">Anular Oficio</button>
