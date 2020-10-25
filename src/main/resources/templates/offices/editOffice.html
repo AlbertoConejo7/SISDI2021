@@ -123,14 +123,15 @@
                         </div>
                         <div class="modal-body">
                             <form method="POST" id="formAnnul" th:action="@{/offices/anular}" th:object="${officeActual}" >
-                                <input type="text" th:field="*{reason}" class="d-none"/>
-                                <input type="text" th:field="*{dateCreate}" class="d-none"/>
-                                <input type="text" th:field="*{emisor}" class="d-none"/>
-                                <input type="text" th:field="*{emisorDep}" class="d-none"/>
-                                <input type="text" th:field="*{receptor}" class="d-none"/>
-                                <input type="text" th:field="*{receptorDep}" class="d-none"/>
-                                <input type="text" th:field="*{type_id}" class="d-none"/>
-                                <input type="text" th:field="*{dateLimit}" class="d-none"/>
+                                <input type="hidden" th:field="*{id}"/>
+                                <input type="hidden" th:field="*{reason}"/>
+                                <input type="hidden" th:field="*{dateCreate}"/>
+                                <input type="hidden" th:field="*{emisor}"/>
+                                <input type="hidden" th:field="*{emisorDep}"/>
+                                <input type="hidden" th:field="*{receptor}"/>
+                                <input type="hidden" th:field="*{receptorDep}"/>
+                                <input type="hidden" th:field="*{type_id}"/>
+                                <input type="hidden" th:field="*{dateLimit}"/>
                                 <div class="form-group">
                                     <label for="officeName">Oficio</label>
                                     <input type="text" class="form-control" th:field="*{offnumber}" readonly="readonly"/>
