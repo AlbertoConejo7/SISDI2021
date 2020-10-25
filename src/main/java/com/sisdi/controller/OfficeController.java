@@ -105,8 +105,9 @@ public class OfficeController {
         List<Office> offices = officeServiceImp.listOfficeByEmisor(user.getUsername());
         log.info("ejecutando el controlador Oficios");
         Office o=officeData.getOffice(office, 3);
+        o.setINDX(office.getId());
         model.addAttribute("offices", offices);
-        log.info(o.toString());
+        officeServiceImp.addOffice(o);
         return "offices/listOffices";
     }
 }
