@@ -1,10 +1,10 @@
 package com.sisdi.model;
 
-import java.util.Date;
 import lombok.Data;
 
 @Data
 public class OfficeSimple {
+    private int id;
     private String offnumber;
     private String reason;
     private String dateCreate;
