@@ -110,4 +110,21 @@ public class OfficeController {
         officeServiceImp.addOffice(o);
         return "offices/listOffices";
     }
+    
+    @GetMapping("/acceptOffice/{officeId}")
+    public String acceptOffice(@PathVariable String officeId, Model model,@AuthenticationPrincipal User user) {
+        Office officeAct = officeServiceImp.searchOffice(officeId);
+        officeAct.setSTATE(1);// cambiar estado 
+        
+        officeAct=officeServiceImp.addOffice(officeAct);
+        List<Office> offices = officeServiceImp.listOfficeByReceptor(user.getUsername());
+       // List<TimeOuts> time = timeOutsServiceImp.listTimeOuts();
+        
+         model.addAttribute("date", fecha);
+        log.info("ejecutando el controlador Oficios");
+        model.addAttribute("officesPending", offices);
+        // model.addAttribute("timeOuts", time);
+        return "offices/pendingOffice";
+    }
+    
 }
