@@ -14,6 +14,7 @@ com\sisdi\service\TimeOutsServiceImp.class
 com\sisdi\model\TimeOuts.class
 com\sisdi\dao\StateDao.class
 com\sisdi\service\TimeOutsService.class
+.netbeans_automatic_build
 com\sisdi\service\UserService.class
 com\sisdi\model\Version.class
 com\sisdi\dao\DepartmentDao.class
@@ -36,6 +37,7 @@ com\sisdi\service\UserServiceImp.class
 com\sisdi\service\VersionService.class
 com\sisdi\service\StateServiceImp.class
 com\sisdi\dao\OfficeDao.class
+com\sisdi\model\searchOffice.class
 com\sisdi\data\TempUserData.class
 com\sisdi\data\DepartmentData.class
 com\sisdi\service\StateService.class

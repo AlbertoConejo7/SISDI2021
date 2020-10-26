@@ -27,21 +27,20 @@ public class Version implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-   
+    private String office_id;
     private String version_id;
     private int version_number;
     private Date version_date;
-    private Time version_time;
     private String version_description;
     private String reason;
     private String observations;
 
-public Version(int id, String id_version, int version_number, Date version_date, Time version_time, String version_description, String reason, String observations) {
+public Version(int id, String office_id, String id_version, int version_number, Date version_date, String version_description, String reason, String observations) {
     this.id = id;
     this.version_id = id_version;
+    this.office_id = office_id;
     this.version_number = version_number;
     this.version_date = version_date;
-    this.version_time=version_time;
     this.version_description = version_description;
     this.reason = reason;
     this.observations = observations;

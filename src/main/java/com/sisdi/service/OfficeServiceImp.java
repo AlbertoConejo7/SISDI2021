@@ -71,15 +71,15 @@ public class OfficeServiceImp implements OfficeService {
         return aux;
     }
 
-//    public List<Office> listByName(String name) {
-//        List <Office> list = this.listOfficeByUser();
-//        List<Office> aux = new ArrayList();
-//        for(Office o : list){
-//            if(o.getOFFNUMBER().contains(name)){
-//                aux.add(o);
-//            }
-//        }
-//        return aux;
-//    }
+    public List<Office> listByName(String name, String user) {
+        List <Office> list = this.listOfficeByUser(user);
+        List<Office> aux = new ArrayList();
+        for(Office o : list){
+            if(o.getOFFNUMBER().contains(name)){
+                aux.add(o);
+            }
+        }
+        return aux;
+    }
 
 }

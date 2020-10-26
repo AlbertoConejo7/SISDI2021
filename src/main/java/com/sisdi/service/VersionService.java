@@ -10,6 +10,8 @@ import java.util.List;
 public interface VersionService {
     
     public List<Version> list_versions();
+    public List<Version> listVersionByOffice(String office);
+//    public List<Version> listVersionByEmisor(String emisor);
     
     public void save_version(Version v);
     

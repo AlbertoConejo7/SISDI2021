@@ -6,6 +6,7 @@ import com.sisdi.model.Office;
 import com.sisdi.model.OfficeSimple;
 import com.sisdi.service.OfficeServiceImp;
 import com.sisdi.model.Usuario;
+import com.sisdi.model.searchOffice;
 import com.sisdi.service.TimeOutsServiceImp;
 import java.util.Date;
 import java.text.ParseException;
@@ -68,9 +69,9 @@ public class OfficeController {
         Office o = officeData.getOffice(office, 1);
         log.info(o.toString());
         officeServiceImp.addOffice(o);
-        String officeId= (String) session.getAttribute("officeResponse");
+        String officeId = (String) session.getAttribute("officeResponse");
         log.info(officeId);
-                
+
         Office of = officeServiceImp.searchOffice(officeId);
         of.setSTATE(2);
         log.info(of.toString());
@@ -110,6 +111,16 @@ public class OfficeController {
     @GetMapping("/listOffices")
     public String listOffice(Model model, @AuthenticationPrincipal User user) {
         List<Office> offices = officeServiceImp.listOfficeByEmisor(user.getUsername());
+        searchOffice search = new searchOffice();
+        log.info("ejecutando el controlador Oficios");
+        model.addAttribute("offices", offices);
+        model.addAttribute("search",search);
+        return "offices/listOffices";
+    }
+
+    @PostMapping("/listByName")
+    public String listByName(Model model, @ModelAttribute("search") searchOffice search, @AuthenticationPrincipal User user) {
+        List<Office> offices = officeServiceImp.listByName(search.getOffnumber(), user.getUsername());
         log.info("ejecutando el controlador Oficios");
         model.addAttribute("offices", offices);
         return "offices/listOffices";

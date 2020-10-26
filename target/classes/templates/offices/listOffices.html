@@ -27,12 +27,12 @@
                     <h3 class='font-italic text-center' id='titleh3'>Lista Oficios</h3>
                 </div>
                 <div>
-                    <form>                
+                    <form class="form " method="POST" th:action="@{/offices/listByName}" th:object="${search}">                
                         <div class="form-group row">
                             <label for="nombre" class="col-md-2 col-form-label">Oficio a buscar</label>                        
                             <div class="input-group col-md-8" >                           
-                                <input class="form-control>" type="text" id="nombreSearch" >                              
-                                <button type="button" class="btn btn-primary ml-3" id="buscar">Buscar</button>
+                                <input class="form-control>" type="text" id="nombreSearch" th:field="*{offnumber}">                              
+                                <button type="submit" class="btn btn-primary ml-3" id="buscar">Buscar</button>
                             </div>
                         </div>
                         <div id="errorDiv" style="width:30%; margin: auto;"></div>
