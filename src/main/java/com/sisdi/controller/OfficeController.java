@@ -11,6 +11,7 @@ import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -63,10 +64,13 @@ public class OfficeController {
     }
 
     @PostMapping("/saveResponseOffice")
-    public String saveResponseOffice(Model model, @ModelAttribute("officeActual") OfficeSimple office, @ModelAttribute("officeResponse") String officeId) throws ParseException {
+    public String saveResponseOffice(Model model, @ModelAttribute("officeActual") OfficeSimple office, HttpSession session) throws ParseException {
         Office o = officeData.getOffice(office, 1);
         log.info(o.toString());
         officeServiceImp.addOffice(o);
+        String officeId= (String) session.getAttribute("officeResponse");
+        log.info(officeId);
+                
         Office of = officeServiceImp.searchOffice(officeId);
         of.setSTATE(2);
         log.info(of.toString());
@@ -75,7 +79,7 @@ public class OfficeController {
     }
 
     @GetMapping("/responseOffice/{officeId}")
-    public String responseOffice(@PathVariable String officeId, Model model) {
+    public String responseOffice(@PathVariable String officeId, Model model, HttpSession session) {
         Office officeAct = officeServiceImp.searchOffice(officeId);
         OfficeSimple office_aux = new OfficeSimple();
         String fecha_ = new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
@@ -88,7 +92,7 @@ public class OfficeController {
         office_aux.setDateCreate(fecha_);
         office_aux.setDateLimit(office.getDateLimit());
         office_aux.setType_id(office.getType_id());
-        model.addAttribute("officeResponse", officeId);
+        session.setAttribute("officeResponse", officeAct.getOFFNUMBER());
         model.addAttribute("officeActual", office_aux);
         return "offices/responseOffice";
     }
