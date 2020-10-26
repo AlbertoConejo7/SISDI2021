@@ -61,9 +61,15 @@ public class OfficeServiceImp implements OfficeService{
         return aux; 
     }
 
-//    @Override
-//    public void updateState(String offnumber, int state) {
-//        officeDao.updateState(offnumber, state);
-//    }
-//    
+    @Override
+    public List<Office> listOfficeByUser(String user) {
+        List<Office> aux=new ArrayList();
+        List<Office> emisor=this.listOfficeByEmisor(user);
+        List<Office> receptor=this.listOfficeByReceptor(user);
+        aux.addAll(emisor); 
+        aux.addAll(receptor);
+        return aux;
+    }
+
+
 }
