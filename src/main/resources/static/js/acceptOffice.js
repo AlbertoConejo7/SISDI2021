@@ -1,11 +1,11 @@
 function saveResponseTime() {
     var limite = document.getElementById("recepcionTimeValue");
-    var dateLimit=document.getElementById("limitTimeValue");
+    var dateLimit=document.getElementById("datelimit");
     
 
      $("#responseTime .close").click();
         showAlert();
-        
+         
     
 }
 function mostrarResultados(datos) {

@@ -23,22 +23,20 @@ public class TimeOuts implements Serializable {
     public TimeOuts() {
     }
 
-    public TimeOuts(int ID, String cod, Date limitdate, Time limittime, int department, String type) {
+    public TimeOuts(int ID, String cod, Date limitdate, int department, String type) {
         this.ID = ID;
-        this.cod = cod;
-        this.limitdate = limitdate;
-        this.limittime = limittime;
-        this.department = department;
-        this.type = type;
+        this.COD = cod;
+        this.LIMITDATE = limitdate;
+         this.DEPARTMENT = department;
+        this.TYPE = type;
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
-    private String cod;
-    private Date limitdate;
-    private Time limittime;
-    private int department;
-    private String type;
+    private String COD;
+    private Date LIMITDATE;
+    private int DEPARTMENT;
+    private String TYPE;
     
     
     
