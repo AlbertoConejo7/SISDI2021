@@ -29,51 +29,74 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class OfficeController {
 
     private Date fecha = new Date();
-    
+
     @Autowired
     private OfficeServiceImp officeServiceImp;
-    
+
     @Autowired
     private TimeOutsServiceImp timeOutsServiceImp;
-    
-    @Autowired 
+
+    @Autowired
     private UserData userData;
-    
-    @Autowired 
+
+    @Autowired
     private OfficeData officeData;
 
     @GetMapping("/addOffice")
     public String addOffice(Model model, OfficeSimple officeAdd, @AuthenticationPrincipal User user) {
         String fechaS = new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
         model.addAttribute("date", fecha);
-        Usuario u=userData.getUser(user.getUsername());
+        Usuario u = userData.getUser(user.getUsername());
         officeAdd.setEmisor(u.getTempUser().getName());
         officeAdd.setEmisorDep(u.getDepartment().getName());
         officeAdd.setDateCreate(fechaS);
         model.addAttribute("officeAdd", officeAdd);
         return "offices/addOffice";
     }
-     @PostMapping("/saveOffice")
-     public String saveOffice(Model model, @ModelAttribute("officeAdd")OfficeSimple office) throws ParseException{
-         Office o=officeData.getOffice(office, 0);
-         log.info(o.toString());
-         officeServiceImp.addOffice(o);
-         return "redirect:/offices/addOffice";
-     }
+
+    @PostMapping("/saveOffice")
+    public String saveOffice(Model model, @ModelAttribute("officeAdd") OfficeSimple office) throws ParseException {
+        Office o = officeData.getOffice(office, 0);
+        log.info(o.toString());
+        officeServiceImp.addOffice(o);
+        return "redirect:/offices/addOffice";
+    }
+
+    @PostMapping("/saveResponseOffice")
+    public String saveResponseOffice(Model model, @ModelAttribute("officeActual") OfficeSimple office, @ModelAttribute("officeResponse") String officeId) throws ParseException {
+        Office o = officeData.getOffice(office, 1);
+        log.info(o.toString());
+        officeServiceImp.addOffice(o);
+        Office of = officeServiceImp.searchOffice(officeId);
+        of.setSTATE(2);
+        log.info(of.toString());
+        officeServiceImp.addOffice(of);
+        return "redirect:/offices/pendingOffice";
+    }
 
     @GetMapping("/responseOffice/{officeId}")
     public String responseOffice(@PathVariable String officeId, Model model) {
         Office officeAct = officeServiceImp.searchOffice(officeId);
-        model.addAttribute("date", fecha);
-        model.addAttribute("officeActual", officeAct);
-        model.addAttribute("title", "Ver Oficio");
+        OfficeSimple office_aux = new OfficeSimple();
+        String fecha_ = new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
+        OfficeSimple office = officeData.getOfficeSimple(officeAct);
+        office_aux.setEmisor(office.getReceptor());
+        office_aux.setEmisorDep(office.getReceptorDep());
+        office_aux.setReceptor(office.getEmisor());
+        office_aux.setReceptorDep(office.getEmisorDep());
+        office_aux.setReason("Responder a " + office.getOffnumber());
+        office_aux.setDateCreate(fecha_);
+        office_aux.setDateLimit(office.getDateLimit());
+        office_aux.setType_id(office.getType_id());
+        model.addAttribute("officeResponse", officeId);
+        model.addAttribute("officeActual", office_aux);
         return "offices/responseOffice";
     }
 
     @GetMapping("/editOffice/{officeId}")
     public String editOffice(@PathVariable String officeId, Model model) {
         Office officeAct = officeServiceImp.searchOffice(officeId);
-        OfficeSimple os=officeData.getOfficeSimple(officeAct);
+        OfficeSimple os = officeData.getOfficeSimple(officeAct);
         model.addAttribute("date", fecha);
         model.addAttribute("officeActual", os);
         model.addAttribute("title", "Ver Oficio");
@@ -91,9 +114,9 @@ public class OfficeController {
     @GetMapping("/pendingOffice")
     public String pendingOffice(Model model, @AuthenticationPrincipal User user) {
         List<Office> offices = officeServiceImp.listOfficeByReceptor(user.getUsername());
-       // List<TimeOuts> time = timeOutsServiceImp.listTimeOuts();
-        
-         model.addAttribute("date", fecha);
+        // List<TimeOuts> time = timeOutsServiceImp.listTimeOuts();
+
+        model.addAttribute("date", fecha);
         log.info("ejecutando el controlador Oficios");
         model.addAttribute("officesPending", offices);
         // model.addAttribute("timeOuts", time);
@@ -101,30 +124,30 @@ public class OfficeController {
     }
 
     @PostMapping("/anular")
-    public String anularOficio(Model model, @AuthenticationPrincipal User user, @ModelAttribute("officeActual")OfficeSimple office) throws ParseException {
+    public String anularOficio(Model model, @AuthenticationPrincipal User user, @ModelAttribute("officeActual") OfficeSimple office) throws ParseException {
         List<Office> offices = officeServiceImp.listOfficeByEmisor(user.getUsername());
         log.info("ejecutando el controlador Oficios");
-        Office o=officeData.getOffice(office, 3);
+        Office o = officeData.getOffice(office, 3);
         o.setINDX(office.getId());
         model.addAttribute("offices", offices);
         officeServiceImp.addOffice(o);
         return "offices/listOffices";
     }
-    
+
     @GetMapping("/acceptOffice/{officeId}")
-    public String acceptOffice(@PathVariable String officeId, Model model,@AuthenticationPrincipal User user) {
+    public String acceptOffice(@PathVariable String officeId, Model model, @AuthenticationPrincipal User user) {
         Office officeAct = officeServiceImp.searchOffice(officeId);
         officeAct.setSTATE(1);// cambiar estado 
-        
-        officeAct=officeServiceImp.addOffice(officeAct);
+
+        officeAct = officeServiceImp.addOffice(officeAct);
         List<Office> offices = officeServiceImp.listOfficeByReceptor(user.getUsername());
-       // List<TimeOuts> time = timeOutsServiceImp.listTimeOuts();
-        
-         model.addAttribute("date", fecha);
+        // List<TimeOuts> time = timeOutsServiceImp.listTimeOuts();
+
+        model.addAttribute("date", fecha);
         log.info("ejecutando el controlador Oficios");
         model.addAttribute("officesPending", offices);
         // model.addAttribute("timeOuts", time);
         return "offices/pendingOffice";
     }
-    
+
 }

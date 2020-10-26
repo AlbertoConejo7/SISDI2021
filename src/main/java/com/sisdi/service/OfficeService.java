@@ -10,5 +10,6 @@ public interface OfficeService {
     List<Office> listOfficeByEmisor(String emisor);
     List<Office> listOfficeByReceptor(String receptor);
     List<Office> listOfficeByUser(String user);
+//    List<Office> listByName(String name);
     
 }

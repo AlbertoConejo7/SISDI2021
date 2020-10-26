@@ -38,7 +38,7 @@
                                     <p>Oficio</p>
                                 </th>
                                 <td colspan="2">
-                                    <p th:text="${officeActual.OFFNUMBER}"></p>
+                                    <p th:text="${officeActual.offnumber}"></p>
                                 </td>
                             </tr>
                             <tr class="m-0">
@@ -46,7 +46,7 @@
                                     <p>Motivo</p>
                                 </th>
                                 <td colspan="2">
-                                    <p th:text="${officeActual.REASON}"></p>
+                                    <p th:text="${officeActual.reason}"></p>
                                 </td>
                             </tr>
                             <tr>
@@ -54,7 +54,7 @@
                                     <p>Fecha Emision</p>
                                 </th>
                                 <td colspan="2">
-                                    <p th:text="${#dates.format(officeActual.INCORDATE, 'dd/MM/yyyy')}"></p>
+                                    <p th:text="${officeActual.dateCreate}"></p>
                                 </td>
                             </tr>
                             <tr>
@@ -63,7 +63,7 @@
                                 </th>
                                 <td colspan="2">
 
-                                    <p th:text="${officeActual.USER_ID}"></p>
+                                    <p th:text="${officeActual.emisor}"></p>
                                 </td>
                             </tr>
                             <tr>
@@ -71,7 +71,7 @@
                                     <p>Departamento Emisor</p>
                                 </th>
                                 <td colspan="2">
-                                    <p>No definido</p>
+                                    <p th:text="${officeActual.emisorDep}"></p>
                                 </td>
                             </tr>
                             <tr>
@@ -79,7 +79,7 @@
                                     <p>Usuario Receptor</p>
                                 </th>
                                 <td colspan="2">
-                                    <p th:text="${officeActual.RECEIVER_ID}"></p>
+                                    <p th:text="${officeActual.receptor}"></p>
                                 </td>
                             </tr>
                             <tr>
@@ -87,7 +87,7 @@
                                     <p>Departamento Receptor</p>
                                 </th>
                                 <td colspan="2">
-                                    <p>No definido</p>
+                                    <p th:text="${officeActual.receptorDep}"></p>
                                 </td>
                             </tr>
                             <tr>
@@ -95,11 +95,13 @@
                                     <p>Tipo</p>
                                 </th>
                                 <td colspan="2">
-                                    <p th:text="${officeActual.TYPE_ID}"></p>
+                                    <p th:if="${officeActual.type_id==1}" th:text="Comnunicar"></p>
+                                    <p th:if="${officeActual.type_id==2}" th:text="Solicitar"></p>
+                                    <p th:if="${officeActual.type_id==3}" th:text="Aprobar"></p>
                                 </td>
                             </tr>
                             <tr >
-                                <td colspan="3">
+                                <td colspan="3" th:if="${officeActual.dateLimit != null}">
                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#annulModal">Anular Officio</button>
                                 </td>
                             </tr>
@@ -120,15 +122,24 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form method="POST" id="formAnnul" th:action="@{/offices/anular}" th:object="${officeAnulado}">
+                            <form method="POST" id="formAnnul" th:action="@{/offices/anular}" th:object="${officeActual}" >
+                                <input type="hidden" th:field="*{id}"/>
+                                <input type="hidden" th:field="*{reason}"/>
+                                <input type="hidden" th:field="*{dateCreate}"/>
+                                <input type="hidden" th:field="*{emisor}"/>
+                                <input type="hidden" th:field="*{emisorDep}"/>
+                                <input type="hidden" th:field="*{receptor}"/>
+                                <input type="hidden" th:field="*{receptorDep}"/>
+                                <input type="hidden" th:field="*{type_id}"/>
+                                <input type="hidden" th:field="*{dateLimit}"/>
                                 <div class="form-group">
                                     <label for="officeName">Oficio</label>
-                                    <input type="text" class="form-control" th:value="${officeActual.OFFNUMBER}" disabled/>
+                                    <input type="text" class="form-control" th:field="*{offnumber}" readonly="readonly"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="dateAnnul">Fecha de Anulación</label>
                                     <div class='input-group date'>
-                                        <input type='text' class="form-control" th:value="${#dates.format(date, 'dd/MM/yyyy')}" disabled/>
+                                        <input type='text' class="form-control" th:value="${#dates.format(date, 'dd/MM/yyyy')}" readonly="readonly"/>
                                         <span class="input-group-addon ">
                                             <img class="icon-img" th:src="@{/images/calendar.svg}">
                                         </span>
@@ -136,7 +147,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="motiveAnnul">Motivo de Anulación</label>
-                                    <textarea class="form-control" id="motiveAnnul" rows="3" style="resize:none;"></textarea>
+                                    <textarea class="form-control" id="motiveAnnul" rows="3" style="resize:none;" th:field="*{observations}"></textarea>
                                 </div>
                                 <div class="modal-footer form-group">
                                     <button type="submit" class="btn btn-danger">Anular Oficio</button>

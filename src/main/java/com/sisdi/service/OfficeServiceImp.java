@@ -7,9 +7,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
-public class OfficeServiceImp implements OfficeService{
+public class OfficeServiceImp implements OfficeService {
+
     @Autowired
     private OfficeDao officeDao;
 
@@ -25,51 +25,61 @@ public class OfficeServiceImp implements OfficeService{
 
     @Override
     public Office searchOffice(String offnumber) {
-        List<Office> list= this.listarOficios();
-         Office aux =null;
-         for(Office o:list){
-             if(o.getOFFNUMBER().equals(offnumber)){
-                 aux=o;
-             }
-         }
-         return aux;
+        List<Office> list = this.listarOficios();
+        Office aux = null;
+        for (Office o : list) {
+            if (o.getOFFNUMBER().equals(offnumber)) {
+                aux = o;
+            }
+        }
+        return aux;
     }
 
     @Override
     public List<Office> listOfficeByEmisor(String emisor) {
-        List<Office> list= this.listarOficios();
-        List<Office> aux= new ArrayList();
-        for(Office o:list){
-             if(o.getUSER_ID().equals(emisor)){
-                 aux.add(o);
-             }
-         }
-        
-        return aux;  
+        List<Office> list = this.listarOficios();
+        List<Office> aux = new ArrayList();
+        for (Office o : list) {
+            if (o.getUSER_ID().equals(emisor)) {
+                aux.add(o);
+            }
+        }
+
+        return aux;
     }
 
     @Override
     public List<Office> listOfficeByReceptor(String receptor) {
-        List<Office> list= this.listarOficios();
-        List<Office> aux= new ArrayList();
-        for(Office o:list){
-             if(o.getRECEIVER_ID().equals(receptor)){
-                 aux.add(o);
-             }
-         }
-        
-        return aux; 
+        List<Office> list = this.listarOficios();
+        List<Office> aux = new ArrayList();
+        for (Office o : list) {
+            if (o.getRECEIVER_ID().equals(receptor)) {
+                aux.add(o);
+            }
+        }
+
+        return aux;
     }
 
     @Override
     public List<Office> listOfficeByUser(String user) {
-        List<Office> aux=new ArrayList();
-        List<Office> emisor=this.listOfficeByEmisor(user);
-        List<Office> receptor=this.listOfficeByReceptor(user);
-        aux.addAll(emisor); 
+        List<Office> aux = new ArrayList();
+        List<Office> emisor = this.listOfficeByEmisor(user);
+        List<Office> receptor = this.listOfficeByReceptor(user);
+        aux.addAll(emisor);
         aux.addAll(receptor);
         return aux;
     }
 
+//    public List<Office> listByName(String name) {
+//        List <Office> list = this.listOfficeByUser();
+//        List<Office> aux = new ArrayList();
+//        for(Office o : list){
+//            if(o.getOFFNUMBER().contains(name)){
+//                aux.add(o);
+//            }
+//        }
+//        return aux;
+//    }
 
 }

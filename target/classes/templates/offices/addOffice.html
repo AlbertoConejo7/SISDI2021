@@ -35,7 +35,7 @@
                     <h3 class='font-italic text-center' id='titleh3'>Crear Oficio</h3>
                 </div>
                 <div class="mx-auto w-75">
-                    <form class="form ">
+                    <form class="form" method="POST" th:action="@{/offices/saveOffice}" th:object="${officeAdd}">
                         <table class="table table-borderless">
                             <tr>
                                 <td>
@@ -43,7 +43,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input type='text' class="form-control" placeholder="Título del oficio"/>
+                                        <input placeholder="Oficio" class="form-control" th:field="*{offnumber}"/>
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -55,7 +55,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input type='text' class="form-control" placeholder="Motivo del oficio"/>
+                                        <input placeholder="Motivo del Oficio"  class="form-control" th:field="*{reason}"/>
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -67,7 +67,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input type='text' class="form-control" th:value="${#dates.format(date, 'dd/MM/yyyy')}" readonly="readonly"/>
+                                        <input th:value="${#dates.format(date, 'dd/MM/yyyy')}"  class="form-control" th:field="*{dateCreate}" readonly="readonly"/>
                                         <span class="input-group-addon ">
                                             <img class="icon-img" th:src="@{/images/calendar.svg}">
                                         </span>
@@ -80,7 +80,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input type='text' class="form-control" placeholder="Nombre del Emisor" th:value="${session.usuarioCompleto.tempUser.name}" disabled/>
+                                        <input th:value="${session.usuarioCompleto.tempUser.name}"  class="form-control" th:field="*{emisor}" readonly="readonly"/>
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -92,7 +92,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input type='text' class="form-control" placeholder="Nombre del Departamento"  th:value="${session.usuarioCompleto.department.name}" disabled/>
+                                        <input th:value="${session.usuarioCompleto.department.name}" class="form-control" th:field="*{emisorDep}" readonly="readonly"/>
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -104,7 +104,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input type='text' class="form-control" placeholder="Nombre del Emisor" />
+                                        <input placeholder="Nombre del Receptor"  th:field="*{receptor}" class="form-control"/>       
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -116,7 +116,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input type='text' class="form-control" placeholder="Nombre del Departamento" />
+                                        <input  placeholder="Departamento"  class="form-control" th:field="*{receptorDep}"/> 
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -127,13 +127,19 @@
                                     <span>Tipo de Oficio</span>
                                 </td>
                                 <td>
-                                    <div class='input-group'>
-                                        <input type="radio" name="boton" value="Comunicar">&nbsp;&nbsp;Comunicar&nbsp;&nbsp;
-                                        <input type="radio" name="boton" value="Solicitar">&nbsp;&nbsp;Solicitar&nbsp;&nbsp;
-                                        <input type="radio" name="boton" value="Aprobar">&nbsp;&nbsp;Aprobar
-                                        <span class="input-group-addon ">
-                                        </span>
+                                    <div class='form-check form-check-inline'>
+                                        <input type="radio" value="1"  th:field="*{type_id}" name="type" id="comunicar" class="form-check-input"/>
+                                        <label path="type" class="form-check-label" for="comunicar">Comunicar</label>
                                     </div>
+                                    <div class='form-check form-check-inline'>
+                                        <input type="radio"  value="2" th:field="*{type_id}" name="type" id="solicitar" class="form-check-input"/>
+                                        <label path="type" class="form-check-label" for="solicitar" >Solicitar</label>
+                                    </div>
+                                    <div class='form-check form-check-inline'>
+                                        <input type="radio" value="3" th:field="*{type_id}" name="type" id="aprobar" class="form-check-input"/>
+                                        <label path="type" class="form-check-label" for="aprobar">Aprobar</label>
+                                    </div>
+                                    <span class="input-group-addon "></span>
                                 </td>
                             </tr>
                             <tr>
@@ -142,7 +148,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <textarea name="texto" rows="4" class="w-100" placeholder="Escriba aquí sus observaciones" style="resize: none;"></textarea>
+                                        <textarea rows="4" class="w-100" placeholder="Escriba aquí sus observaciones" style="resize: none;" th:field="*{observations}"></textarea>                             
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -180,21 +186,20 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input type='text' class="form-control w-100" id="dateLimit" placeholder="Fecha de Limite de Respuesta" disabled/>
+                                        <input class="form-control w-100" id="dateLimit" placeholder="Fecha de Limite de Respuesta" th:field="*{dateLimit}" readonly="readonly"/>
                                         <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#responseTime">Agregar Plazo de Respuesta</button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2" class="text-lg-right">
-                                    <button type="button" class="btn btn-primary mt-2">Agregar Oficio</button>
+                                    <button type="submit" class="btn btn-primary mt-2">Agregar Oficio</button>
                                 </td>
                             </tr>
                         </table>
                     </form>
                 </div>
             </div>
-        </div>
 
         <div class="modal fade" id="responseTime" tabindex="-1" role="dialog" aria-labelledby="responseTimeTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
