@@ -68,6 +68,7 @@ public class OfficeServiceImp implements OfficeService{
         List<Office> receptor=this.listOfficeByReceptor(user);
         aux.addAll(emisor); 
         aux.addAll(receptor);
+        //
         return aux;
     }
 
