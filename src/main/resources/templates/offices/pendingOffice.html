@@ -63,13 +63,13 @@
                                             <td th:if="${office.STATE == 2}" th:text="Respondido"></td>
                                             <td th:if="${office.STATE == 3}" th:text="Anulado"></td>
                                             
-                                                <td>
-                                                    <a th:href="@{/offices/responseOffice/{id} (id=${office.OFFNUMBER})}">Responder</a>
+                                                <td >
+                                                    <a th:if="${office.STATE == 1}" th:href="@{/offices/responseOffice/{id} (id=${office.OFFNUMBER})}">Responder</a>
                                                 </td>
                               
                                              <td>
                                             
-                                            <div class='input-group' th:if="${office.STATE != 1}">
+                                            <div class='input-group' th:if="${office.STATE == 0}">
 
                                                 <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#responseTime">Aceptar Oficio</button>
                                             </div>
