@@ -146,6 +146,7 @@ public class OfficeController {
         o.setINDX(office.getId());
         model.addAttribute("offices", offices);
         officeServiceImp.addOffice(o);
+        model.addAttribute("search",new searchOffice());
         return "offices/listOffices";
     }
 
