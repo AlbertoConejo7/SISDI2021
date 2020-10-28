@@ -32,11 +32,10 @@
                                 <table id="tableAcc" class="table table-striped table-bordered border-info" style="width: 100%">
                                     <thead>
                                         <tr>
-                                            <th style="text-align: center">Oficio</th>
-                                            <th style="text-align: center">Versiòn</th>
-                                            <th style="text-align: center">Fecha de versiòn</th>
-                                            <th style="text-align: center">Hora</th>
-                                            <th style="text-align: center">Motivo de versiòn</th>
+                                            <th style="text-align: center">Versión</th>
+                                            <th style="text-align: center">Número de versión</th>
+                                            <th style="text-align: center">Fecha de versión</th>
+                                            <th style="text-align: center">Motivo de versión</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -44,16 +43,15 @@
                                         <tr th:if="${versions == null or versions.empty}">
                                             <td colspan="6" style="text-align: center;">No existen versiones del oficio</td>
                                         </tr>
-                                        <tr th:each="version : ${versions}" th:if="${versions != null and !versions.empty}">
-                                            <!--<td th:text="${version.id_office}"></td>-->
-                                            <td  th:text="${version.version_number}"></td>
-                                            <td  th:text="${version.version_date}"></td>
-                                            <td  th:text="${version.version_time}"></td>
-                                            <td  th:text="${version.version_description}"></td>
+                                        <tr th:each="Version : ${versions}" th:if="${versions != null and !versions.empty}">
+                                            <td th:text="${Version.version_id}"></td>
+                                            <td  th:text="${Version.version_number}"></td>
+                                            <td  th:text="${Version.version_date}"></td>
+                                            <td  th:text="${Version.version_description}"></td>
                                         </tr>
                                         <tr>
                                             <td colspan="5">
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#newVersionModal">Agregar Version</button>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#newVersionModal">Agregar Versión</button>
                                             </td>
 
                                         </tr>
@@ -69,46 +67,62 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form>
+                                                <form class="form " method="POST" th:action="@{/versions/saveVersion}" th:object="${officeActual}">
                                                     <div class="form-group">
                                                         <label for="officeName">Oficio</label>
-                                                        <input type="text" class="form-control" id="exampleFormControlInput1" th:value="${officeActual.offnumber}" disabled/>
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" th:field="*{offnumber}" readonly="readonly"/>
                                                     </div>
+                                                    <input type="hidden"  th:field="*{id}"/>
+                                                    <input type="hidden"  th:field="*{type_id}"/>
                                                     <div class="form-group">
                                                         <label for="officeEmisor">Emisor</label>
-                                                        <input type="text" class="form-control" id="exampleFormControlInput1" th:value="${officeActual.emisor}" placeholder="emisor"/>
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" th:field="*{emisor}" readonly ="readonly"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="officeEmisor">Departameno Emisor</label>
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" th:field="*{emisorDep}" readonly ="readonly"/>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="officeReceptor">Receptor</label>
-                                                        <input type="text" class="form-control" id="exampleFormControlInput1" th:value="${officeActual.receptor}" placeholder="receptor"/>
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" th:field="*{receptor}" readonly = "readonly"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="officeReceptor">Departamento Receptor</label>
+                                                        <input type="text" class="form-control" id="exampleFormControlInput1" th:field="*{receptorDep}" readonly = "readonly"/>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label for="dateVersion">Fecha de Actualización</label>
                                                         <div class='input-group date'>
-                                                            <input type='text' class="form-control" th:value="${#dates.format(date, 'dd/MM/yyyy')}" disabled/>
+                                                            <input type='text' class="form-control" th:value="${#dates.format(date, 'dd/MM/yyyy')}" th:field="*{dateCreate}" readonly="readonly"/>
                                                             <span class="input-group-addon ">
                                                                 <img class="icon-img" th:src="@{/images/calendar.svg}">
                                                             </span>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="version">Versión</label>
-                                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Version"/>
+                                                        <label for="dateVersion">Fecha Limite</label>
+                                                        <div class='input-group date'>
+                                                            <input type='text' class="form-control" th:field="*{dateLimit}" readonly="readonly"/>
+                                                            <span class="input-group-addon ">
+                                                                <img class="icon-img" th:src="@{/images/calendar.svg}">
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="motive">Motivo</label>
-                                                        <textarea class="form-control" id="motive" rows="3" th:text="${officeActual.reason}"></textarea>
+                                                        <textarea class="form-control" id="motive" rows="3" th:field="*{reason}"></textarea>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="observations">Observaciones</label>
-                                                        <textarea class="form-control" id="observations" rows="3" th:text="${officeActual.observations}"></textarea>
+                                                        <textarea class="form-control" id="observations" rows="3" th:field="*{observations}"></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-danger">Agregar versión</button>
                                                     </div>
                                                 </form>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button th:action="@{/saveVersion}" type="button" class="btn btn-danger">Agregar version</button>
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>

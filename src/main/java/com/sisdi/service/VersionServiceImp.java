@@ -37,25 +37,13 @@ public class VersionServiceImp implements VersionService {
         return versionDao.findById(v.getId()).orElse(null);
     }
 
-//    @Override
-//    public List<Version> listVersionByEmisor(String emisor) {
-//        List<Version> list = this.list_versions();
-//        List<Version> aux = new ArrayList();
-//        for (Version o : list) {
-////            if (().equals(emisor)) {
-////                aux.add(o);
-////            }
-//        }
-
-//        return aux;
-//    }
     @Override
     public List<Version> listVersionByOffice(String office) {
         List<Version> list = this.list_versions();
         List<Version> aux = new ArrayList();
-        for (Version o : list) {
-            if (o.getOffice_id().equals(office)) {
-                aux.add(o);
+        for (Version v : list) {
+            if (v.getOffice_id().equals(office)) {
+                aux.add(v);
             }
         }
 

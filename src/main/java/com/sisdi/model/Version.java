@@ -45,5 +45,8 @@ public Version(int id, String office_id, String id_version, int version_number, 
     this.reason = reason;
     this.observations = observations;
 }
+
+public Version (){
+}
     
 }
