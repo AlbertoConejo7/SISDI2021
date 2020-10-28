@@ -70,8 +70,10 @@
                                              <td>
                                             
                                             <div class='input-group' th:if="${office.STATE == 0}">
+                                                 <a th:if="${office.STATE == 0}" th:href="@{/offices/acceptOffice/{id} (id=${office.OFFNUMBER})}">Marcar como Recibido</a>
 
-                                                <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#responseTime">Aceptar Oficio</button>
+                                                <!-- <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#responseTime">Aceptar Oficio</button>-->
+                                                
                                             </div>
                                                  
                                             </td>
