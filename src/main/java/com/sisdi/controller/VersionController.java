@@ -10,6 +10,7 @@ import com.sisdi.service.VersionService;
 import java.util.Date;
 import java.sql.Time;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,9 @@ public class VersionController {
     public String listVersion(@PathVariable String officeId, Model model, @AuthenticationPrincipal User user) {
         Office officeAct = officeService.searchOffice(officeId);
         OfficeSimple os = officeData.getOfficeSimple(officeAct);
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String date = format.format(fecha);
+        os.setDateCreate(date);
         List<Version> versions = versionService.listVersionByOffice(officeId);
         model.addAttribute("date", fecha);
         model.addAttribute("officeActual", os);
