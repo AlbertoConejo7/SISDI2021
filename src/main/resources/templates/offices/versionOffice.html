@@ -99,16 +99,17 @@
                                                                 <img class="icon-img" th:src="@{/images/calendar.svg}">
                                                             </span>
                                                         </div>
+                                                        <input type='hidden' class="form-control" th:field="*{dateLimit}" readonly="readonly"/>
                                                     </div>
-                                                    <div class="form-group">
+                                                    <!--<div class="form-group">
                                                         <label for="dateVersion">Fecha Limite</label>
                                                         <div class='input-group date'>
-                                                            <input type='text' class="form-control" th:field="*{dateLimit}" readonly="readonly"/>
+                                                            <input type='hidden' class="form-control" th:field="*{dateLimit}" readonly="readonly"/>
                                                             <span class="input-group-addon ">
                                                                 <img class="icon-img" th:src="@{/images/calendar.svg}">
                                                             </span>
                                                         </div>
-                                                    </div>
+                                                    </div>-->
                                                     <div class="form-group">
                                                         <label for="motive">Motivo</label>
                                                         <textarea class="form-control" id="motive" rows="3" th:field="*{reason}"></textarea>
