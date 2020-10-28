@@ -43,7 +43,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input placeholder="Oficio" class="form-control" th:field="*{offnumber}"/>
+                                        <input placeholder="Oficio" class="form-control" th:field="*{offnumber}" required/>
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -55,7 +55,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input placeholder="Motivo del Oficio"  class="form-control" th:field="*{reason}"/>
+                                        <input placeholder="Motivo del Oficio"  class="form-control" th:field="*{reason}" required/>
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -104,7 +104,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input placeholder="Nombre del Receptor"  th:field="*{receptor}" class="form-control"/>       
+                                        <input placeholder="Nombre del Receptor"  th:field="*{receptor}" class="form-control" required/>       
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -116,7 +116,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input  placeholder="Departamento"  class="form-control" th:field="*{receptorDep}"/> 
+                                        <input  placeholder="Departamento"  class="form-control" th:field="*{receptorDep}" required/> 
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -128,7 +128,7 @@
                                 </td>
                                 <td>
                                     <div class='form-check form-check-inline'>
-                                        <input type="radio" value="1"  th:field="*{type_id}" name="type" id="comunicar" class="form-check-input"/>
+                                        <input type="radio" value="1"  th:field="*{type_id}" name="type" id="comunicar" class="form-check-input" checked="checked"/>
                                         <label path="type" class="form-check-label" for="comunicar">Comunicar</label>
                                     </div>
                                     <div class='form-check form-check-inline'>
@@ -148,7 +148,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <textarea rows="4" class="w-100" placeholder="Escriba aquí sus observaciones" style="resize: none;" th:field="*{observations}"></textarea>                             
+                                        <textarea rows="4" class="w-100" placeholder="Escriba aquí sus observaciones" style="resize: none;" th:field="*{observations}" ></textarea>                             
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
