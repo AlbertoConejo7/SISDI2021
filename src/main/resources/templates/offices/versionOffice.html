@@ -46,7 +46,7 @@
                                         <tr th:each="Version : ${versions}" th:if="${versions != null and !versions.empty}">
                                             <td th:text="${Version.version_id}"></td>
                                             <td  th:text="${Version.version_number}"></td>
-                                            <td  th:text="${Version.version_date}"></td>
+                                            <td  th:text="${#dates.format(Version.version_date, 'dd/MM/yyyy')}"></td>
                                             <td  th:text="${Version.version_description}"></td>
                                         </tr>
                                         <tr>
@@ -94,7 +94,7 @@
                                                     <div class="form-group">
                                                         <label for="dateVersion">Fecha de Actualización</label>
                                                         <div class='input-group date'>
-                                                            <input type='text' class="form-control" th:value="${#dates.format(date, 'dd/MM/yyyy')}" th:field="*{dateCreate}" readonly="readonly"/>
+                                                            <input type='text' class="form-control" th:field="*{dateCreate}" readonly="readonly"/>
                                                             <span class="input-group-addon ">
                                                                 <img class="icon-img" th:src="@{/images/calendar.svg}">
                                                             </span>
