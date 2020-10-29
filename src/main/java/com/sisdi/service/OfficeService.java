@@ -1,6 +1,7 @@
 package com.sisdi.service;
 
 import com.sisdi.model.Office;
+import java.util.Date;
 import java.util.List;
 
 public interface OfficeService {
@@ -10,6 +11,7 @@ public interface OfficeService {
     List<Office> listOfficeByEmisor(String emisor);
     List<Office> listOfficeByReceptor(String receptor);
     List<Office> listOfficeByUser(String user);
-//    List<Office> listByName(String name);
-    
+    List<Office> listByName(List <Office> list, String name);
+    List<Office> listByDate(List<Office> list, Date date);
+    List<Office> listByReason(List<Office> list, String reason);
 }
