@@ -165,5 +165,14 @@ public class OfficeController {
         // model.addAttribute("timeOuts", time);
         return "offices/pendingOffice";
     }
+    @GetMapping("/viewOffice/{officeId}")
+   public String viewOffice(@PathVariable String officeId, Model model) {
+        Office officeAct = officeServiceImp.searchOffice(officeId);
+        OfficeSimple os = officeData.getOfficeSimple(officeAct);
+        model.addAttribute("date", fecha);
+        model.addAttribute("officeActual", os);
+        model.addAttribute("title", "no");
+        return "offices/editOffice";
+    }
 
 }
