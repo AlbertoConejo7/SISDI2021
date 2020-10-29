@@ -20,7 +20,10 @@ public class OfficeData {
         Office o=new Office();
          Usuario emisor=userData.getUserByName(office.getEmisor());
          Usuario receptor=userData.getUserByName(office.getReceptor());
-         Date dateLimit=new SimpleDateFormat("dd/MM/yyyy").parse(office.getDateLimit());
+         if(office.getDateLimit()!=""){
+              Date dateLimit=new SimpleDateFormat("dd/MM/yyyy").parse(office.getDateLimit());
+              o.setDEADLINE(dateLimit);
+         }
          o.setOFFNUMBER(office.getOffnumber());
          o.setREASON(office.getReason());
          o.setINCORDATE(fecha);
@@ -29,7 +32,6 @@ public class OfficeData {
          o.setTYPE_ID(office.getType_id());
          o.setSTATE(state);
          o.setOBSERVATIONS(office.getObservations());
-         o.setDEADLINE(dateLimit);
          o.setTIMEOUTS_ID(1);
         return o;
     }
