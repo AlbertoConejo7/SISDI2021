@@ -8,11 +8,10 @@ $('#datepicker1').datepicker({
     todayHighlight: true
 });
 
-
-$('#datepicker2').datepicker2({
+$('#datepicker2').datepicker({
     format: "dd/mm/yyyy",
-    weekStart: l,
+    weekStart: 1,
     language: "es",
-    startDate: today,
+    endDate: today,
     todayHighlight: true
 });
