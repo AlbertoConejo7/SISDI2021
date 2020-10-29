@@ -3,16 +3,24 @@ package com.sisdi.data;
 import com.sisdi.model.Office;
 import com.sisdi.model.OfficeSimple;
 import com.sisdi.model.Usuario;
+import com.sisdi.model.searchOffice;
+import com.sisdi.service.OfficeServiceImp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class OfficeData {
     @Autowired
     private UserData userData;
+    
+    @Autowired
+    private OfficeServiceImp officeService;
     
     private Date fecha = new Date();
      
@@ -57,5 +65,27 @@ public class OfficeData {
             o.setDateLimit(limit);
         }
         return o; 
+    }
+    public List<Office> searchOffice(searchOffice search, String user) throws ParseException{
+        List<Office> list=officeService.listOfficeByUser(user);
+        log.info(list.toString());
+       if(!search.getOffnumber().equals("")){
+           list=officeService.listByName(list, search.getOffnumber());
+       }
+       log.info(list.toString());
+       if(search.getDateCreate()!=""){
+            Date dateLimit=new SimpleDateFormat("dd/MM/yyyy").parse(search.getDateCreate());
+            list=officeService.listByDate(list, dateLimit);
+            log.info(dateLimit.toString());
+         }
+       log.info(list.toString());
+
+       if(!search.getReason().equals("")){
+           list=officeService.listByReason(list, search.getReason());
+           
+       }
+       log.info(list.toString());
+
+        return list;
     }
 }
