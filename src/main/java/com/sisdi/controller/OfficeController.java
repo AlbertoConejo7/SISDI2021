@@ -117,13 +117,21 @@ public class OfficeController {
         model.addAttribute("search",search);
         return "offices/listOffices";
     }
+    @GetMapping("/searchedOffices")
+    public String searchedOffices(Model model, @AuthenticationPrincipal User user) {
+        searchOffice search = new searchOffice();
+        log.info("ejecutando el controlador Oficios");
+        model.addAttribute("search",search);
+        return "offices/listOffices";
+    }
 
-    @PostMapping("/listByName")
-    public String listByName(Model model, @ModelAttribute("search") searchOffice search, @AuthenticationPrincipal User user) {
-        List<Office> offices = officeServiceImp.listByName(search.getOffnumber(), user.getUsername());
+    @PostMapping("/searchOffice")
+    public String searchOffice(Model model, @ModelAttribute("search") searchOffice search, @AuthenticationPrincipal User user) throws ParseException {
+        List<Office> offices = officeData.searchOffice(search, user.getUsername());
+        log.info(search.toString());
         log.info("ejecutando el controlador Oficios");
         model.addAttribute("offices", offices);
-        return "offices/listOffices";
+        return "offices/searchOffices";
     }
 
     @GetMapping("/pendingOffice")
