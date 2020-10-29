@@ -3,6 +3,7 @@ package com.sisdi.service;
 import com.sisdi.dao.OfficeDao;
 import com.sisdi.model.Office;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,16 +71,42 @@ public class OfficeServiceImp implements OfficeService {
         aux.addAll(receptor);
         return aux;
     }
-
-    public List<Office> listByName(String name, String user) {
-        List <Office> list = this.listOfficeByUser(user);
+    @Override
+    public List<Office> listByName(List <Office> list, String name) {
         List<Office> aux = new ArrayList();
+        String nameAux1=name.toLowerCase();
         for(Office o : list){
-            if(o.getOFFNUMBER().contains(name)){
+            String nameAux2=o.getOFFNUMBER().toLowerCase();
+            if(nameAux2.contains(nameAux1)){
                 aux.add(o);
             }
         }
         return aux;
     }
+
+    @Override
+    public List<Office> listByDate(List<Office> list, Date date) {
+        List<Office> aux = new ArrayList();
+        for(Office o : list){
+            if(date.equals(o.getINCORDATE())){
+                aux.add(o);
+            }
+        }
+        return aux;
+    }
+
+    @Override
+    public List<Office> listByReason(List<Office> list, String reason) {
+        List<Office> aux = new ArrayList();
+        String reasonAux1=reason.toLowerCase();
+        for(Office o : list){
+            String reasonAux2=o.getREASON().toLowerCase();
+            if(reasonAux2.contains(reasonAux1)){
+                aux.add(o);
+            }
+        }
+        return aux;
+    }
+
 
 }
