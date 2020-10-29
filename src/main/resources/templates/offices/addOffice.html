@@ -100,11 +100,11 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <span>Receptor</span>
+                                    <span>Departamento Receptor</span>
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input placeholder="Nombre del Receptor"  th:field="*{receptor}" class="form-control" required/>       
+                                        <input  placeholder="Departamento"  class="form-control" th:field="*{receptorDep}" required/> 
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -112,11 +112,11 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <span>Departamento Receptor</span>
+                                    <span>Receptor</span>
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input  placeholder="Departamento"  class="form-control" th:field="*{receptorDep}" required/> 
+                                        <input placeholder="Nombre del Receptor"  th:field="*{receptor}" class="form-control" required/>       
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -148,7 +148,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <textarea rows="4" class="w-100" placeholder="Escriba aquí sus observaciones" style="resize: none;" th:field="*{observations}" ></textarea>                             
+                                        <textarea rows="4" class="w-100" placeholder="Escriba aquí sus observaciones" style="resize: none;" th:field="*{observations}" required></textarea>                             
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -160,7 +160,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input type="file" name="adjunto" accept=".pdf"/>
+                                        <input type="file" name="adjunto" accept=".pdf" required/>
                                         <span class="input-group-addon ">
                                         </span>
                                         <p class="w-100">*Solo se admite un único archivo .pdf*</p>
@@ -173,7 +173,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input type="file" name="adjunto" accept=".pdf,.jpg,.png, .pptx, .docx, .mp3, .mp4, .xml, .txt, .html" multiple />
+                                        <input  type="file" name="adjunto" accept=".pdf,.jpg,.png, .pptx, .docx, .mp3, .mp4, .xml, .txt, .html" multiple />
                                         <span class="input-group-addon ">
                                         </span>
                                         <p class="w-100">*Agregue aquí los adjuntos necesarios*</p>

@@ -38,6 +38,7 @@
                                             <th style="text-align: center">Fecha de Modificación</th>
                                             <th style="text-align: center">Tipo</th>
                                             <th style="text-align: center">Estado</th>
+                                            <th style="text-align: center">Ver Oficio</th>
                                             <th style="text-align: center">Responder</th>
                                             <th style="text-align: center">Marcar como Recibido</th>
                                             
@@ -62,9 +63,11 @@
                                             <td th:if="${office.STATE == 1}" th:text="Recibido"></td>
                                             <td th:if="${office.STATE == 2}" th:text="Respondido"></td>
                                             <td th:if="${office.STATE == 3}" th:text="Anulado"></td>
-                                            
+                                             <td >
+                                                    <a th:href="@{/offices/viewOffice/{id} (id=${office.OFFNUMBER})}">Ver</a>
+                                                </td>
                                                 <td >
-                                                    <a th:if="${office.STATE == 1}" th:href="@{/offices/responseOffice/{id} (id=${office.OFFNUMBER})}">Responder</a>
+                                                    <a th:if="${office.STATE == 1 && office.DEADLINE!=null}" th:href="@{/offices/responseOffice/{id} (id=${office.OFFNUMBER})}">Responder</a>
                                                 </td>
                               
                                              <td>
