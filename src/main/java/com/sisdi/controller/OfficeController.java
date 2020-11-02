@@ -48,10 +48,13 @@ public class OfficeController {
     public String addOffice(Model model, OfficeSimple officeAdd, @AuthenticationPrincipal User user) {
         String fechaS = new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
         model.addAttribute("date", fecha);
+        List<Usuario> usuarios=userData.listUsers();
         Usuario u = userData.getUser(user.getUsername());
         officeAdd.setEmisor(u.getTempUser().getName());
         officeAdd.setEmisorDep(u.getDepartment().getName());
         officeAdd.setDateCreate(fechaS);
+        log.info(usuarios.toString());
+        model.addAttribute("usuarios", usuarios);
         model.addAttribute("officeAdd", officeAdd);
         return "offices/addOffice";
     }
