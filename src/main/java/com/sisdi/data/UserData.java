@@ -3,6 +3,7 @@ package com.sisdi.data;
 import com.sisdi.model.UserEntity;
 import com.sisdi.model.Usuario;
 import com.sisdi.service.UserServiceImp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,12 @@ public final class UserData {
     }
     public boolean is(int i){
         return i==1;
+    }
+    public List<Usuario> listUsers(){
+        List<Usuario> aux= new ArrayList();
+        for(Usuario u:listUser.values()){
+            aux.add(u);
+        }
+        return aux;
     }
 }
