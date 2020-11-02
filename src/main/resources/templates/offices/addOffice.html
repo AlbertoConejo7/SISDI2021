@@ -98,7 +98,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
+                            <!--<tr>
                                 <td>
                                     <span>Departamento Receptor</span>
                                 </td>
@@ -109,14 +109,16 @@
                                         </span>
                                     </div>
                                 </td>
-                            </tr>
+                            </tr>-->
                             <tr>
                                 <td>
                                     <span>Receptor</span>
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input placeholder="Nombre del Receptor"  th:field="*{receptor}" class="form-control" required/>       
+                                        <select name="usuarios" th:field="*{receptor}">
+                                            <option th:each="usuario:${usuarios}" th:value="${usuario.tempUser.name}" th:text="${usuario.tempUser.name + ' / ' + usuario.department.name}"></option>
+                                        </select>
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
