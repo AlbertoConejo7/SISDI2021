@@ -24,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @Slf4j
@@ -56,14 +57,18 @@ public class OfficeController {
         log.info(usuarios.toString());
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("officeAdd", officeAdd);
+        
         return "offices/addOffice";
     }
 
     @PostMapping("/saveOffice")
-    public String saveOffice(Model model, @ModelAttribute("officeAdd") OfficeSimple office) throws ParseException {
+    public String saveOffice(Model model, @ModelAttribute("officeAdd") OfficeSimple office,RedirectAttributes redirectAttrs) throws ParseException {
         Office o = officeData.getOffice(office, 0);
         log.info(o.toString());
         officeServiceImp.addOffice(o);
+        redirectAttrs
+            .addFlashAttribute("mensaje", "Agregado correctamente")
+            .addFlashAttribute("clase", "success");
         return "redirect:/offices/addOffice";
     }
 

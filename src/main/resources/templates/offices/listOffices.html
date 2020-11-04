@@ -46,7 +46,9 @@
                                         <th style="text-align: center">Fecha de Modificación</th>
                                         <th style="text-align: center">Tipo</th>
                                         <th style="text-align: center">Estado</th>
-                                        <th style="text-align: center"></th>
+                                        <th style="text-align: center">Editar Oficio </th>
+                                        <th style="text-align: center">Ver Oficio </th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,11 +70,12 @@
                                         <td th:if="${office.STATE == 2}" th:text="Respondido"></td>
                                         <td th:if="${office.STATE == 3}" th:text="Anulado"></td>
                                         <td th:if="${office.STATE != 3}">
-                                            <a th:href="@{/offices/editOffice/{id} (id=${office.OFFNUMBER})}">Editar</a>
+                                            <a th:href="@{/offices/editOffice/{id} (id=${office.OFFNUMBER})}"><img th:src="@{/images/edit.png}"></a>
                                         </td>
-                                        <td th:if="${office.STATE == 3}">
-                                            <a th:href="@{/offices/viewOffice/{id} (id=${office.OFFNUMBER})}">Ver</a>
+                                        <td >
+                                            <a th:href="@{/offices/viewOffice/{id} (id=${office.OFFNUMBER})}"><img th:src="@{/images/show.png}"></a>
                                         </td>
+                                       
                                     </tr>
                                 </tbody>
                             </table>

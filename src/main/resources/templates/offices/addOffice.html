@@ -19,16 +19,23 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker.es.min.js" type="text/javascript"></script>
         <script th:src="@{/js/calendar.js}"></script>
-    </head> 
+          
+    </head>
+    
     <body>
         <header th:insert="menu/Head :: menu"></header>
         <div class="mt-2 col-md-1">
             <br> <br>
         </div>
+         
         <div class="alert alert-success alert-dismissable alert-min fade" id="alert-save">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <strong>Fecha de Plazo de Respuesta</strong> guardada.
         </div>
+        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+     th:text="${mensaje}"
+     class="alert">
+</div>
         <main>
             <div class="container mx-auto">
                 <div id="titulo">
@@ -257,4 +264,5 @@
     <script th:src="@{/js/addOffice.js}"></script>
     <script th:src="@{/js/calendar.js}"></script>
 </body>
+
 </html>

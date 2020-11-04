@@ -41,6 +41,7 @@
                                             <th style="text-align: center">Ver Oficio</th>
                                             <th style="text-align: center">Responder</th>
                                             <th style="text-align: center">Marcar como Recibido</th>
+                                            <th style="text-align: center">Fecha Limite de Respuesta</th>
                                             
                                         </tr>
                                     </thead>
@@ -64,22 +65,25 @@
                                             <td th:if="${office.STATE == 2}" th:text="Respondido"></td>
                                             <td th:if="${office.STATE == 3}" th:text="Anulado"></td>
                                              <td >
-                                                    <a th:href="@{/offices/viewOffice/{id} (id=${office.OFFNUMBER})}">Ver</a>
-                                                </td>
+                                            <a th:href="@{/offices/viewOffice/{id} (id=${office.OFFNUMBER})}"><img th:src="@{/images/show.png}"></a>
+                                            </td>
                                                 <td >
-                                                    <a th:if="${office.STATE == 1 && office.DEADLINE!=null}" th:href="@{/offices/responseOffice/{id} (id=${office.OFFNUMBER})}">Responder</a>
+                                                    <a th:if="${office.STATE == 1 && office.DEADLINE!=null}" th:href="@{/offices/responseOffice/{id} (id=${office.OFFNUMBER})}"><img th:src="@{/images/reply.png}"></a>
                                                 </td>
                               
                                              <td>
                                             
-                                            <div class='input-group' th:if="${office.STATE == 0}">
-                                                 <a th:if="${office.STATE == 0}" th:href="@{/offices/acceptOffice/{id} (id=${office.OFFNUMBER})}">Marcar como Recibido</a>
-
+                                            <div class='input-group'>
+                                                 <a th:if="${office.STATE == 0}" th:href="@{/offices/acceptOffice/{id} (id=${office.OFFNUMBER})}"><img th:src="@{/images/aceptar.png}"></a>
+                                                <a th:if="${office.STATE != 0}"><img th:src="@{/images/recibido.png}"></a>
+                                                 
                                                 <!-- <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#responseTime">Aceptar Oficio</button>-->
-                                                
+                                     
                                             </div>
                                                  
                                             </td>
+                                            
+                                            <td th:if="${office.DEADLINE != null && office.STATE == 1 }" th:text="${#dates.format(office.DEADLINE, 'dd/MM/yyyy')}"></td>
                                            <!--   <td  th:each=${#dates.format(timeOuts.LIMITDATE, 'dd/MM/yyyy')}"></td> -->
                                         </tr>
                                         

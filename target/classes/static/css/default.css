@@ -14,6 +14,20 @@
     src: url(Arial.ttf);
 }
 
+.imgen{
+    text-align: center;
+}
+
+.usuario{
+    position: absolute;
+    background-color:#343c44;
+    margin-top: 7px;
+    color:#fff;
+    display:inline-block;
+    text-align:center;
+    width:400px;
+    border: 1px solid #11DBDB;
+}
 
 #wrapper {
     padding: 130px;
