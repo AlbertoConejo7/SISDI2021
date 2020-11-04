@@ -19,15 +19,22 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker.es.min.js" type="text/javascript"></script>
         <script th:src="@{/js/calendar.js}"></script>
-    </head> 
+          
+    </head>
+    
     <body>
         <header th:insert="menu/Head :: menu"></header>
         <div class="mt-2 col-md-1">
             <br> <br>
         </div>
+         
         <div class="alert alert-success alert-dismissable alert-min fade" id="alert-save">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <strong>Fecha de Plazo de Respuesta</strong> guardada.
+        </div>
+        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+             th:text="${mensaje}"
+             class="alert">
         </div>
         <main>
             <div class="container mx-auto">
@@ -43,7 +50,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input placeholder="Oficio" class="form-control" th:field="*{offnumber}"/>
+                                        <input placeholder="Oficio" class="form-control" th:field="*{offnumber}" required/>
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -55,7 +62,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input placeholder="Motivo del Oficio"  class="form-control" th:field="*{reason}"/>
+                                        <input placeholder="Motivo del Oficio"  class="form-control" th:field="*{reason}" required/>
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -98,25 +105,27 @@
                                     </div>
                                 </td>
                             </tr>
+                            <!--<tr>
+                                <td>
+                                    <span>Departamento Receptor</span>
+                                </td>
+                                <td>
+                                    <div class='input-group'>
+                                        <input  placeholder="Departamento"  class="form-control" th:field="*{receptorDep}" required/> 
+                                        <span class="input-group-addon ">
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>-->
                             <tr>
                                 <td>
                                     <span>Receptor</span>
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input placeholder="Nombre del Receptor"  th:field="*{receptor}" class="form-control"/>       
-                                        <span class="input-group-addon ">
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Departamento Receptor</span>
-                                </td>
-                                <td>
-                                    <div class='input-group'>
-                                        <input  placeholder="Departamento"  class="form-control" th:field="*{receptorDep}"/> 
+                                        <select name="usuarios" th:field="*{receptor}">
+                                            <option th:each="usuario:${usuarios}" th:value="${usuario.tempUser.name}" th:text="${usuario.tempUser.name + ' / ' + usuario.department.name}"></option>
+                                        </select>
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -128,7 +137,7 @@
                                 </td>
                                 <td>
                                     <div class='form-check form-check-inline'>
-                                        <input type="radio" value="1"  th:field="*{type_id}" name="type" id="comunicar" class="form-check-input"/>
+                                        <input type="radio" value="1"  th:field="*{type_id}" name="type" id="comunicar" class="form-check-input" checked="checked"/>
                                         <label path="type" class="form-check-label" for="comunicar">Comunicar</label>
                                     </div>
                                     <div class='form-check form-check-inline'>
@@ -148,7 +157,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <textarea rows="4" class="w-100" placeholder="Escriba aquí sus observaciones" style="resize: none;" th:field="*{observations}"></textarea>                             
+                                        <textarea rows="4" class="w-100" placeholder="Escriba aquí sus observaciones" style="resize: none;" th:field="*{observations}" required></textarea>                             
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -160,7 +169,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input type="file" name="adjunto" accept=".pdf"/>
+                                        <input type="file" name="adjunto" accept=".pdf" required/>
                                         <span class="input-group-addon ">
                                         </span>
                                         <p class="w-100">*Solo se admite un único archivo .pdf*</p>
@@ -173,7 +182,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input type="file" name="adjunto" accept=".pdf,.jpg,.png, .pptx, .docx, .mp3, .mp4, .xml, .txt, .html" multiple />
+                                        <input  type="file" name="adjunto" accept=".pdf,.jpg,.png, .pptx, .docx, .mp3, .mp4, .xml, .txt, .html" multiple />
                                         <span class="input-group-addon ">
                                         </span>
                                         <p class="w-100">*Agregue aquí los adjuntos necesarios*</p>
@@ -182,7 +191,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <span>Fecha Limite de Respuesta</span>
+                                    <span>Fecha Límite de Respuesta</span>
                                 </td>
                                 <td>
                                     <div class='input-group'>
@@ -216,7 +225,7 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <span>Fecha de Emision</span>
+                                            <span>Fecha de Emisión</span>
                                         </td>
                                         <td>
                                             <div class='input-group date'>
@@ -229,7 +238,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <span>Fecha Limite de Respuesta</span>
+                                            <span>Fecha Límite de Respuesta</span>
                                             <span class="help-block error-message hide-message" id="errorResponseTime">Error</span>
                                         </td>
                                         <td>
@@ -246,7 +255,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="saveResponseTime()">Guardar</button>
+                        <button type="button" class="btn btn-primary" onclick="saveResponseTime()">Guardar oficio</button>
                     </div>
                 </div>
             </div>
@@ -255,4 +264,5 @@
     <script th:src="@{/js/addOffice.js}"></script>
     <script th:src="@{/js/calendar.js}"></script>
 </body>
+
 </html>

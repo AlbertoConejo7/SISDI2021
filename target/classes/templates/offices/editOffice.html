@@ -27,9 +27,15 @@
         <div class="mt-2 col-md-1">
             <br> <br> <br>
         </div>
+        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+             th:text="${mensaje}"
+             class="alert">
+        </div>       
         <main>
             <div class="container">
-                <div th:insert="menu/HeadOffice :: menuOffice"></div>
+                <div th:if="${title != 'no'}">
+                    <div   th:insert="menu/HeadOffice :: menuOffice"></div>
+                </div>
                 <div class="row mt-4 mr-5">
                     <div class="col-sm">
                         <table class="table"> 
@@ -51,10 +57,21 @@
                             </tr>
                             <tr>
                                 <th>
-                                    <p>Fecha Emision</p>
+                                    <p>Fecha Emisión</p>
                                 </th>
                                 <td colspan="2">
                                     <p th:text="${officeActual.dateCreate}"></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <p>Fecha de Respuesta Límite</p>
+                                </th>
+                                <td colspan="2" th:if="${officeActual.dateLimit != null}">
+                                    <p th:text="${officeActual.dateLimit}"></p>
+                                </td>
+                                <td colspan="2" th:if="${officeActual.dateLimit == null}">
+                                    <p>No requiere respuesta</p>
                                 </td>
                             </tr>
                             <tr>
@@ -100,9 +117,23 @@
                                     <p th:if="${officeActual.type_id==3}" th:text="Aprobar"></p>
                                 </td>
                             </tr>
+                            <tr>
+                                <th>
+                                    <p>Observaciones</p>
+                                </th>
+                                <td colspan="2">
+                                    <p th:text="${officeActual.observations}"></p>
+                                </td>
+                            </tr>
                             <tr >
-                                <td colspan="3" th:if="${officeActual.dateLimit != null}">
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#annulModal">Anular Officio</button>
+                                <td colspan="3" th:if="${title != 'no'}">
+                                    <div th:if="${officeActual.dateLimit == null}">
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#annulModal">Anular Officio</button>
+                                    </div>
+
+                                </td>
+                                <td colspan="3" th:if="${title == 'no'}">
+                                    <button type="button" th:onclick="history.back()" class="btn btn-primary">Regresar</button>
                                 </td>
                             </tr>
                         </table>
@@ -147,9 +178,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="motiveAnnul">Motivo de Anulación</label>
-                                    <textarea class="form-control" id="motiveAnnul" rows="3" style="resize:none;" th:field="*{observations}"></textarea>
+                                    <textarea class="form-control" id="motiveAnnul" rows="3" style="resize:none;" th:field="*{observations}" required></textarea>
                                 </div>
-                                <div class="modal-footer form-group">
+                                <div class="modal-footer form-group" >
                                     <button type="submit" class="btn btn-danger">Anular Oficio</button>
                                 </div>
                             </form>

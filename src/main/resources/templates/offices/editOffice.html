@@ -27,6 +27,10 @@
         <div class="mt-2 col-md-1">
             <br> <br> <br>
         </div>
+        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+             th:text="${mensaje}"
+             class="alert">
+        </div>       
         <main>
             <div class="container">
                 <div th:if="${title != 'no'}">
@@ -53,7 +57,7 @@
                             </tr>
                             <tr>
                                 <th>
-                                    <p>Fecha Emision</p>
+                                    <p>Fecha Emisión</p>
                                 </th>
                                 <td colspan="2">
                                     <p th:text="${officeActual.dateCreate}"></p>
@@ -61,7 +65,7 @@
                             </tr>
                             <tr>
                                 <th>
-                                    <p>Fecha de Respuesta Limite</p>
+                                    <p>Fecha de Respuesta Límite</p>
                                 </th>
                                 <td colspan="2" th:if="${officeActual.dateLimit != null}">
                                     <p th:text="${officeActual.dateLimit}"></p>
@@ -126,10 +130,10 @@
                                     <div th:if="${officeActual.dateLimit == null}">
                                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#annulModal">Anular Officio</button>
                                     </div>
-                                    
+
                                 </td>
                                 <td colspan="3" th:if="${title == 'no'}">
-                                   <button type="button" th:onclick="history.back()" class="btn btn-primary">Regresar</button>
+                                    <button type="button" th:onclick="history.back()" class="btn btn-primary">Regresar</button>
                                 </td>
                             </tr>
                         </table>

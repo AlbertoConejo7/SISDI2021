@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @Slf4j
@@ -39,8 +40,8 @@ public class VersionController {
 
     @Autowired
     private OfficeData officeData;
-    
-    @Autowired 
+
+    @Autowired
     private VersionData versionData;
 
     private Date fecha = new Date();
@@ -62,14 +63,25 @@ public class VersionController {
     }
 
     @PostMapping("/saveVersion")
-    public String saveVersion(@ModelAttribute("officeActual")OfficeSimple office) throws ParseException {
-        Version v = versionData.getVersion(office);
-        Office off = officeData.getOffice(office,0);
-        off.setINDX(office.getId());
-        log.info(office.toString());
-        officeService.addOffice(off);
-        versionService.save_version(v);
-        return "redirect:/offices/editOffice/"+office.getOffnumber();
+    public String saveVersion(@ModelAttribute("officeActual") OfficeSimple office, RedirectAttributes redirectAttrs) throws ParseException {
+        try {
+            Version v = versionData.getVersion(office);
+            Office off = officeData.getOffice(office, 0);
+            off.setINDX(office.getId());
+            log.info(office.toString());
+            officeService.addOffice(off);
+            versionService.save_version(v);
+
+            redirectAttrs
+                    .addFlashAttribute("mensaje", "Versión agregada correctamente")
+                    .addFlashAttribute("clase", "success");
+        } 
+        catch (Exception e) {
+            redirectAttrs
+                    .addFlashAttribute("mensaje", "Error al agregar versión")
+                    .addFlashAttribute("clase", "alert alert-danger");
+        }
+        return "redirect:/offices/editOffice/" + office.getOffnumber();
     }
 
 }

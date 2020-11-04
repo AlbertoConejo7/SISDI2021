@@ -33,9 +33,9 @@
             <strong>Fecha de Plazo de Respuesta</strong> guardada.
         </div>
         <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
-     th:text="${mensaje}"
-     class="alert">
-</div>
+             th:text="${mensaje}"
+             class="alert">
+        </div>
         <main>
             <div class="container mx-auto">
                 <div id="titulo">
@@ -191,7 +191,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <span>Fecha Limite de Respuesta</span>
+                                    <span>Fecha Límite de Respuesta</span>
                                 </td>
                                 <td>
                                     <div class='input-group'>
@@ -225,7 +225,7 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <span>Fecha de Emision</span>
+                                            <span>Fecha de Emisión</span>
                                         </td>
                                         <td>
                                             <div class='input-group date'>
@@ -238,7 +238,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <span>Fecha Limite de Respuesta</span>
+                                            <span>Fecha Límite de Respuesta</span>
                                             <span class="help-block error-message hide-message" id="errorResponseTime">Error</span>
                                         </td>
                                         <td>
@@ -255,7 +255,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="saveResponseTime()">Guardar</button>
+                        <button type="button" class="btn btn-primary" onclick="saveResponseTime()">Guardar oficio</button>
                     </div>
                 </div>
             </div>

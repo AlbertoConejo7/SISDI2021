@@ -49,7 +49,7 @@ public class OfficeController {
     public String addOffice(Model model, OfficeSimple officeAdd, @AuthenticationPrincipal User user) {
         String fechaS = new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
         model.addAttribute("date", fecha);
-        List<Usuario> usuarios=userData.listUsers();
+        List<Usuario> usuarios = userData.listUsers();
         Usuario u = userData.getUser(user.getUsername());
         officeAdd.setEmisor(u.getTempUser().getName());
         officeAdd.setEmisorDep(u.getDepartment().getName());
@@ -57,33 +57,47 @@ public class OfficeController {
         log.info(usuarios.toString());
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("officeAdd", officeAdd);
-        
+
         return "offices/addOffice";
     }
 
     @PostMapping("/saveOffice")
-    public String saveOffice(Model model, @ModelAttribute("officeAdd") OfficeSimple office,RedirectAttributes redirectAttrs) throws ParseException {
-        Office o = officeData.getOffice(office, 0);
-        log.info(o.toString());
-        officeServiceImp.addOffice(o);
-        redirectAttrs
-            .addFlashAttribute("mensaje", "Agregado correctamente")
-            .addFlashAttribute("clase", "success");
+    public String saveOffice(Model model, @ModelAttribute("officeAdd") OfficeSimple office, RedirectAttributes redirectAttrs) throws ParseException {
+        try {
+            Office o = officeData.getOffice(office, 0);
+            log.info(o.toString());
+            officeServiceImp.addOffice(o);
+            redirectAttrs
+                    .addFlashAttribute("mensaje", "Oficio agregado correctamente")
+                    .addFlashAttribute("clase", "success");
+        } catch (Exception e) {
+            redirectAttrs
+                    .addFlashAttribute("mensaje", "Error al agregar oficio")
+                    .addFlashAttribute("clase", "alert alert-danger");
+        }
         return "redirect:/offices/addOffice";
     }
 
     @PostMapping("/saveResponseOffice")
-    public String saveResponseOffice(Model model, @ModelAttribute("officeActual") OfficeSimple office, HttpSession session) throws ParseException {
+    public String saveResponseOffice(Model model, @ModelAttribute("officeActual") OfficeSimple office, HttpSession session, RedirectAttributes redirectAttrs) throws ParseException {
         Office o = officeData.getOffice(office, 1);
         log.info(o.toString());
-        officeServiceImp.addOffice(o);
-        String officeId = (String) session.getAttribute("officeResponse");
-        log.info(officeId);
-
-        Office of = officeServiceImp.searchOffice(officeId);
-        of.setSTATE(2);
-        log.info(of.toString());
-        officeServiceImp.addOffice(of);
+        try {
+            officeServiceImp.addOffice(o);
+            String officeId = (String) session.getAttribute("officeResponse");
+            log.info(officeId);
+            Office of = officeServiceImp.searchOffice(officeId);
+            of.setSTATE(2);
+            log.info(of.toString());
+            officeServiceImp.addOffice(of);
+            redirectAttrs
+                    .addFlashAttribute("mensaje", "Respuesta enviada correctamente")
+                    .addFlashAttribute("clase", "success");
+        } catch (Exception e) {
+            redirectAttrs
+                    .addFlashAttribute("mensaje", "Error al responder oficio")
+                    .addFlashAttribute("clase", "alert alert-danger");
+        }
         return "redirect:/offices/pendingOffice";
     }
 
@@ -122,14 +136,15 @@ public class OfficeController {
         searchOffice search = new searchOffice();
         log.info("ejecutando el controlador Oficios");
         model.addAttribute("offices", offices);
-        model.addAttribute("search",search);
+        model.addAttribute("search", search);
         return "offices/listOffices";
     }
+
     @GetMapping("/searchedOffices")
     public String searchedOffices(Model model, @AuthenticationPrincipal User user) {
         searchOffice search = new searchOffice();
         log.info("ejecutando el controlador Oficios");
-        model.addAttribute("search",search);
+        model.addAttribute("search", search);
         return "offices/listOffices";
     }
 
@@ -162,7 +177,7 @@ public class OfficeController {
         o.setINDX(office.getId());
         model.addAttribute("offices", offices);
         officeServiceImp.addOffice(o);
-        model.addAttribute("search",new searchOffice());
+        model.addAttribute("search", new searchOffice());
         return "offices/listOffices";
     }
 
@@ -181,8 +196,9 @@ public class OfficeController {
         // model.addAttribute("timeOuts", time);
         return "offices/pendingOffice";
     }
+
     @GetMapping("/viewOffice/{officeId}")
-   public String viewOffice(@PathVariable String officeId, Model model) {
+    public String viewOffice(@PathVariable String officeId, Model model) {
         Office officeAct = officeServiceImp.searchOffice(officeId);
         OfficeSimple os = officeData.getOfficeSimple(officeAct);
         model.addAttribute("date", fecha);

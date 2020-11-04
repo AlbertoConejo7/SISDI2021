@@ -19,6 +19,7 @@ com\sisdi\model\Version.class
 com\sisdi\dao\DepartmentDao.class
 com\sisdi\model\Usuario.class
 com\sisdi\data\UserData.class
+com\sisdi\data\VersionData.class
 com\sisdi\controller\OfficeController.class
 com\sisdi\model\OfficeSimple.class
 com\sisdi\model\UserEntity.class
