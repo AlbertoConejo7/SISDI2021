@@ -181,11 +181,44 @@
                                     <textarea class="form-control" id="motiveAnnul" rows="3" style="resize:none;" th:field="*{observations}" required></textarea>
                                 </div>
                                 <div class="modal-footer form-group" >
-                                    <button type="submit" class="btn btn-danger">Anular Oficio</button>
+                                   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+                                       Anular Oficio
+                                   </button>
                                 </div>
                             </form>
                         </div>
-
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Anular Oficio</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ¿Está seguro de que desea anular el oficio?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            <form method="POST" id="formAnnul" th:action="@{/offices/anular}" th:object="${officeActual}" >
+                                <input type="hidden" th:field="*{id}"/>
+                                <input type="hidden" th:field="*{reason}"/>
+                                <input type="hidden" th:field="*{dateCreate}"/>
+                                <input type="hidden" th:field="*{emisor}"/>
+                                <input type="hidden" th:field="*{emisorDep}"/>
+                                <input type="hidden" th:field="*{receptor}"/>
+                                <input type="hidden" th:field="*{receptorDep}"/>
+                                <input type="hidden" th:field="*{type_id}"/>
+                                <input type="hidden" th:field="*{dateLimit}"/>
+                                <input type="hidden" th:field="*{offnumber}"/>
+                                <button type="submit" class="btn btn-danger">Si</button>
+                            </form>
+                            
+                        </div>
                     </div>
                 </div>
             </div>
