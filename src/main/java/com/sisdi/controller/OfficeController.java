@@ -178,7 +178,7 @@ public class OfficeController {
         model.addAttribute("offices", offices);
         officeServiceImp.addOffice(o);
         model.addAttribute("search", new searchOffice());
-        return "offices/listOffices";
+        return "redirect:/offices/listOffices";
     }
 
     @GetMapping("/acceptOffice/{officeId}")
