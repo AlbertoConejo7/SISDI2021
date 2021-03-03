@@ -65,3 +65,7 @@
     top:60px !important;
     right: 0;
 }
+
+.dblock{
+    display: block !important;
+}
