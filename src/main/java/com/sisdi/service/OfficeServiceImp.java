@@ -54,7 +54,7 @@ public class OfficeServiceImp implements OfficeService {
         List<Office> list = this.listarOficios();
         List<Office> aux = new ArrayList();
         for (Office o : list) {
-            if (o.getRECEIVER_ID().equals(receptor)) {
+            if (o.getRECEIVER_ID().equals(receptor) && o.getSTATE() != 3) {
                 aux.add(o);
             }
         }
