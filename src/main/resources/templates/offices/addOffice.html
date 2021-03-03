@@ -19,7 +19,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker.es.min.js" type="text/javascript"></script>
         <script th:src="@{/js/calendar.js}"></script>
-          
+        
     </head>
     
     <body>
@@ -42,7 +42,7 @@
                     <h3 class='font-italic text-center' id='titleh3'>Crear Oficio</h3>
                 </div>
                 <div class="mx-auto w-75">
-                    <form class="form" method="POST" th:action="@{/offices/saveOffice}" th:object="${officeAdd}">
+                    <form class="form was-validated" method="POST" th:action="@{/offices/saveOffice}" th:object="${officeAdd}" id="add-office">
                         <table class="table table-borderless">
                             <tr>
                                 <td>
@@ -50,7 +50,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input placeholder="Oficio" class="form-control" th:field="*{offnumber}" required/>
+                                        <input placeholder="Oficio" class="form-control" name="offnumber" id="offnumber" th:field="*{offnumber}"  required/>
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -62,9 +62,11 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input placeholder="Motivo del Oficio"  class="form-control" th:field="*{reason}" required/>
+                                        <input placeholder="Motivo del Oficio"  name="motivo" id="motivo" class="form-control" th:field="*{reason}" required/>
                                         <span class="input-group-addon ">
                                         </span>
+                                        
+                                        <div class="invalid-feedback">Indique el motivo del Oficio</div>
                                     </div>
                                 </td>
                             </tr>
@@ -123,9 +125,11 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <select name="usuarios" th:field="*{receptor}">
+                                        <select name="usuarios" class="custom-select" th:field="*{receptor}" required>
+                                             <option value="">Seleccione Receptor</option>
                                             <option th:each="usuario:${usuarios}" th:value="${usuario.tempUser.name}" th:text="${usuario.tempUser.name + ' / ' + usuario.department.name}"></option>
                                         </select>
+                                        <div class="invalid-feedback">Debe seleccionar un Receptor</div>
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -136,18 +140,20 @@
                                     <span>Tipo de Oficio</span>
                                 </td>
                                 <td>
-                                    <div class='form-check form-check-inline'>
-                                        <input type="radio" value="1"  th:field="*{type_id}" name="type" id="comunicar" class="form-check-input" checked="checked"/>
-                                        <label path="type" class="form-check-label" for="comunicar">Comunicar</label>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" name="type" id='comunicar' value="1"  th:field="*{type_id}" required>
+                                        <label class="custom-control-label" for="comunicar">Comunicar</label>
                                     </div>
-                                    <div class='form-check form-check-inline'>
-                                        <input type="radio"  value="2" th:field="*{type_id}" name="type" id="solicitar" class="form-check-input"/>
-                                        <label path="type" class="form-check-label" for="solicitar" >Solicitar</label>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" name="type" id='solicitar' value="2" th:field="*{type_id}" required>
+                                        <label class="custom-control-label" for="solicitar">Solicitar</label>
                                     </div>
-                                    <div class='form-check form-check-inline'>
-                                        <input type="radio" value="3" th:field="*{type_id}" name="type" id="aprobar" class="form-check-input"/>
-                                        <label path="type" class="form-check-label" for="aprobar">Aprobar</label>
+                                    <div class="custom-control custom-radio mb-3">
+                                        <input type="radio" class="custom-control-input" name="type" id='aprobar' value="3" th:field="*{type_id}" required>
+                                        <label class="custom-control-label" for="aprobar">Aprobar</label>
+                                        <div class="invalid-feedback">Seleccione el tipo de oficio</div>
                                     </div>
+                                                                       
                                     <span class="input-group-addon "></span>
                                 </td>
                             </tr>
@@ -157,7 +163,8 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <textarea rows="4" class="w-100" placeholder="Escriba aquí sus observaciones" style="resize: none;" th:field="*{observations}" required></textarea>                             
+                                        <textarea rows="4" class="w-100" name="observaciones" id="observaciones" placeholder="Escriba aquí sus observaciones" 
+                                                  style="resize: none;" th:field="*{observations}"></textarea>                             
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -168,8 +175,10 @@
                                     <span>Adjuntar oficio</span>
                                 </td>
                                 <td>
-                                    <div class='input-group'>
-                                        <input type="file" name="adjunto" accept=".pdf" required/>
+                                    <div class='input-group custom-file'>
+                                        <input type="file" name="adjunto" accept=".pdf" id="adjunto" class="custom-file-input" lang="es" required />
+                                        <label class="custom-file-label" for="validatedCustomFile">Seleccione Archivo</label>
+                                        <div class="invalid-feedback">Seleccione el Oficio</div>
                                         <span class="input-group-addon ">
                                         </span>
                                         <p class="w-100">*Solo se admite un único archivo .pdf*</p>
@@ -182,7 +191,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input  type="file" name="adjunto" accept=".pdf,.jpg,.png, .pptx, .docx, .mp3, .mp4, .xml, .txt, .html" multiple />
+                                        <input  type="file" name="adjunto2" id="adjunto2" accept=".pdf,.jpg,.png, .pptx, .docx, .mp3, .mp4, .xml, .txt, .html" multiple />
                                         <span class="input-group-addon ">
                                         </span>
                                         <p class="w-100">*Agregue aquí los adjuntos necesarios*</p>
@@ -255,7 +264,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="saveResponseTime()">Guardar oficio</button>
+                        <button type="button" class="btn btn-primary" onclick="saveResponseTime()">Guardar Plazo</button>
                     </div>
                 </div>
             </div>
@@ -263,6 +272,8 @@
     </main>
     <script th:src="@{/js/addOffice.js}"></script>
     <script th:src="@{/js/calendar.js}"></script>
+</script>
+
 </body>
 
 </html>

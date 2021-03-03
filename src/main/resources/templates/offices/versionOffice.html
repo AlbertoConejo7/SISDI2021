@@ -67,7 +67,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form class="form " method="POST" th:action="@{/versions/saveVersion}" th:object="${officeActual}">
+                                                <form class="form was-validated" method="POST" th:action="@{/versions/saveVersion}" th:object="${officeActual}">
                                                     <div class="form-group">
                                                         <label for="officeName">Oficio</label>
                                                         <input type="text" class="form-control" id="exampleFormControlInput1" th:field="*{offnumber}" readonly="readonly"/>
@@ -112,7 +112,7 @@
                                                     </div>-->
                                                     <div class="form-group">
                                                         <label for="motive">Motivo</label>
-                                                        <textarea class="form-control" id="motive" rows="3" th:field="*{reason}"></textarea>
+                                                        <textarea class="form-control" required id="motive" rows="3" th:field="*{reason}"></textarea>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="observations">Observaciones</label>

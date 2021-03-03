@@ -74,7 +74,7 @@
                                             <td >
                                                 <a th:if="${office.STATE == 1 && office.DEADLINE!=null}" th:href="@{/offices/responseOffice/{id} (id=${office.OFFNUMBER})}"><img th:src="@{/images/reply.png}"></a>
                                             </td>
-
+                                          
                                             <td>
 
                                                 <div class='input-group'>
@@ -89,6 +89,7 @@
 
                                             <td th:if="${office.DEADLINE != null && office.STATE == 1 }" th:text="${#dates.format(office.DEADLINE, 'dd/MM/yyyy')}"></td>
                                             <!--   <td  th:each=${#dates.format(timeOuts.LIMITDATE, 'dd/MM/yyyy')}"></td> -->
+                                             <td th:if="${office.DEADLINE == null || office.STATE != 1 }"></td>
                                         </tr>
 
                                     </tbody>

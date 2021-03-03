@@ -37,7 +37,7 @@
                     <h3 class='font-italic text-center' id='titleh3'> Responder Oficio</h3>
                 </div>
                 <div class="mx-auto w-75">
-                    <form class="form " method="POST" th:action="@{/offices/saveResponseOffice}"
+                    <form class="form was-validated" method="POST" th:action="@{/offices/saveResponseOffice}"
                           th:object="${officeActual}">
                         <table class="table table-borderless">
                             <tr>
@@ -154,6 +154,7 @@
                                     <div class='input-group'>
                                         <input type='text' class="form-control" placeholder="Motivo del oficio" 
                                                th:field="*{reason}" required/>
+                                        <div class="invalid-feedback">Indique el motivo del Oficio</div>
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -177,8 +178,10 @@
                                     <span>Adjuntar oficio</span>
                                 </td>
                                 <td>
-                                    <div class='input-group'>
-                                        <input type="file" name="adjunto" accept=".pdf"/>
+                                    <div class='input-group custom-file'>
+                                        <input type="file" name="adjunto" accept=".pdf" class="custom-file-input" required/>
+                                        <label class="custom-file-label" for="validatedCustomFile">Seleccione Archivo</label>
+                                        <div class="invalid-feedback">Seleccione el Oficio</div>
                                         <span class="input-group-addon ">
                                         </span>
                                         <p class="w-100">*Solo se admite un único archivo .pdf*</p>
