@@ -127,6 +127,7 @@ public class OfficeController {
         model.addAttribute("date", fecha);
         model.addAttribute("officeActual", os);
         model.addAttribute("title", "Ver Oficio");
+        model.addAttribute("url", "https://ucu.edu.uy/sites/default/files/facultad/dcsp/Concurso_2015/038_Tecno2015_tecnologia_un_beneficio_o_una_adicci%C3%B3n.pdf");
         return "offices/editOffice";
     }
 
@@ -165,6 +166,7 @@ public class OfficeController {
         model.addAttribute("date", fecha);
         log.info("ejecutando el controlador Oficios");
         model.addAttribute("officesPending", offices);
+       
         // model.addAttribute("timeOuts", time);
         return "offices/pendingOffice";
     }
@@ -204,6 +206,18 @@ public class OfficeController {
         model.addAttribute("date", fecha);
         model.addAttribute("officeActual", os);
         model.addAttribute("title", "no");
+         model.addAttribute("url", "https://ucu.edu.uy/sites/default/files/facultad/dcsp/Concurso_2015/038_Tecno2015_tecnologia_un_beneficio_o_una_adicci%C3%B3n.pdf");
+        return "offices/editOffice";
+    }
+    
+    @GetMapping("/viewOfficeS/{officeId}")
+    public String viewOfficeS(@PathVariable String officeId, Model model) {
+        Office officeAct = officeServiceImp.searchOffice(officeId);
+        OfficeSimple os = officeData.getOfficeSimple(officeAct);
+        model.addAttribute("date", fecha);
+        model.addAttribute("officeActual", os);
+        model.addAttribute("title", "no-r");
+         model.addAttribute("url", "https://ucu.edu.uy/sites/default/files/facultad/dcsp/Concurso_2015/038_Tecno2015_tecnologia_un_beneficio_o_una_adicci%C3%B3n.pdf");
         return "offices/editOffice";
     }
 
