@@ -69,17 +69,17 @@
                                             <td th:if="${office.STATE == 2}" th:text="Respondido"></td>
                                             <td th:if="${office.STATE == 3}" th:text="Anulado"></td>
                                             <td >
-                                                <a th:href="@{/offices/viewOffice/{id} (id=${office.OFFNUMBER})}"><img th:src="@{/images/show.png}"></a>
+                                                <a th:href="@{/offices/viewOffice/{id} (id=${office.OFFNUMBER})}"><img th:src="@{/images/ojo.svg}" width="25" height="25"></a>
                                             </td>
                                             <td >
-                                                <a th:if="${office.STATE == 1 && office.DEADLINE!=null}" th:href="@{/offices/responseOffice/{id} (id=${office.OFFNUMBER})}"><img th:src="@{/images/reply.png}"></a>
+                                                <a th:if="${office.STATE == 1 && office.DEADLINE!=null}" th:href="@{/offices/responseOffice/{id} (id=${office.OFFNUMBER})}"><img th:src="@{/images/reply.svg}"width="25" height="25"></a>
                                             </td>
                                           
                                             <td>
 
                                                 <div class='input-group'>
-                                                    <a th:if="${office.STATE == 0}" th:href="@{/offices/acceptOffice/{id} (id=${office.OFFNUMBER})}"><img th:src="@{/images/aceptar.png}"></a>
-                                                    <a th:if="${office.STATE != 0}"><img th:src="@{/images/recibido.png}"></a>
+                                                    <a th:if="${office.STATE == 0}" th:href="@{/offices/acceptOffice/{id} (id=${office.OFFNUMBER})}"><img th:src="@{/images/recibido.svg}"></a>
+                                                    <a th:if="${office.STATE != 0}"><img th:src="@{/images/check.svg}" width="25" height="25"></a>
 
                                                     <!-- <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#responseTime">Aceptar Oficio</button>-->
 
