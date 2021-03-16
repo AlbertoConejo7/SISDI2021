@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>SISDI-Agregar Oficio</title>
+               
         <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
         <link th:href="@{/css/default.css}" rel="stylesheet"/>
         <link th:href="@{/css/errors.css}" rel="stylesheet"/>
@@ -9,6 +10,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" rel="stylesheet"/>
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
         <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet"/>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script th:src="@{/bootstrap/js/jquery.js}"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
@@ -58,7 +60,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <span>Motivo</span>
+                                    <span>Motivo</span><span class="required"> *</span>
                                 </td>
                                 <td>
                                     <div class='input-group'>
@@ -121,7 +123,12 @@
                             </tr>-->
                             <tr>
                                 <td>
-                                    <span>Receptor</span>
+                                    <span>Receptor</span><span class="required"> *</span>
+                                     <a tabindex="0" role="button" data-html = "true" data-toggle="popover"
+                                       data-trigger="focus" title="Receptor"
+                                       data-content="Quien recibe el oficio">
+                                        <img th:src="@{/images/info.png}" width=20>
+                                    </a>
                                 </td>
                                 <td>
                                     <div class='input-group'>
@@ -137,8 +144,14 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <span>Tipo de Oficio</span>
-                                </td>
+                                    <span>Tipo de Oficio</span><span class="required"> *</span>
+                                    <a tabindex="0" role="button" data-html = "true" data-toggle="popover"
+                                       data-trigger="focus" title="Tipos de Oficio"
+                                       data-content="<b>Comunicar: </b>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
+                                       <b>Solicitar:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
+                                       <b> Aprobar: </b>Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+                                        <img th:src="@{/images/info.png}" width=20>
+                                    </a>
                                 <td>
                                     <div class="custom-control custom-radio">
                                         <input type="radio" class="custom-control-input" name="type" id='comunicar' value="1"  th:field="*{type_id}" required>
@@ -160,6 +173,11 @@
                             <tr>
                                 <td>
                                     <span>Observaciones</span>
+                                     <a tabindex="0" role="button" data-html = "true" data-toggle="popover"
+                                       data-trigger="focus" title="Observaciones (Opcional)"
+                                       data-content="Información extra para el receptor">
+                                        <img th:src="@{/images/info.png}" width=20>
+                                    </a>
                                 </td>
                                 <td>
                                     <div class='input-group'>
@@ -173,13 +191,13 @@
                             <tr>
                                 <td>
                                     <div class="form-group">
-                                        <label>Adjuntar oficio</label>
+                                        <label>Adjuntar oficio</label><span class="required"> *</span>
                                     </div>
                                 </td>
                                 <td>
                                     <input type="file" class="form-control " id="adjunto" name="adjunto" accept=".pdf" style="height:45px;" required/>
                                     <div class="invalid-feedback">Seleccione el Oficio</div>
-                                     <p class="w-100">*Solo se admite un único archivo .pdf*</p>
+                                    <p class="w-100">*Solo se admite un único archivo .pdf*</p>
                                 </td>
                             </tr>
                             <tr>
@@ -269,6 +287,11 @@
         </main>
         <script th:src="@{/js/addOffice.js}"></script>
         <script th:src="@{/js/calendar.js}"></script>
-      </body>
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="popover"]').popover();
+            });
+        </script>
+    </body>
 
 </html>
