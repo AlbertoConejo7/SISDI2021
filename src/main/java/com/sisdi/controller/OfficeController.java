@@ -77,7 +77,7 @@ public class OfficeController {
         }
         return "redirect:/offices/addOffice";
     }
-
+    
     @PostMapping("/saveResponseOffice")
     public String saveResponseOffice(Model model, @ModelAttribute("officeActual") OfficeSimple office, HttpSession session, RedirectAttributes redirectAttrs) throws ParseException {
         Office o = officeData.getOffice(office, 1);
