@@ -19,15 +19,15 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker.es.min.js" type="text/javascript"></script>
         <script th:src="@{/js/calendar.js}"></script>
-        
+
     </head>
-    
+
     <body>
         <header th:insert="menu/Head :: menu"></header>
         <div class="mt-2 col-md-1">
             <br> <br>
         </div>
-         
+
         <div class="alert alert-success alert-dismissable alert-min fade" id="alert-save">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <strong>Fecha de Plazo de Respuesta</strong> guardada.
@@ -65,7 +65,7 @@
                                         <input placeholder="Motivo del Oficio"  name="motivo" id="motivo" class="form-control" th:field="*{reason}" required/>
                                         <span class="input-group-addon ">
                                         </span>
-                                        
+
                                         <div class="invalid-feedback">Indique el motivo del Oficio</div>
                                     </div>
                                 </td>
@@ -126,7 +126,7 @@
                                 <td>
                                     <div class='input-group'>
                                         <select name="usuarios" class="custom-select" th:field="*{receptor}" required>
-                                             <option value="">Seleccione Receptor</option>
+                                            <option value="">Seleccione Receptor</option>
                                             <option th:each="usuario:${usuarios}" th:value="${usuario.tempUser.name}" th:text="${usuario.tempUser.name + ' / ' + usuario.department.name}"></option>
                                         </select>
                                         <div class="invalid-feedback">Debe seleccionar un Receptor</div>
@@ -153,7 +153,7 @@
                                         <label class="custom-control-label" for="aprobar">Aprobar</label>
                                         <div class="invalid-feedback">Seleccione el tipo de oficio</div>
                                     </div>
-                                                                       
+
                                     <span class="input-group-addon "></span>
                                 </td>
                             </tr>
@@ -172,17 +172,14 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <span>Adjuntar oficio</span>
+                                    <div class="form-group">
+                                        <label>Adjuntar oficio</label>
+                                    </div>
                                 </td>
                                 <td>
-                                    <div class='input-group custom-file'>
-                                        <input type="file" name="adjunto" accept=".pdf" id="adjunto" class="custom-file-input" lang="es" required />
-                                        <label class="custom-file-label" for="validatedCustomFile">Seleccione Archivo</label>
-                                        <div class="invalid-feedback">Seleccione el Oficio</div>
-                                        <span class="input-group-addon ">
-                                        </span>
-                                        <p class="w-100">*Solo se admite un único archivo .pdf*</p>
-                                    </div>
+                                    <input type="file" class="form-control " id="adjunto" name="adjunto" accept=".pdf" style="height:45px;" required/>
+                                    <div class="invalid-feedback">Seleccione el Oficio</div>
+                                     <p class="w-100">*Solo se admite un único archivo .pdf*</p>
                                 </td>
                             </tr>
                             <tr>
@@ -191,7 +188,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input  type="file" name="adjunto2" id="adjunto2" accept=".pdf,.jpg,.png, .pptx, .docx, .mp3, .mp4, .xml, .txt, .html" multiple />
+                                        <input  type="file" name="adjunto2" id="adjunto2" accept=".pdf,.jpg,.png, .pptx, .docx, .mp3, .mp4, .xml, .txt, .html, .zip, .rar" multiple />
                                         <span class="input-group-addon ">
                                         </span>
                                         <p class="w-100">*Agregue aquí los adjuntos necesarios*</p>
@@ -219,61 +216,59 @@
                 </div>
             </div>
 
-        <div class="modal fade" id="responseTime" tabindex="-1" role="dialog" aria-labelledby="responseTimeTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="responseTimeTitle">Plazo de Tiempo de Respuesta</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="containerPopUp">
-                            <div class="form-group">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <span>Fecha de Emisión</span>
-                                        </td>
-                                        <td>
-                                            <div class='input-group date'>
-                                                <input type='text' class="form-control" th:value="${#dates.format(date, 'dd/MM/yyyy')}" readonly="readonly"/>
-                                                <span class="input-group-addon ">
-                                                    <img class="icon-img" th:src="@{/images/calendar.svg}">
-                                                </span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span>Fecha Límite de Respuesta</span>
-                                            <span class="help-block error-message hide-message" id="errorResponseTime">Error</span>
-                                        </td>
-                                        <td>
-                                            <div class='input-group date' id='datepicker1'>
-                                                <input type='text' class="form-control" placeholder="dd/mm/yyyy" id="responseTimeValue"/>
-                                                <span class="input-group-addon ">
-                                                    <img class="icon-img" th:src="@{/images/calendar.svg}">
-                                                </span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
+            <div class="modal fade" id="responseTime" tabindex="-1" role="dialog" aria-labelledby="responseTimeTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="responseTimeTitle">Plazo de Tiempo de Respuesta</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="containerPopUp">
+                                <div class="form-group">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <span>Fecha de Emisión</span>
+                                            </td>
+                                            <td>
+                                                <div class='input-group date'>
+                                                    <input type='text' class="form-control" th:value="${#dates.format(date, 'dd/MM/yyyy')}" readonly="readonly"/>
+                                                    <span class="input-group-addon ">
+                                                        <img class="icon-img" th:src="@{/images/calendar.svg}">
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span>Fecha Límite de Respuesta</span>
+                                                <span class="help-block error-message hide-message" id="errorResponseTime">Error</span>
+                                            </td>
+                                            <td>
+                                                <div class='input-group date' id='datepicker1'>
+                                                    <input type='text' class="form-control" placeholder="dd/mm/yyyy" id="responseTimeValue"/>
+                                                    <span class="input-group-addon ">
+                                                        <img class="icon-img" th:src="@{/images/calendar.svg}">
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="saveResponseTime()">Guardar Plazo</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" onclick="saveResponseTime()">Guardar Plazo</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
-    <script th:src="@{/js/addOffice.js}"></script>
-    <script th:src="@{/js/calendar.js}"></script>
-</script>
-
-</body>
+        </main>
+        <script th:src="@{/js/addOffice.js}"></script>
+        <script th:src="@{/js/calendar.js}"></script>
+      </body>
 
 </html>
