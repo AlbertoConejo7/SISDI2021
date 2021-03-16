@@ -69,3 +69,8 @@
 .dblock{
     display: block !important;
 }
+
+.required{
+    color:red;
+    font-weight: bold;
+}
