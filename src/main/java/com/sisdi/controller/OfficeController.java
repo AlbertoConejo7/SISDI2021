@@ -2,6 +2,7 @@ package com.sisdi.controller;
 
 import com.sisdi.data.OfficeData;
 import com.sisdi.data.UserData;
+import com.sisdi.model.FileSimple;
 import com.sisdi.model.Office;
 import com.sisdi.model.OfficeSimple;
 import com.sisdi.service.OfficeServiceImp;
@@ -59,6 +60,22 @@ public class OfficeController {
         model.addAttribute("officeAdd", officeAdd);
 
         return "offices/addOffice";
+    }
+    
+    @GetMapping("/addFile")
+    public String addFile(Model model, FileSimple fileAdd, @AuthenticationPrincipal User user) {
+        String fechaS = new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
+        model.addAttribute("date", fecha);
+        List<Usuario> usuarios = userData.listUsers();
+        Usuario u = userData.getUser(user.getUsername());
+        fileAdd.setOwner(u.getTempUser().getName());
+        fileAdd.setDepartment(u.getDepartment().getName());
+        fileAdd.setDateCreateFile(fechaS);
+        log.info(usuarios.toString());
+        model.addAttribute("usuarios", usuarios);
+        model.addAttribute("fileAdd", fileAdd);
+
+        return "offices/addFile";
     }
 
     @PostMapping("/saveOffice")
