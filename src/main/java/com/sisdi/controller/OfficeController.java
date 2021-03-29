@@ -77,6 +77,22 @@ public class OfficeController {
 
         return "offices/addFile";
     }
+    
+    @GetMapping("/sendFile")
+    public String sendFile(Model model, FileSimple fileSend, @AuthenticationPrincipal User user) {
+        String fechaS = new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
+        model.addAttribute("date", fecha);
+        List<Usuario> usuarios = userData.listUsers();
+        Usuario u = userData.getUser(user.getUsername());
+        fileSend.setOwner(u.getTempUser().getName());
+        fileSend.setDepartment(u.getDepartment().getName());
+        fileSend.setDateCreateFile(fechaS);
+        log.info(usuarios.toString());
+        model.addAttribute("usuarios", usuarios);
+        model.addAttribute("fileSend", fileSend);
+
+        return "offices/sendFile";
+    }
 
     @PostMapping("/saveOffice")
     public String saveOffice(Model model, @ModelAttribute("officeAdd") OfficeSimple office, RedirectAttributes redirectAttrs) throws ParseException {
