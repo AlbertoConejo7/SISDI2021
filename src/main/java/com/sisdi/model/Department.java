@@ -12,10 +12,13 @@ public class Department implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    private String cod;
     
     public Department(){}
     public Department(int id, String name) {
         this.id = id;
         this.name = name;
+        this.cod = cod;
+        
     }    
 }
