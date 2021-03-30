@@ -390,3 +390,14 @@ call sisdi.updateOffice('OFICIO MSPH-AM-CCPJ-NE-001-2020', 'Asamblea', 'Oficio A
 call sisdi.changeState('OFICIO MSPH-AM-CCPJ-NE-003-2020', 1);
 
 INSERT INTO `sisdi`.`t_office` (`OFFNUMBER`, `REASON`, `NAME`, `INCORDATE`, `INCORTIME`, `DEADLINE`, `SESSIONDATE`, `OBSERVATIONS`, `PUBLIC`, `NOTIFIED`, `STATE`, `TYPE_ID`, `USER_ID`, `RECEIVER_ID`, `TIMEOUTS_ID`) VALUES ('OFICIO MSPH-AM-CCPJ-NE-002-2020', 'Asamblea', 'Oficio Asamblea', '2020-10-01', '11:00:00', '2020-10-30', '2020-10-22', 'texto largo', 1, 1, 2, 1, 'gestiondecobros@sanpablo.go.cr', 'asistente.licencias@sanpablo.go.cr', 1);
+UPDATE `sisdi`.`t_department` SET `COD` = 'S' WHERE (`ID` = '1');
+UPDATE `sisdi`.`t_department` SET `COD` = 'CM' WHERE (`ID` = '2');
+UPDATE `sisdi`.`t_department` SET `COD` = 'AL' WHERE (`ID` = '3');
+UPDATE `sisdi`.`t_department` SET `COD` = 'DU' WHERE (`ID` = '4');
+UPDATE `sisdi`.`t_department` SET `COD` = 'HM' WHERE (`ID` = '5');
+UPDATE `sisdi`.`t_department` SET `COD` = 'SP' WHERE (`ID` = '6');
+UPDATE `sisdi`.`t_department` SET `COD` = 'PV' WHERE (`ID` = '7');
+UPDATE `sisdi`.`t_department` SET `COD` = 'RH' WHERE (`ID` = '8');
+
+INSERT INTO `sisdi`.`t_expediente` (`INDX`, `FILENAME`, `OBSERVATIONS`, `OWNER_ID`, `RECEIVER_ID`, `OFFICE_AMOUNT`, `DATE_CREATE`) VALUES ('1', 'Expediente Central', 'No Existen', 'gestiondecobros@sanpablo.go.cr', 'asistente.licencias@sanpablo.go.cr', '1', '2021-01-01');
+UPDATE `sisdi`.`t_office` SET `EXPEDIENTE` = 'Expediente Central' WHERE (`INDX` = '1');

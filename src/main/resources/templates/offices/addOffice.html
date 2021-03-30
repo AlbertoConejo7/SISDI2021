@@ -44,7 +44,7 @@
                     <h3 class='font-italic text-center' id='titleh3'>Crear Oficio</h3>
                 </div>
                 <div class="mx-auto w-75">
-                    <form class="form was-validated" method="POST" th:action="@{/offices/saveOffice}" th:object="${officeAdd}" id="add-office">
+                    <form class="form was-validated" method="POST" th:action="@{/offices/saveOffice}" th:object="${officeAdd}" id="add-office" >
                         <table class="table table-borderless">
                             <tr>
                                 <td>
@@ -52,7 +52,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input placeholder="Oficio" class="form-control" name="offnumber" id="offnumber" th:field="*{offnumber}"  required/>
+                                        <input placeholder="Oficio" class="form-control" name="offnumber" id="offnumber" th:field="*{offnumber}"  readonly="readonly"/>
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>

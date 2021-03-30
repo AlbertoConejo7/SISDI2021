@@ -46,12 +46,20 @@ public class OfficeController {
     @Autowired
     private OfficeData officeData;
 
-    @GetMapping("/addOffice")
+   @GetMapping("/addOffice")
     public String addOffice(Model model, OfficeSimple officeAdd, @AuthenticationPrincipal User user) {
         String fechaS = new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
+        String year = new SimpleDateFormat("yyyy").format(this.fecha);
         model.addAttribute("date", fecha);
         List<Usuario> usuarios = userData.listUsers();
         Usuario u = userData.getUser(user.getUsername());
+          List<Office> offices = officeServiceImp.listarOficios();
+          Office of=offices.get(offices.size()-1);
+       int INDX= of.getINDX();
+        
+        String offNumber= "OFICIO"+"-"+"MSPH"+"-"+"AM"+"-"+u.getDepartment().getCod()+"-"+"NE"
+                +"-"+(INDX+1)+"-"+year;
+        officeAdd.setOffnumber(offNumber);
         officeAdd.setEmisor(u.getTempUser().getName());
         officeAdd.setEmisorDep(u.getDepartment().getName());
         officeAdd.setDateCreate(fechaS);

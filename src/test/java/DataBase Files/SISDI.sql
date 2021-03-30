@@ -1,3 +1,4 @@
+
 DROP DATABASE SISDI;
 CREATE SCHEMA IF NOT EXISTS `SISDI` DEFAULT CHARACTER SET utf8 ;
 
@@ -54,13 +55,27 @@ constraint PK_USER primary key (ID),
 constraint FK_TEMPUSER foreign key (TEMPUSER) references T_TEMPUSER(EMAIL),
 constraint FK_DEPARTMENT foreign key (DEPARTMENT) references T_DEPARTMENT(ID)
 );
-
+ create table T_EXPEDIENTE(
+INDX int auto_increment,
+FILENAME varchar(45),
+OBSERVATIONS longtext, 
+OWNER_ID varchar(45),-- Emisor propietario del expediente que pertenece a algun departamento
+RECEIVER_ID  varchar(45), -- Receptor del expediente que pertenece a algun departamento
+ OFFICE_AMOUNT int, 
+ DATE_CREATE date,
+ constraint PK_EXPEDIENTE primary key(INDX),
+ constraint UK_FILENAME unique key (FILENAME),
+ constraint FK_OWNER foreign key (OWNER_ID) references T_USER(TEMPUSER),
+ constraint FK_RECEIVER foreign key (RECEIVER_ID) references T_USER(TEMPUSER)
+ 
+ );
 
 create table T_OFFICE(
 INDX int auto_increment,
 OFFNUMBER varchar(45),
 REASON varchar(45),
 NAME varchar(45),
+EXPEDIENTE varchar(45),
 INCORDATE date,
 INCORTIME time,
 DEADLINE date,
@@ -80,9 +95,13 @@ constraint FK_TYPE foreign key (TYPE_ID) references T_TYPE(ID),
 constraint FK_STATE foreign key (STATE) references T_STATE(ID),
 constraint UK_OFFNUMBER unique key (OFFNUMBER),
 constraint FK_USER foreign key (USER_ID) references T_USER(TEMPUSER),
-constraint FK_RECEIVER foreign key (RECEIVER_ID) references T_USER(TEMPUSER),
+constraint FK_EXPEDIENTE foreign key (EXPEDIENTE) references T_EXPEDIENTE(FILENAME),
+constraint FK_RECEIVER_EXP foreign key (RECEIVER_ID) references T_USER(TEMPUSER),
 constraint FK_TIMEOUTS foreign key (TIMEOUTS_ID) references T_TIMEOUTS(ID)
 );
+
+ 
+ 
 
 create table T_VERSION (
 ID int auto_increment, 
