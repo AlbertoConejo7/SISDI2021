@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>SISDI-Agregar Oficio</title>
-               
+
         <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
         <link th:href="@{/css/default.css}" rel="stylesheet"/>
         <link th:href="@{/css/errors.css}" rel="stylesheet"/>
@@ -10,7 +10,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" rel="stylesheet"/>
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
         <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet"/>
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script th:src="@{/bootstrap/js/jquery.js}"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
@@ -124,7 +124,7 @@
                             <tr>
                                 <td>
                                     <span>Receptor</span><span class="required"> *</span>
-                                     <a tabindex="0" role="button" data-html = "true" data-toggle="popover"
+                                    <a tabindex="0" role="button" data-html = "true" data-toggle="popover"
                                        data-trigger="focus" title="Receptor"
                                        data-content="Quien recibe el oficio">
                                         <img th:src="@{/images/info.png}" width=20>
@@ -173,7 +173,7 @@
                             <tr>
                                 <td>
                                     <span>Observaciones</span>
-                                     <a tabindex="0" role="button" data-html = "true" data-toggle="popover"
+                                    <a tabindex="0" role="button" data-html = "true" data-toggle="popover"
                                        data-trigger="focus" title="Observaciones (Opcional)"
                                        data-content="Información extra para el receptor">
                                         <img th:src="@{/images/info.png}" width=20>
@@ -195,9 +195,13 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <input type="file" class="form-control " id="adjunto" name="adjunto" accept=".pdf" style="height:45px;" required/>
-                                    <div class="invalid-feedback">Seleccione el Oficio</div>
-                                    <p class="w-100">*Solo se admite un único archivo .pdf*</p>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control readonly"  id="exampleInputFile" required placeholder="Ningun Archivo Seleccionado">
+                                        <button type="button" class="btn btn-primary mt-2 mr-2" data-toggle="modal" data-target="#exampleModal">
+                                            Seleccionar Archivo
+                                        </button>
+                                        <span ><small id="isSigned"></small></span>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -284,6 +288,29 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Adjuntar Documento</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="adjuntofile" enctype="multipart/form-data" class="form was-validated">
+                            <div class="modal-body">
+                                <input type="file" class="form-control  w-100"  name="adjunto" accept=".pdf" style="height:45px;" required/>
+                                <div class="invalid-feedback">Seleccione el Oficio</div>
+                                <p class="w-100">*Solo se admite un único archivo .pdf*</p>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" id="btnSubmit">Validar Documento</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </main>
         <script th:src="@{/js/addOffice.js}"></script>
         <script th:src="@{/js/calendar.js}"></script>
@@ -291,6 +318,50 @@
             $(document).ready(function () {
                 $('[data-toggle="popover"]').popover();
             });
+            $(document).ready(function () {
+                $("#btnSubmit").click(function (e) {
+                    e.preventDefault();
+                    doAjax();
+                });
+            });
+            $(".readonly").keydown(function (e) {
+                e.preventDefault();
+            });
+            function doAjax() {
+                var form = $('#adjuntofile')[0];
+                var data = new FormData(form);
+                console.log(data.get("adjunto"));
+                $.ajax({
+                    url: "/singleFileUpload",
+                    type: "POST",
+                    data: data,
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    dataType: "json",
+                    success: function (res) {
+                        console.log(res.name);
+                        $("#exampleModal .close").click();
+                        printInfo(res);
+                    },
+                    error: function (err) {
+                        console.error(err);
+                    }
+                });
+            }
+            function printInfo(res) {
+                var inputFile = $("#exampleInputFile");
+                var pSigned = $("#isSigned");
+                inputFile.val(res.name);
+                if (res.signed) {
+                    inputFile.addClass("c-true");
+                    pSigned.text("El Oficio " + res.name + " se encuentra firmado");
+                } else {
+                    inputFile.addClass("c-false");
+                    pSigned.text("El Oficio " + res.name + " no se encuentra firmado");
+                }
+            }
         </script>
     </body>
 
