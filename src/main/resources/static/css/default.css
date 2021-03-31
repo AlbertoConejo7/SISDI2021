@@ -81,3 +81,7 @@
 .c-false{
      border: solid 2px red !important;
 }
+.bell{
+    position: absolute;
+    right: 0;
+}
