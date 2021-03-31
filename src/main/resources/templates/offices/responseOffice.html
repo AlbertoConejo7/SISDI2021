@@ -11,6 +11,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" rel="stylesheet"/>
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
         <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script th:src="@{/bootstrap/js/jquery.js}"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
@@ -42,7 +43,7 @@
                         <table class="table table-borderless">
                             <tr>
                                 <td>
-                                    <span>Oficio:</span>
+                                    <span>Titulo</span>
                                 </td>
                                 <td>
                                     <div class='input-group'>
@@ -137,18 +138,9 @@
                                     </div>
                                 </td>
                             </tr>
-                            <!--<tr>
-                                <td>
-                                    <div class='input-group'>
-                                        <input type="radio" name="boton" value="Respuesta">&nbsp;&nbsp;No aplica&nbsp;&nbsp;
-                                        <span class="input-group-addon ">
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>-->
                             <tr>
                                 <td>
-                                    <span>Motivo:</span>
+                                    <span>Motivo <span class="required"> *</span></span>
                                 </td>
                                 <td>
                                     <div class='input-group'>
@@ -175,22 +167,27 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <span>Adjuntar oficio</span>
+                                    <span>Adjuntar oficio<span class="required"> *</span></span>
+                                    <a tabindex="0" role="button" data-html = "true" data-toggle="popover"
+                                       data-trigger="focus" title="Adjuntar oficio"
+                                       data-content="En este espacio de adjunta el oficio, solamente en formato .pdf, para un mayor orden se recomienda que el oficio tenga el mismo nombre que el titulo.">
+                                        <img th:src="@{/images/info.png}" width=20>
+                                    </a>
                                 </td>
                                 <td>
-                                    <div class='input-group custom-file'>
-                                        <input type="file" name="adjunto" accept=".pdf" class="custom-file-input" required/>
-                                        <label class="custom-file-label" for="validatedCustomFile">Seleccione Archivo</label>
-                                        <div class="invalid-feedback">Seleccione el Oficio</div>
-                                        <span class="input-group-addon ">
-                                        </span>
-                                        <p class="w-100">*Solo se admite un único archivo .pdf*</p>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control readonly"  id="inputFile" required placeholder="Ningun Archivo Seleccionado">
+                                        <button type="button" class="btn btn-primary mt-2 mr-2" data-toggle="modal" data-target="#attachedModal">
+                                            Seleccionar Archivo
+                                        </button>
+                                        <span ><small id="isSigned"></small></span>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <span>Archivos adjuntos</span>
+                                    <span>Archivos adjuntos </span>
+
                                 </td>
                                 <td>
                                     <div class='input-group'>
@@ -210,8 +207,32 @@
                     </form>
                 </div>
             </div>
+            <div class="modal fade" id="attachedModal" tabindex="-1" role="dialog" aria-labelledby="attachedModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="attachedModalLabel">Adjuntar Documento</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="adjuntofile" enctype="multipart/form-data" class="form was-validated">
+                            <div class="modal-body">
+                                <input type="file" class="form-control  w-100"  name="adjunto" accept=".pdf" style="height:45px;" required/>
+                                <div class="invalid-feedback">Seleccione el Oficio</div>
+                                <p class="w-100">*Solo se admite un único archivo .pdf*</p>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" id="btnSubmit">Validar Documento</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </main>
         <script th:src="@{/js/addOffice.js}"></script>
         <script th:src="@{/js/calendar.js}"></script>
+        <script th:src="@{/js/validateSignPdf.js}"></script>
     </body>
 </html>
