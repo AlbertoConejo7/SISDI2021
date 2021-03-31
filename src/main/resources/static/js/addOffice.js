@@ -1,6 +1,6 @@
 function saveResponseTime() {
     var limite = document.getElementById("responseTimeValue");
-    var dateLimit=document.getElementById("dateLimit");
+    var dateLimit = document.getElementById("dateLimit");
     var error = document.getElementById("errorResponseTime");
 
     if (limite.value == "") {
@@ -15,27 +15,24 @@ function saveResponseTime() {
         error.classList.add("hide-message");
         limite.classList.remove("error-input");
         showAlert();
-        dateLimit.value=limite.value;
+        dateLimit.value = limite.value;
     }
 }
+
 function mostrarResultados(datos) {
-      console.log(datos);
+    console.log(datos);
 }
+
 function showAlert() {
-    var alertSave=$("#alert-save");
+    var alertSave = $("#alert-save");
     alertSave.addClass("show");
     alertSave.removeClass("fade");
     window.setTimeout(function () {
-       alertSave.addClass("fade");
-       alertSave.removeClass("show");
+        alertSave.addClass("fade");
+        alertSave.removeClass("show");
     }, 3000);
 };
 
-function getJSON2(url, data, callback) {
-     fetch(url, {
-        method: 'POST',
-        body: data
-    }).then((result) => {
-        return result.json();
-    }).then(callback);
-}
+$(document).ready(function () {
+    $('[data-toggle="popover"]').popover();
+});
