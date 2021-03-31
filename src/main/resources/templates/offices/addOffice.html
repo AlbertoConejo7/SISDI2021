@@ -109,26 +109,9 @@
                                     </div>
                                 </td>
                             </tr>
-                            <!--<tr>
-                                <td>
-                                    <span>Departamento Receptor</span>
-                                </td>
-                                <td>
-                                    <div class='input-group'>
-                                        <input  placeholder="Departamento"  class="form-control" th:field="*{receptorDep}" required/> 
-                                        <span class="input-group-addon ">
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>-->
                             <tr>
                                 <td>
                                     <span>Receptor</span><span class="required"> *</span>
-                                    <a tabindex="0" role="button" data-html = "true" data-toggle="popover"
-                                       data-trigger="focus" title="Receptor"
-                                       data-content="Quien recibe el oficio">
-                                        <img th:src="@{/images/info.png}" width=20>
-                                    </a>
                                 </td>
                                 <td>
                                     <div class='input-group'>
@@ -147,9 +130,9 @@
                                     <span>Tipo de Oficio</span><span class="required"> *</span>
                                     <a tabindex="0" role="button" data-html = "true" data-toggle="popover"
                                        data-trigger="focus" title="Tipos de Oficio"
-                                       data-content="<b>Comunicar: </b>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
-                                       <b>Solicitar:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
-                                       <b> Aprobar: </b>Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+                                       data-content="<b>Comunicar: </b>Anunciar, notificar, informar, manifestar información relevante para el receptor.<br>
+                                       <b>Solicitar:</b> Requerir información del funcionario receptor.<br>
+                                       <b> Aprobar: </b> Confirmar información enviada con anterioridad.">
                                         <img th:src="@{/images/info.png}" width=20>
                                     </a>
                                 <td>
@@ -173,11 +156,7 @@
                             <tr>
                                 <td>
                                     <span>Observaciones</span>
-                                    <a tabindex="0" role="button" data-html = "true" data-toggle="popover"
-                                       data-trigger="focus" title="Observaciones (Opcional)"
-                                       data-content="Información extra para el receptor">
-                                        <img th:src="@{/images/info.png}" width=20>
-                                    </a>
+                                    
                                 </td>
                                 <td>
                                     <div class='input-group'>
@@ -192,12 +171,17 @@
                                 <td>
                                     <div class="form-group">
                                         <label>Adjuntar oficio</label><span class="required"> *</span>
+                                        <a tabindex="0" role="button" data-html = "true" data-toggle="popover"
+                                           data-trigger="focus" title="Adjuntar oficio"
+                                           data-content="En este espacio de adjunta el oficio, solamente en formato .pdf, para un mayor orden se recomienda que el oficio tenga el mismo nombre que el titulo.">
+                                            <img th:src="@{/images/info.png}" width=20>
+                                        </a>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" class="form-control readonly"  id="exampleInputFile" required placeholder="Ningun Archivo Seleccionado">
-                                        <button type="button" class="btn btn-primary mt-2 mr-2" data-toggle="modal" data-target="#exampleModal">
+                                        <input type="text" class="form-control readonly"  id="inputFile" required placeholder="Ningun Archivo Seleccionado">
+                                        <button type="button" class="btn btn-primary mt-2 mr-2" data-toggle="modal" data-target="#attachedModal">
                                             Seleccionar Archivo
                                         </button>
                                         <span ><small id="isSigned"></small></span>
@@ -220,6 +204,11 @@
                             <tr>
                                 <td>
                                     <span>Fecha Límite de Respuesta</span>
+                                    <a tabindex="0" role="button" data-html = "true" data-toggle="popover"
+                                       data-trigger="focus" title="Fecha Limite de Respuesta"
+                                       data-content="Si el Oficio lo requiere se le puede aplicar una fecha limite a responder.">
+                                        <img th:src="@{/images/info.png}" width=20>
+                                    </a>
                                 </td>
                                 <td>
                                     <div class='input-group'>
@@ -288,11 +277,11 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="attachedModal" tabindex="-1" role="dialog" aria-labelledby="attachedModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Adjuntar Documento</h5>
+                            <h5 class="modal-title" id="attachedModalLabel">Adjuntar Documento</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -314,55 +303,7 @@
         </main>
         <script th:src="@{/js/addOffice.js}"></script>
         <script th:src="@{/js/calendar.js}"></script>
-        <script>
-            $(document).ready(function () {
-                $('[data-toggle="popover"]').popover();
-            });
-            $(document).ready(function () {
-                $("#btnSubmit").click(function (e) {
-                    e.preventDefault();
-                    doAjax();
-                });
-            });
-            $(".readonly").keydown(function (e) {
-                e.preventDefault();
-            });
-            function doAjax() {
-                var form = $('#adjuntofile')[0];
-                var data = new FormData(form);
-                console.log(data.get("adjunto"));
-                $.ajax({
-                    url: "/singleFileUpload",
-                    type: "POST",
-                    data: data,
-                    enctype: 'multipart/form-data',
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    dataType: "json",
-                    success: function (res) {
-                        console.log(res.name);
-                        $("#exampleModal .close").click();
-                        printInfo(res);
-                    },
-                    error: function (err) {
-                        console.error(err);
-                    }
-                });
-            }
-            function printInfo(res) {
-                var inputFile = $("#exampleInputFile");
-                var pSigned = $("#isSigned");
-                inputFile.val(res.name);
-                if (res.signed) {
-                    inputFile.addClass("c-true");
-                    pSigned.text("El Oficio " + res.name + " se encuentra firmado");
-                } else {
-                    inputFile.addClass("c-false");
-                    pSigned.text("El Oficio " + res.name + " no se encuentra firmado");
-                }
-            }
-        </script>
+        <script th:src="@{/js/validateSignPdf.js}"></script>
     </body>
 
 </html>
