@@ -9,7 +9,6 @@ function doAjax() {
         data: data,
         dataType: "json",
         success: function (res) {
-            console.log(res);
             for (var i = 0; i < res.length; i++) {
                 verifiedDate(res[i]);
             }
@@ -24,12 +23,10 @@ function verifiedDate(obj){
     var today=new Date();
     today.setHours(0,0,0,0);
     if(day<today){
-        console.log("La fecha limite de respuesta vencio");
          createAlert(obj, "danger");
     }
     else{
          createAlert(obj, "info");
-        console.log("La fecha limite de respuesta es: " + day.getDate());
     }
     
     
