@@ -43,6 +43,18 @@ public class ExpedienteServiceImp implements ExpedienteService {
         return aux;
     }
     @Override
+    public List<Expediente> listExpedienteByEmisor(String emisor) {
+        List<Expediente> list = this.listarExpedientes();
+        List<Expediente> aux = new ArrayList();
+        for (Expediente o : list) {
+            if (o.getOWNER_ID().equals(emisor)) {
+                aux.add(o);
+            }
+        }
+
+        return aux;
+    }
+    @Override
     public List<Expediente> listExpedienteByReceptor(String receptor) {
         List<Expediente> list = this.listarExpedientes();
         List<Expediente> aux = new ArrayList();
@@ -52,6 +64,15 @@ public class ExpedienteServiceImp implements ExpedienteService {
             }
         }
 
+        return aux;
+    }
+    @Override
+    public List<Expediente> listExpedienteByUser(String user) {
+        List<Expediente> aux = new ArrayList();
+        List<Expediente> emisor = this.listExpedienteByEmisor(user);
+        List<Expediente> receptor = this.listExpedienteByReceptor(user);
+        aux.addAll(emisor);
+        aux.addAll(receptor);
         return aux;
     }
 }
