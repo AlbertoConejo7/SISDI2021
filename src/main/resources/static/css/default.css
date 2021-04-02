@@ -81,7 +81,21 @@
 .c-false{
      border: solid 2px red !important;
 }
-.bell{
-    position: absolute;
-    right: 0;
+#expedientesTras, #oficiosRes {
+      width: 300px;
+      padding: 10px;
+      text-align: center;
+}
+
+.alert{
+    text-align: left !important;
+}
+.alert strong, .alert p{
+    font-size: 10pt !important;
+}
+#pageMessages {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  width: 30%;
 }
