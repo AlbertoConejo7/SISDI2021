@@ -2,12 +2,14 @@ package com.sisdi.controller;
 
 import com.sisdi.data.OfficeData;
 import com.sisdi.data.UserData;
+import com.sisdi.model.Expediente;
 import com.sisdi.model.FileSimple;
 import com.sisdi.model.Office;
 import com.sisdi.model.OfficeSimple;
 import com.sisdi.service.OfficeServiceImp;
 import com.sisdi.model.Usuario;
 import com.sisdi.model.searchOffice;
+import com.sisdi.service.ExpedienteServiceImp;
 import com.sisdi.service.TimeOutsServiceImp;
 import java.util.Date;
 import java.text.ParseException;
@@ -45,6 +47,9 @@ public class OfficeController {
 
     @Autowired
     private OfficeData officeData;
+    
+    @Autowired
+    private ExpedienteServiceImp expedienteServiceImp;
 
    @GetMapping("/addOffice")
     public String addOffice(Model model, OfficeSimple officeAdd, @AuthenticationPrincipal User user) {
@@ -211,6 +216,19 @@ public class OfficeController {
         // model.addAttribute("timeOuts", time);
         return "offices/pendingOffice";
     }
+    
+     @GetMapping("/pendingExpediente")
+    public String pendingExpediente(Model model, @AuthenticationPrincipal User user) {
+        List<Expediente> expedientes = expedienteServiceImp.listExpedienteByReceptor(user.getUsername());
+        // List<TimeOuts> time = timeOutsServiceImp.listTimeOuts();
+
+       
+        log.info("ejecutando el controlador Expedientes");
+        model.addAttribute("expedientesPending", expedientes);
+       
+        // model.addAttribute("timeOuts", time);
+        return "offices/pendingExpediente";
+    }
 
     @PostMapping("/anular")
     public String anularOficio(Model model, @AuthenticationPrincipal User user, @ModelAttribute("officeActual") OfficeSimple office) throws ParseException {
@@ -239,6 +257,28 @@ public class OfficeController {
         // model.addAttribute("timeOuts", time);
         return "offices/pendingOffice";
     }
+     @GetMapping("/acceptExpediente/{expedienteId}")
+    public String acceptExpediente(@PathVariable String expedienteId, Model model, @AuthenticationPrincipal User user) {
+        Expediente expedienteAct = expedienteServiceImp.searchExpediente(expedienteId);
+        expedienteAct.setSTATE(1);// cambiar estado 
+
+        expedienteAct = expedienteServiceImp.addExpediente(expedienteAct);
+        List<Expediente> expedientes = expedienteServiceImp.listExpedienteByReceptor(user.getUsername());
+        // List<TimeOuts> time = timeOutsServiceImp.listTimeOuts();
+       String fechaS = new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
+      //  model.addAttribute("date", fecha);
+        expedienteAct.setDATE_RETURN(fechaS);
+        
+         
+        log.info("ejecutando el controlador expedientes");
+        model.addAttribute("expedientesPending", expedientes);
+        // expedienteAct = expedienteServiceImp.addExpediente(expedienteAct); arreglar guardar date
+        // model.addAttribute("timeOuts", time);
+        return "offices/pendingExpediente";
+    }
+    
+    
+    
 
     @GetMapping("/viewOffice/{officeId}")
     public String viewOffice(@PathVariable String officeId, Model model) {
