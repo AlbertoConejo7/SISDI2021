@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    doAjaxExp();
+    doAjaxExp("expedientesTras");
 });
-function doAjaxExp() {
+function doAjaxExp(dir) {
     var data = "index";
     $.ajax({
         url: "/notificationExpediente",
@@ -9,8 +9,13 @@ function doAjaxExp() {
         data: data,
         dataType: "json",
         success: function (res) {
+            if(res.length==0 && dir!="pageMessages"){
+                $('#expedientesTras').prepend($("<span />", {
+                    html: "No hay Expedientes para trasladar"
+                }));
+            }
             for (var i = 0; i < res.length; i++) {
-                createAlertExp(res[i]);
+                createAlertExp(res[i], dir);
             }
         },
         error: function (err) {
@@ -19,26 +24,19 @@ function doAjaxExp() {
     });
 }
 
-function createAlertExp(obj) {
+function createAlertExp(obj, dir) {
 
-    var alertClasses = ["alert", "animated", "flipInX"];
-    alertClasses.push("alert-danger");
-    alertClasses.push("alert-dismissible");
+    var alertClasses = "alert alert-info";
     
-    
-    var msg = $("<div />", {
-        "class": alertClasses.join(" ")
+    var msg = $("<div/>", {
+        "class": alertClasses
     });
 
     $("<h6 />", {
         html: obj.Filename
     }).appendTo(msg);
     $("<strong />", {
-        html: "La fecha de almacenaje para el expediente "+obj.Filename+ " se venció, el expediente fue el crado el día "+ obj.Create +", por favor realizar el traslado."
-    }).appendTo(msg);
-
-    $("<p />", {
-        html: "El expediente se encuantra compartido con el usuario " + obj.Receptor
+        html: "La fecha de almacenaje para el expediente se venció, por favor realizar el traslado. <br/>"
     }).appendTo(msg);
 
     $("<a />", {
@@ -47,11 +45,6 @@ function createAlertExp(obj) {
         text: "Expedientes"
     }).appendTo(msg);
 
-    $("<span />", {
-        "class": "close",
-        "data-dismiss": "alert",
-        html: "X"
-    }).appendTo(msg);
 
-    $('#pageMessages').prepend(msg);
+    $('#'+dir).prepend(msg);
 }
