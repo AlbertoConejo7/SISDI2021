@@ -15,20 +15,26 @@
         <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-        <link th:href="@{/css/notificaciones.css}" rel="stylesheet"/>
     </head>
     <body>
         <header th:insert="menu/Head :: menu"></header>
         <div class="mt-2 col-md-1">
             <br> <br> <br>
         </div>
+        <div id="pageMessages">
+            
+        </div>
         <div class="imgen">
             <img th:src="@{/images/SISDI.png}">
         </div>
-        <div id="pageMessages">
+        <script th:src="@{/js/notificacionesResponse.js}"></script>
+        <script th:src="@{/js/notificacionesExpediente.js}"></script>
+        <script>
+            $(document).ready(function () {
+                doAjaxExp("pageMessages");
+                doAjaxRes("pageMessages");
+            });
 
-        </div>
-         <script th:src="@{/js/notificacionesResponse.js}"></script>
-          <script th:src="@{/js/notificacionesExpediente.js}"></script>
+        </script>
     </body>
 </html>
