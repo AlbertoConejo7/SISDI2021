@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    doAjax();
+    doAjaxRes("oficiosRes");
 });
-function doAjax() {
+function doAjaxRes(dir) {
     var data = "index";
     $.ajax({
         url: "/notificationResponse",
@@ -9,8 +9,14 @@ function doAjax() {
         data: data,
         dataType: "json",
         success: function (res) {
-            for (var i = 0; i < res.length; i++) {
-                verifiedDate(res[i]);
+            if (res.length == 0 && dir!="pageMessages") {
+                $('#oficiosRes').prepend($("<span />", {
+                    html: "No hay Oficios sin responder"
+                }));
+            } else {
+                for (var i = 0; i < res.length; i++) {
+                    verifiedDate(res[i], dir);
+                }
             }
         },
         error: function (err) {
@@ -18,45 +24,38 @@ function doAjax() {
         }
     });
 }
-function verifiedDate(obj){
-    var day= new Date(obj.Deadline+"T00:00");
-    var today=new Date();
-    today.setHours(0,0,0,0);
-    if(day<today){
-         createAlert(obj, "danger");
+function verifiedDate(obj, dir) {
+    var day = new Date(obj.Deadline + "T00:00");
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (day < today) {
+        createAlert(obj, "danger", dir);
+    } else {
+        createAlert(obj, "info", dir);
     }
-    else{
-         createAlert(obj, "info");
-    }
-    
-    
-}
-function createAlert(obj, type) {
 
-    var alertClasses = ["alert", "animated", "flipInX"];
-    alertClasses.push("alert-"+type);
-    alertClasses.push("alert-dismissible");
-    var strong="";
-    
-    if(type=="danger"){
-        strong="La fecha límite de respuesta ya venció, debe responderlo pronto, la fecha límite de respuesta es: " + obj.Deadline;
-    }else{
-        strong="La fecha límite de respuesta es: " + obj.Deadline;
+}
+function createAlert(obj, type, dir) {
+
+    var alertClasses = "alert alert-" + type;
+    var strong = "";
+
+    if (type == "danger") {
+        strong = "La fecha límite de respuesta ya venció, debe responderlo pronto";
+    } else {
+        strong = "La fecha límite de respuesta es: " + obj.Deadline;
     }
-    
+
     var msg = $("<div />", {
-        "class": alertClasses.join(" ")
+        "class": alertClasses
     });
 
     $("<h6 />", {
         html: obj.Offnumber
     }).appendTo(msg);
-    $("<strong />", {
-        html: strong
-    }).appendTo(msg);
 
-    $("<p />", {
-        html: "El oficio fue emitido por " + obj.Emisor
+    $("<strong />", {
+        html: strong + "<br/>"
     }).appendTo(msg);
 
     $("<a />", {
@@ -65,11 +64,5 @@ function createAlert(obj, type) {
         text: "Oficios Recibidos"
     }).appendTo(msg);
 
-    $("<span />", {
-        "class": "close",
-        "data-dismiss": "alert",
-        html: "X"
-    }).appendTo(msg);
-
-    $('#pageMessages').prepend(msg);
+    $('#'+dir).prepend(msg);
 }
