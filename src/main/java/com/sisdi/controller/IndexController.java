@@ -1,7 +1,9 @@
 package com.sisdi.controller;
 
 import com.sisdi.data.UserData;
+import com.sisdi.model.Expediente;
 import com.sisdi.model.Office;
+import com.sisdi.service.ExpedienteServiceImp;
 import com.sisdi.service.OfficeServiceImp;
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -10,6 +12,9 @@ import java.security.NoSuchProviderException;
 import java.security.SignatureException;
 import java.security.cert.CertificateException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import javax.naming.InvalidNameException;
@@ -42,8 +47,12 @@ public class IndexController {
 
     @Autowired
     private UserData userData;
+    
     @Autowired
     private OfficeServiceImp officeServiceImp;
+    
+    @Autowired
+    private ExpedienteServiceImp expedienteServiceImp;
 
     @GetMapping("/login")
     public String login() {
@@ -115,6 +124,27 @@ public class IndexController {
         log.info(officesDate.toString());
 
         return new ResponseEntity(officesF.toString(), new HttpHeaders(), HttpStatus.OK);
+    }
+    @PostMapping("/notificationExpediente")
+    public ResponseEntity<?> notificationExpediente(Model model, @AuthenticationPrincipal User user, HttpSession session) {
+        List<Expediente> expedientes = expedienteServiceImp.listExpedienteByEmisor(user.getUsername());
+        JSONArray expedientesV=new JSONArray();
+        for (Expediente e : expedientes) {
+            LocalDate fHoy= LocalDate.now();
+        LocalDate localDate = LocalDate.parse(e.getDATE_CREATE());
+            long years = ChronoUnit.YEARS.between(localDate, fHoy); 
+            String y=String.valueOf(years);
+            if (years >= 5.0) {
+                    JSONObject obj = new JSONObject();
+                    obj.put("Filename", e.getFILENAME());
+                    obj.put("Create", localDate);
+                    obj.put("Receptor", e.getRECEIVER_ID());
+                    expedientesV.put(obj);
+            }
+        }
+         log.info(expedientesV.toString());
+        
+        return new ResponseEntity(expedientesV.toString(), new HttpHeaders(), HttpStatus.OK);
     }
 
 }
