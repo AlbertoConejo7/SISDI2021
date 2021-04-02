@@ -402,3 +402,6 @@ UPDATE `sisdi`.`t_department` SET `COD` = 'RH' WHERE (`ID` = '8');
 INSERT INTO `sisdi`.`t_expediente` (`INDX`, `FILENAME`, `OBSERVATIONS`, `OWNER_ID`, `RECEIVER_ID`, `OFFICE_AMOUNT`, `DATE_CREATE`) VALUES ('1', 'Expediente Central', 'No Existen', 'gestiondecobros@sanpablo.go.cr', 'asistente.licencias@sanpablo.go.cr', '1', '2021-01-01');
 UPDATE `sisdi`.`t_office` SET `EXPEDIENTE` = 'Expediente Central' WHERE (`INDX` = '1');
 UPDATE `sisdi`.`t_expediente` SET `STATE` = '0' WHERE (`INDX` = '1');
+
+INSERT INTO `sisdi`.`t_expediente` (`INDX`, `FILENAME`, `OBSERVATIONS`, `OWNER_ID`, `RECEIVER_ID`, `OFFICE_AMOUNT`, `DATE_CREATE`) VALUES ('2', 'Expediente Gestion-Asistente', 'No Existen', 'gestiondecobros@sanpablo.go.cr', 'asistente.licencias@sanpablo.go.cr', '1', '2015-01-01');
+UPDATE `sisdi`.`t_expediente` SET `STATE` = '0' WHERE (`INDX` = '2');
