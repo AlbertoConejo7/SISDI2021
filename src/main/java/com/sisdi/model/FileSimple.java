@@ -19,4 +19,5 @@ public class FileSimple {
     private String department;
     private int officeAmount;
     private String observations;
+    private String receiver;
 }
