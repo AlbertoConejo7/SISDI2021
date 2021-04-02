@@ -63,6 +63,8 @@ OWNER_ID varchar(45),-- Emisor propietario del expediente que pertenece a algun 
 RECEIVER_ID  varchar(45), -- Receptor del expediente que pertenece a algun departamento
  OFFICE_AMOUNT int, 
  DATE_CREATE date,
+ DATE_RETURN date,
+ STATE int,
  constraint PK_EXPEDIENTE primary key(INDX),
  constraint UK_FILENAME unique key (FILENAME),
  constraint FK_OWNER foreign key (OWNER_ID) references T_USER(TEMPUSER),
