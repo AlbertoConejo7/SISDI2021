@@ -102,7 +102,7 @@ public class IndexController {
         for (Office o : offices) {
             if (o.getDEADLINE() != null) {
                 if (o.getSTATE() != 2) {
-                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
                     String strDate= formatter.format(o.getDEADLINE());  
                     JSONObject obj = new JSONObject();
                     obj.put("Offnumber", o.getOFFNUMBER());
