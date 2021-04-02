@@ -27,6 +27,7 @@
                              
                         </div>
                     </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link text-light font-weight-bold px-3" href="#" th:text="PERFIL">PERFIL</a>
                     </li>
@@ -40,11 +41,25 @@
                             <input th:value="${session.user.username}" class="usuario" readonly="readonly"/>
                         </p>
                     </li>
-                    <li class="nav-item bell" >
-                        <a class="nav-link text-light font-weight-bold px-3" th:href="@{/}" ><img th:src="@{/images/bell.png}" alt="" width="30px"/></a>
+                </ul>
+                <ul class="nav pull-right">
+                     <li class="nav-item dropdown">
+                        <a class="nav-link text-light font-weight-bold px-3 dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> <img th:src="@{/images/bell.png}" alt="" width="30px"/> </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div  id="oficiosRes"  >
+                                
+                            </div>
+                            <hr>
+                            <div  id="expedientesTras"  >
+                                
+                            </div>
+                            
+                             
+                        </div>
                     </li>
                 </ul>
             </div>
         </nav>
+       
     </body>
 </html>
