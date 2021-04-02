@@ -207,8 +207,6 @@ public class OfficeController {
     @GetMapping("/pendingOffice")
     public String pendingOffice(Model model, @AuthenticationPrincipal User user) {
         List<Office> offices = officeServiceImp.listOfficeByReceptor(user.getUsername());
-        // List<TimeOuts> time = timeOutsServiceImp.listTimeOuts();
-
         model.addAttribute("date", fecha);
         log.info("ejecutando el controlador Oficios");
         model.addAttribute("officesPending", offices);
@@ -219,14 +217,9 @@ public class OfficeController {
     
      @GetMapping("/pendingExpediente")
     public String pendingExpediente(Model model, @AuthenticationPrincipal User user) {
-        List<Expediente> expedientes = expedienteServiceImp.listExpedienteByReceptor(user.getUsername());
-        // List<TimeOuts> time = timeOutsServiceImp.listTimeOuts();
-
-       
-        log.info("ejecutando el controlador Expedientes");
+        List<Expediente> expedientes = expedienteServiceImp.listExpedienteByUser(user.getUsername());       
+        log.info(expedientes.toString());
         model.addAttribute("expedientesPending", expedientes);
-       
-        // model.addAttribute("timeOuts", time);
         return "offices/pendingExpediente";
     }
 
