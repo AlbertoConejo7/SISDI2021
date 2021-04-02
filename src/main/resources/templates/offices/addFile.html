@@ -93,6 +93,22 @@
                             </tr>
                             <tr>
                                 <td>
+                                    <span>Receptor</span><span class="required"> *</span>
+                                </td>
+                                <td>
+                                    <div class='input-group'>
+                                        <select name="usuarios" class="custom-select" th:field="*{receiver}" required>
+                                            <option value="">Seleccione Receptor</option>
+                                            <option th:each="usuario:${usuarios}" th:value="${usuario.tempUser.name}" th:text="${usuario.tempUser.name + ' / ' + usuario.department.name}"></option>
+                                        </select>
+                                        <div class="invalid-feedback">Debe seleccionar un Receptor</div>
+                                        <span class="input-group-addon ">
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     <span>Cantidad de oficios</span>
                                 </td>
                                 <td>
