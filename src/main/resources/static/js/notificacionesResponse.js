@@ -11,7 +11,7 @@ function doAjax() {
         success: function (res) {
             console.log(res);
             for (var i = 0; i < res.length; i++) {
-                createAlert(res[i]);
+                verifiedDate(res[i]);
             }
         },
         error: function (err) {
@@ -19,14 +19,34 @@ function doAjax() {
         }
     });
 }
-//'Opps!', 'Something went wrong', 'Here is a bunch of text about some stuff that happened.', 'danger', true, 'pageMessages'
-//title, summary, details, severity, dismissible, appendToId
-function createAlert(obj) {
+function verifiedDate(obj){
+    var day= new Date(obj.Deadline+"T00:00");
+    var today=new Date();
+    today.setHours(0,0,0,0);
+    if(day<today){
+        console.log("La fecha limite de respuesta vencio");
+         createAlert(obj, "danger");
+    }
+    else{
+         createAlert(obj, "info");
+        console.log("La fecha limite de respuesta es: " + day.getDate());
+    }
+    
+    
+}
+function createAlert(obj, type) {
 
     var alertClasses = ["alert", "animated", "flipInX"];
-    alertClasses.push("alert-info");
+    alertClasses.push("alert-"+type);
     alertClasses.push("alert-dismissible");
-
+    var strong="";
+    
+    if(type=="danger"){
+        strong="La fecha límite de respuesta ya venció, debe responderlo pronto, la fecha límite de respuesta es: " + obj.Deadline;
+    }else{
+        strong="La fecha límite de respuesta es: " + obj.Deadline;
+    }
+    
     var msg = $("<div />", {
         "class": alertClasses.join(" ")
     });
@@ -35,7 +55,7 @@ function createAlert(obj) {
         html: obj.Offnumber
     }).appendTo(msg);
     $("<strong />", {
-        html: "La Fecha limite de Respuesta es: " + obj.Deadline
+        html: strong
     }).appendTo(msg);
 
     $("<p />", {
