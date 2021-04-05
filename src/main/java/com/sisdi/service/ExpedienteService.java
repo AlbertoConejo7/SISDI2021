@@ -11,4 +11,5 @@ public interface ExpedienteService {
     List<Expediente> listExpedienteByUser(String user);
     List<Expediente> listExpedienteByEmisor(String emisor);
     List<Expediente> listExpedienteByReceptor(String receptor);
+    Expediente getExpediente(String filename);
 }
