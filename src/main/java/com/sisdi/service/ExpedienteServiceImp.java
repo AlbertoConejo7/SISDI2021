@@ -75,4 +75,16 @@ public class ExpedienteServiceImp implements ExpedienteService {
         aux.addAll(receptor);
         return aux;
     }
+
+    @Override
+    public Expediente getExpediente(String filename) {
+        List<Expediente> list = this.listarExpedientes();
+        Expediente aux = null;
+        for (Expediente o : list) {
+            if (o.getFILENAME().equals(filename)) {
+                aux=o;
+            }
+        }
+        return aux;
+    }
 }
