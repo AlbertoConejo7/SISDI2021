@@ -11,11 +11,14 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SignatureException;
 import java.security.cert.CertificateException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.naming.InvalidNameException;
 import javax.servlet.http.HttpServletResponse;
@@ -71,9 +74,6 @@ public class IndexController {
 
     @GetMapping("/error")
     public String showError(Model model, @AuthenticationPrincipal User user, HttpSession session) {
-        if (!user.isAccountNonExpired()) {
-            return "/login";
-        }
         return "error";
     }
 
@@ -121,8 +121,6 @@ public class IndexController {
                 }
             }
         }
-        log.info(officesDate.toString());
-
         return new ResponseEntity(officesF.toString(), new HttpHeaders(), HttpStatus.OK);
     }
     @PostMapping("/notificationExpediente")
@@ -131,7 +129,7 @@ public class IndexController {
         JSONArray expedientesV=new JSONArray();
         for (Expediente e : expedientes) {
             LocalDate fHoy= LocalDate.now();
-        LocalDate localDate = LocalDate.parse(e.getDATE_CREATE());
+            LocalDate localDate = this.convertToLocalDate(e.getDATE_CREATE());
             long years = ChronoUnit.YEARS.between(localDate, fHoy); 
             String y=String.valueOf(years);
             if (years >= 5.0) {
@@ -142,9 +140,24 @@ public class IndexController {
                     expedientesV.put(obj);
             }
         }
-         log.info(expedientesV.toString());
-        
         return new ResponseEntity(expedientesV.toString(), new HttpHeaders(), HttpStatus.OK);
+    }
+    public LocalDate convertToLocalDate(Date dateToConvert) {
+    return dateToConvert.toInstant()
+      .atZone(ZoneId.systemDefault())
+      .toLocalDate();
+}
+    @PostMapping("/fileAmount")
+    public ResponseEntity<?> fileAmount(Model model, @AuthenticationPrincipal User user, HttpSession session, @RequestParam("name") String name) {
+        Expediente e = expedienteServiceImp.getExpediente(name);
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+        String strDate = dateFormat.format(e.getDATE_CREATE());  
+        JSONObject obj = new JSONObject();
+        obj.put("Cantidad", e.getOFFICE_AMOUNT());
+        obj.put("Indx", e.getINDX());
+        obj.put("Create", strDate);
+        log.info(strDate);
+        return new ResponseEntity(obj.toString(), new HttpHeaders(), HttpStatus.OK);
     }
 
 }
