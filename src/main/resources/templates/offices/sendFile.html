@@ -42,23 +42,21 @@
                     <h3 class='font-italic text-center' id='titleh3'>Trasladar Expediente</h3>
                 </div>
                 <div class="mx-auto w-75">
-                    <form class="form was-validated" method="POST" th:action="@{/offices/saveFile}" th:object="${fileSend}" id="add-office">
+                    <form class="form was-validated" method="POST" th:action="@{/offices/saveFile}" th:object="${fileSend}" id="send-file">
+                        <input type="hidden"  id="indx" th:field="*{indx}"/>
+                        <input type="hidden"  id="create" th:field="*{dateCreateFile}"/>
                         <table class="table table-borderless">
                             <tr>
                                 <td>
                                     <span>Expediente</span><span class="required"> *</span>
-                                     <a tabindex="0" role="button" data-html = "true" data-toggle="popover"
-                                       data-trigger="focus" title="Receptor"
-                                       data-content="Quien recibe el oficio">
-                                    </a>
-                                </td>
+                                </td> 
                                 <td>
                                     <div class='input-group'>
-                                        <select name="usuarios" class="custom-select"  required>
-                                            <option value="">Seleccione el expediente</option>
-                                            
+                                        <select name="expedientes" class="custom-select" th:field="*{fileName}" onchange="amountOfiices(this)" required>
+                                            <option value="">Seleccione Expediente</option>
+                                            <option th:each="expediente:${expedientesPending}" th:value="${expediente.FILENAME}" th:text="${expediente.FILENAME}"></option>
                                         </select>
-                                        <div class="invalid-feedback">Debe seleccionar un Receptor</div>
+                                        <div class="invalid-feedback">Debe seleccionar un Expediente</div>
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -66,11 +64,11 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <span>Fecha de Ingreso</span>
+                                    <span>Fecha de Traslado</span>
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input th:value="${#dates.format(date, 'dd/MM/yyyy')}"  class="form-control" th:field="*{dateCreateFile}" readonly="readonly"/>
+                                        <input th:value="${#dates.format(date, 'dd/MM/yyyy')}"  class="form-control" th:field="*{dateReturn}" readonly="readonly"/>
                                         <span class="input-group-addon ">
                                             <img class="icon-img" th:src="@{/images/calendar.svg}">
                                         </span>
@@ -107,7 +105,7 @@
                                 </td>
                                 <td>
                                     <div class='input-group'>
-                                        <input placeholder="Cantidad" class="form-control" name="officeAmount" id="officeAmount" required/>
+                                        <input placeholder="Cantidad" class="form-control" name="officeAmount" id="officeAmount" readonly="readonly"/>
                                         <span class="input-group-addon ">
                                         </span>
                                     </div>
@@ -131,9 +129,6 @@
                                     </div>
                                 </td>
                             </tr>
-
-
-
                             <tr>
                                 <td colspan="2" class="text-lg-right">
                                     <button type="submit" class="btn btn-primary mt-2">Trasladar Expediente</button>
@@ -151,6 +146,24 @@
             $(document).ready(function () {
                 $('[data-toggle="popover"]').popover();
             });
+            function amountOfiices(select) {
+                var name=select.value;
+                console.log(select.value);
+                $.ajax({
+                    type: "POST",
+                    url: '/fileAmount',
+                    data: {"name": name},
+                    dataType: 'json',
+                    success: function (res) {
+                        $('#officeAmount').val(res.Cantidad)
+                        $('#indx').val(res.Indx)
+                        $('#create').val(res.Create)
+                    },
+                    error: function (err) {
+                        console.error(err);
+                    }
+                });
+            }
         </script>
     </body>
 
