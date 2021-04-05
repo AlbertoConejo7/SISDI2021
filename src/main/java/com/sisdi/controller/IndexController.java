@@ -1,5 +1,6 @@
 package com.sisdi.controller;
 
+import com.sisdi.data.FileData;
 import com.sisdi.data.UserData;
 import com.sisdi.model.Expediente;
 import com.sisdi.model.Office;
@@ -50,6 +51,9 @@ public class IndexController {
 
     @Autowired
     private UserData userData;
+    
+     @Autowired
+    private FileData fileData;
     
     @Autowired
     private OfficeServiceImp officeServiceImp;
@@ -126,27 +130,15 @@ public class IndexController {
     @PostMapping("/notificationExpediente")
     public ResponseEntity<?> notificationExpediente(Model model, @AuthenticationPrincipal User user, HttpSession session) {
         List<Expediente> expedientes = expedienteServiceImp.listExpedienteByEmisor(user.getUsername());
-        JSONArray expedientesV=new JSONArray();
-        for (Expediente e : expedientes) {
-            LocalDate fHoy= LocalDate.now();
-            LocalDate localDate = this.convertToLocalDate(e.getDATE_CREATE());
-            long years = ChronoUnit.YEARS.between(localDate, fHoy); 
-            String y=String.valueOf(years);
-            if (years >= 5.0) {
-                    JSONObject obj = new JSONObject();
-                    obj.put("Filename", e.getFILENAME());
-                    obj.put("Create", localDate);
-                    obj.put("Receptor", e.getRECEIVER_ID());
-                    expedientesV.put(obj);
-            }
-        }
+        JSONArray expedientesV= null;
+       if(!user.getUsername().equals("archivocentral@sanpablo.go.cr") ){
+            expedientesV=fileData.expedientesVencidos(expedientes);
+       }else{
+            expedientesV=fileData.expedientesTrasladados(expedientes);
+       }
         return new ResponseEntity(expedientesV.toString(), new HttpHeaders(), HttpStatus.OK);
     }
-    public LocalDate convertToLocalDate(Date dateToConvert) {
-    return dateToConvert.toInstant()
-      .atZone(ZoneId.systemDefault())
-      .toLocalDate();
-}
+   
     @PostMapping("/fileAmount")
     public ResponseEntity<?> fileAmount(Model model, @AuthenticationPrincipal User user, HttpSession session, @RequestParam("name") String name) {
         Expediente e = expedienteServiceImp.getExpediente(name);
