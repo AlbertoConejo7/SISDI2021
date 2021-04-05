@@ -9,13 +9,28 @@ function doAjaxExp(dir) {
         data: data,
         dataType: "json",
         success: function (res) {
-            if(res.length==0 && dir!="pageMessages"){
-                $('#expedientesTras').prepend($("<span />", {
-                    html: "No hay Expedientes para trasladar"
-                }));
-            }
-            for (var i = 0; i < res.length; i++) {
-                createAlertExp(res[i], dir);
+            console.log(res.length);
+            if (res.length == 1 && dir != "pageMessages") {
+                if (res[0].Tipo === "Trasladar") {
+                    $('#expedientesTras').prepend($("<span />", {
+                        html: "No hay Expedientes para trasladar"
+                    }));
+                } else {
+                    $('#expedientesTras').prepend($("<span />", {
+                        html: "No hay Expedientes trasladados"
+                    }));
+                }
+            } else {
+                if (res[0].Tipo === "Trasladar") {
+                    for (var i = 1; i < res.length; i++) {
+                        createAlertTras(res[i], dir);
+                    }
+                }
+                if (res[0].Tipo === "Central") {
+                    for (var i = 1; i < res.length; i++) {
+                        createAlertCent(res[i], dir);
+                    }
+                }
             }
         },
         error: function (err) {
@@ -24,10 +39,10 @@ function doAjaxExp(dir) {
     });
 }
 
-function createAlertExp(obj, dir) {
+function createAlertTras(obj, dir) {
 
     var alertClasses = "alert alert-info";
-    
+
     var msg = $("<div/>", {
         "class": alertClasses
     });
@@ -46,5 +61,30 @@ function createAlertExp(obj, dir) {
     }).appendTo(msg);
 
 
-    $('#'+dir).prepend(msg);
+    $('#' + dir).prepend(msg);
+}
+
+function createAlertCent(obj, dir) {
+
+    var alertClasses = "alert alert-info";
+
+    var msg = $("<div/>", {
+        "class": alertClasses
+    });
+
+    $("<h6 />", {
+        html: obj.Filename
+    }).appendTo(msg);
+    $("<strong />", {
+        html: "Se realizo el traslado de este Oficio, por que el plazo de almacenaje venció <br/>"
+    }).appendTo(msg);
+
+    $("<a />", {
+        name: "link",
+        href: "/offices/pendingExpediente",
+        text: "Expedientes"
+    }).appendTo(msg);
+
+
+    $('#' + dir).prepend(msg);
 }
