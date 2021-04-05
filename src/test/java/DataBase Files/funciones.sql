@@ -313,15 +313,6 @@ insert into T_USER (TEMPUSER,PASSWORD,DEPARTMENT,STATUS) values
  ('policiamunicipal@sanpablo.go.cr','policiamunicipal',6,1); # pass:$2y$12$C1F.BejEy.AJjkK6JU3mSuJ2HPFyTaaYgIvA1uRs/kmIxnAMoiXhS
 insert into T_USER_ROLE (USER_ID,ROLE_NAME) values('policiamunicipal@sanpablo.go.cr','Policía Municipal');
 
-
-
-
-
-
-
-
-
-
 #### Proveduria #####
 insert into T_TEMPUSER(NAME,EMAIL) values('Oscar Hidalgo Mena','proveeduria1@sanpablo.go.cr');
 insert into T_TEMPUSER(NAME,EMAIL) values('Adriana Benavides Vargas','proveeduria2@sanpablo.go.cr');
@@ -403,5 +394,8 @@ INSERT INTO `sisdi`.`t_expediente` (`INDX`, `FILENAME`, `OBSERVATIONS`, `OWNER_I
 UPDATE `sisdi`.`t_office` SET `EXPEDIENTE` = 'Expediente Central' WHERE (`INDX` = '1');
 UPDATE `sisdi`.`t_expediente` SET `STATE` = '0' WHERE (`INDX` = '1');
 
-INSERT INTO `sisdi`.`t_expediente` (`INDX`, `FILENAME`, `OBSERVATIONS`, `OWNER_ID`, `RECEIVER_ID`, `OFFICE_AMOUNT`, `DATE_CREATE`) VALUES ('2', 'Expediente Gestion-Asistente', 'No Existen', 'gestiondecobros@sanpablo.go.cr', 'asistente.licencias@sanpablo.go.cr', '1', '2015-01-01');
+INSERT INTO `sisdi`.`t_expediente` (`INDX`, `FILENAME`, `OBSERVATIONS`, `OWNER_ID`, `RECEIVER_ID`, `OFFICE_AMOUNT`, `DATE_CREATE`) VALUES ('2', 'Expediente Gestion-Asistente', 'No Existen', 'gestiondecobros@sanpablo.go.cr', 'asistente.licencias@sanpablo.go.cr', '0', '2015-01-01');
 UPDATE `sisdi`.`t_expediente` SET `STATE` = '0' WHERE (`INDX` = '2');
+
+INSERT INTO `sisdi`.`t_expediente` (`INDX`, `FILENAME`, `OBSERVATIONS`, `OWNER_ID`, `RECEIVER_ID`, `OFFICE_AMOUNT`, `DATE_CREATE`) VALUES ('3', 'Expediente Otro', 'No Existen', 'gestiondecobros@sanpablo.go.cr', 'asistente.licencias@sanpablo.go.cr', '0', '2015-05-07');
+UPDATE `sisdi`.`t_expediente` SET `STATE` = '0' WHERE (`INDX` = '3');
