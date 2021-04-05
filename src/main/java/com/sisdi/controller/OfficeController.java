@@ -1,5 +1,6 @@
 package com.sisdi.controller;
 
+import com.sisdi.data.FileData;
 import com.sisdi.data.OfficeData;
 import com.sisdi.data.UserData;
 import com.sisdi.model.Expediente;
@@ -49,6 +50,9 @@ public class OfficeController {
     private OfficeData officeData;
     
     @Autowired
+    private FileData fileData;
+    
+    @Autowired
     private ExpedienteServiceImp expedienteServiceImp;
 
    @GetMapping("/addOffice")
@@ -95,16 +99,37 @@ public class OfficeController {
     public String sendFile(Model model, FileSimple fileSend, @AuthenticationPrincipal User user) {
         String fechaS = new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
         model.addAttribute("date", fecha);
+        List<Expediente> expedientes = expedienteServiceImp.listExpedienteByEmisor(user.getUsername());       
         List<Usuario> usuarios = userData.listUsers();
         Usuario u = userData.getUser(user.getUsername());
         fileSend.setOwner(u.getTempUser().getName());
         fileSend.setDepartment(u.getDepartment().getName());
-        fileSend.setDateCreateFile(fechaS);
-        log.info(usuarios.toString());
+        fileSend.setDateReturn(fechaS);
+        
+        model.addAttribute("expedientesPending", expedientes);
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("fileSend", fileSend);
 
         return "offices/sendFile";
+    }
+    @PostMapping("/saveFile")
+    public String saveFile(Model model, @ModelAttribute("fileSend") FileSimple fileSend, RedirectAttributes redirectAttrs,  @AuthenticationPrincipal User user) throws ParseException {
+        try {
+            fileSend.setOwner("archivocentral@sanpablo.go.cr");
+            fileSend.setReceiver("archivocentral@sanpablo.go.cr");
+            Expediente exp=fileData.getFile(fileSend);
+            log.info("El expediente"+exp.toString());
+            redirectAttrs
+                    .addFlashAttribute("mensaje", "Expediente trasladado correctamente")
+                    .addFlashAttribute("clase", "success");
+                    expedienteServiceImp.addExpediente(exp);
+        } catch (Exception e) {
+            redirectAttrs
+                    .addFlashAttribute("mensaje", "Error al trasladar oficio")
+                    .addFlashAttribute("clase", "alert alert-danger");
+                    log.info(e.toString());
+        }
+        return "redirect:/offices/sendFile";
     }
 
     @PostMapping("/saveOffice")
@@ -258,9 +283,9 @@ public class OfficeController {
         expedienteAct = expedienteServiceImp.addExpediente(expedienteAct);
         List<Expediente> expedientes = expedienteServiceImp.listExpedienteByReceptor(user.getUsername());
         // List<TimeOuts> time = timeOutsServiceImp.listTimeOuts();
-       String fechaS = new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
+       //String fechaS = new SimpleDateFormat("dd/MM/yyyy").format(this.fecha);
       //  model.addAttribute("date", fecha);
-        expedienteAct.setDATE_RETURN(fechaS);
+        expedienteAct.setDATE_RETURN(fecha);
         
          
         log.info("ejecutando el controlador expedientes");
@@ -269,9 +294,6 @@ public class OfficeController {
         // model.addAttribute("timeOuts", time);
         return "offices/pendingExpediente";
     }
-    
-    
-    
 
     @GetMapping("/viewOffice/{officeId}")
     public String viewOffice(@PathVariable String officeId, Model model) {
@@ -293,6 +315,11 @@ public class OfficeController {
         model.addAttribute("title", "no-r");
          model.addAttribute("url", "https://ucu.edu.uy/sites/default/files/facultad/dcsp/Concurso_2015/038_Tecno2015_tecnologia_un_beneficio_o_una_adicci%C3%B3n.pdf");
         return "offices/editOffice";
+    }
+    
+    @GetMapping("/authSignature")
+    public String authSignature(Model model, OfficeSimple officeAdd, @AuthenticationPrincipal User user) {
+        return "offices/authSignature";
     }
 
 }
