@@ -13,8 +13,10 @@ import lombok.Data;
 
 @Data
 public class FileSimple {
+    private int indx;
     private String fileName;
     private String dateCreateFile;
+    private String dateReturn;
     private String owner;
     private String department;
     private int officeAmount;
